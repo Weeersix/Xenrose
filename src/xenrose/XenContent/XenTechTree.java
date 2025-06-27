@@ -1,0 +1,103 @@
+package xenrose.XenContent;
+
+import arc.struct.Seq;
+import mindustry.content.Liquids;
+import mindustry.content.TechTree;
+import mindustry.game.Objectives;
+import mindustry.content.Items;
+
+import static mindustry.content.TechTree.node;
+import static mindustry.content.TechTree.nodeProduce;
+
+public class XenTechTree {
+    public static void load() {
+        XenPlanets.xenor.techTree = TechTree.nodeRoot("Xenor", XenBlocks.coreSunrise, () -> {
+            node(XenBlocks.energyDrill, Seq.with(new Objectives.Produce(XenItems.damascus)), () -> {
+                node(XenBlocks.airMechanicalDrill, Seq.with(new Objectives.Produce(XenItems.dantstalin)), () -> {});
+                node(XenBlocks.energyChargedDrill, Seq.with(new Objectives.Produce(XenItems.gold)), () -> {});
+            });
+            node(XenBlocks.damascusConveyor, Seq.with(new Objectives.Produce(XenItems.damascus)), () -> {
+                node(XenBlocks.damascusJunction, () -> {
+                    node(XenBlocks.damascusRouter);
+                    node(XenBlocks.damascusBridge);
+                });
+            });
+            node(XenBlocks.reinforcedDamascusWall, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
+                node(XenBlocks.reinforcedDamascusWallLarge, () -> {
+                    node(XenBlocks.diocasiumArmor, Seq.with(new Objectives.Produce(XenItems.diocasium)), () -> {});
+                });
+            });
+            node(XenBlocks.samum, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
+                        node(XenBlocks.desiccation, Seq.with(new Objectives.Produce(XenItems.gold)), () -> {
+                            node(XenBlocks.merge, Seq.with(new Objectives.Produce(XenItems.diocasium)), () -> {});
+                        });
+                        node(XenBlocks.calmness, Seq.with(new Objectives.Produce(XenItems.protexide)), () -> {});
+                    });
+            node(XenBlocks.hydraulicPump, Seq.with(new Objectives.Produce(XenItems.gold)), () -> {
+                node(XenBlocks.fragilePipeline, () -> {
+                    node(XenBlocks.fragileLiquidRouter, () -> {
+                        node(XenBlocks.fragileLiquidBridge, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {});
+                    });
+                    node(XenBlocks.reinforcedPipelineJunction, Seq.with(new Objectives.Produce(XenItems.dantstalin)), () -> {});
+                });
+            });
+            node(XenBlocks.kirmiteEvaporator, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
+                node(XenBlocks.cableNode, () -> {});
+            });
+            node(XenBlocks.pyrometallurgicalInstallation, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
+                node(XenBlocks.crusher, () -> {
+                    node(XenBlocks.waterReformer, Seq.with(new Objectives.SectorComplete(XenSectorPresets.LightLowland)), () -> {
+                        node(XenBlocks.dantstalinSmelter, Seq.with(new Objectives.SectorComplete(XenSectorPresets.KirmitCoast)), () -> {});
+                    });
+                    node(XenBlocks.orinilCrucible, Seq.with(new Objectives.Produce(XenLiquids.liquidOrinil)), () -> {
+                        node(XenBlocks.energyChargingSplitter, Seq.with(new Objectives.Produce(XenItems.isoteron)), () -> {});
+                        node(XenBlocks.energyStabilizingBoiler, Seq.with(new Objectives.Produce(XenItems.diocasium)), () -> {});
+                    });
+                });
+            });
+            node(XenBlocks.groundUnitsAssembler, Seq.with(new Objectives.OnSector(XenSectorPresets.DryingThickets)), () -> {
+                node(XenUnits.zanar, Seq.with(new Objectives.Research(XenBlocks.groundUnitsAssembler)), () -> {});
+                node(XenBlocks.hoverUnitsAssembler, Seq.with(new Objectives.SectorComplete(XenSectorPresets.DryingThickets)), () -> {
+                    node(XenUnits.imitation, Seq.with(new Objectives.Research(XenBlocks.hoverUnitsAssembler)), () -> {});
+                    node(XenBlocks.orinilReassembler, Seq.with(new Objectives.Research(XenItems.protexide)), () -> {
+                        node(XenUnits.inorn, Seq.with(new Objectives.Research(XenBlocks.orinilReassembler)), () -> {});
+                        node(XenUnits.simulation, Seq.with(new Objectives.Research(XenBlocks.orinilReassembler)), () -> {});
+                    });
+                });
+            });
+            node(XenSectorPresets.Landing, () -> {
+                node(XenSectorPresets.BurntHills, Seq.with(new Objectives.SectorComplete(XenSectorPresets.Landing)), () -> {
+                    node(XenSectorPresets.LightLowland, Seq.with(new Objectives.SectorComplete(XenSectorPresets.BurntHills)), () -> {});
+                });
+                node(XenSectorPresets.DryingThickets, Seq.with(new Objectives.SectorComplete(XenSectorPresets.Landing)), () -> {
+                    node(XenSectorPresets.KirmitCoast, Seq.with(new Objectives.Research(XenBlocks.hoverUnitsAssembler)), () -> {});
+                });
+            });
+            nodeProduce(XenItems.damascus, () -> {
+                nodeProduce(Items.sand, Seq.with(new Objectives.Produce(Items.sand)), () -> {});
+                nodeProduce(XenItems.zinc, () -> {
+                    nodeProduce(XenItems.gold, () -> {
+                        nodeProduce(XenLiquids.liquidKirmit, () -> {});
+                        nodeProduce(XenItems.protexide, () -> {
+                            nodeProduce(Items.tungsten, () -> {});
+                        });
+                        nodeProduce(XenLiquids.liquidOrinil, () -> {
+                            nodeProduce(XenItems.diocasium, () -> {
+                                nodeProduce(XenItems.isoteron, () -> {
+                                    nodeProduce(XenItems.asteril, () -> {});
+                                });
+                                nodeProduce(XenItems.moluron, () -> {});
+                            });
+                        });
+                    });
+                    nodeProduce(Liquids.water, () -> {
+                        nodeProduce(Liquids.hydrogen, () -> {});
+                        nodeProduce(XenLiquids.oxygen, () -> {});
+                    });
+                    nodeProduce(XenItems.dantstalin, () -> {});
+                });
+            });
+            node(XenBlocks.coreZenith, Seq.with(new Objectives.Produce(XenItems.protexide)), () -> {});
+        });
+    }
+}
