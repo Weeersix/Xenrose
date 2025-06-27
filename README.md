@@ -4,3 +4,4 @@
 
 # Discord:
 # [![Discord](https://img.shields.io/discord/1387842523015282728?style=for-the-badge&color=ffa875&logo=discord&label=Xenrose|Main)](https://discord.gg/KuexqAakdg)
+# <a href="https://github.com/Weeersix/Xenrose/stargazers">
