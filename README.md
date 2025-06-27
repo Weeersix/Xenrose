@@ -1,4 +1,4 @@
-### ![img-icon.png](/assets/icon.png)
+![img-icon.png](/assets/icon.png)
 # Welcome to Xenor! 
 ## This is an almost completely desiccated planet, with only occasional patches of kirmite.
 # ![img-xenrose-logo.png](/assets/sprites-override/ui/xenrose-logo.png)
