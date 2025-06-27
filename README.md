@@ -3,4 +3,4 @@
 # ![img-icon.png](/assets/icon.png)
 
 # Discord:
-# [![Discord](https://img.shields.io/discord/1301553669925244970?style=for-the-badge&color=ffa875&logo=discord&label=Xenrose|Main)](https://discord.gg/KuexqAakdg)
+# [![Discord](https://img.shields.io/discord/1387842523015282728?style=for-the-badge&color=ffa875&logo=discord&label=Xenrose|Main)](https://discord.gg/KuexqAakdg)
