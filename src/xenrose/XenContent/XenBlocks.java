@@ -196,9 +196,6 @@ public class XenBlocks {
                     breakable = false;
                 }};
                 kirmiteTree = new TallBlock("kirmite-tree");
-                peatBoulder = new Prop("peat-boulder"){{
-                    variants = 2;
-                }};
 
                 softDamascusGround = new Floor("soft-damascus-ground") {{
                     variants = 2;
@@ -211,27 +208,6 @@ public class XenBlocks {
                 }};
                 deepenedDamascusFloor = new Floor("deepened-damascus-floor"){{
                     variants = 3;
-                }};
-                damascusPit = new SteamVent("damascus-pit"){{
-                    status = StatusEffects.melting;
-                    statusDuration = 180f;
-                    speedMultiplier = 0.19f;
-                    size = 4;
-                    variants = 2;
-                    effect = new ParticleEffect() {{
-                        particles =  3;
-                        length = 210;
-                        lifetime = 432;
-                        cone = 20;
-                        baseRotation = 30;
-                        sizeFrom = 0;
-                        sizeTo = 19;
-                        colorFrom = Color.valueOf("6a615285");
-                        colorTo = Color.valueOf("c1bba57f");
-                        sizeInterp = pow3Out;
-                        interp = pow3Out;
-                    }};
-                    effectColor = Color.valueOf("9d91758c");
                 }};
                 kirmiteStoneFloor = new Floor("kirmite-stone-floor") {{
                     variants = 3;

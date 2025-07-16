@@ -38,21 +38,6 @@ public class XenFx extends Fx {
             });
         }
     }),
-
-    pyrometallurgicalInstallationSmoke = new Effect(210f, e -> {
-        color(Color.valueOf("b76b19"));
-        alpha(1.6f);
-
-        rand.setSeed(e.id);
-        for(int i = 0; i < 3; i++){
-            float len = rand.random(6f), rot = rand.range(35f) + e.rotation;
-
-            e.scaled(e.lifetime * rand.random(0.3f, 1f), b -> {
-                v.trns(rot, len * b.finpow());
-                Fill.circle(e.x + v.x, e.y + v.y, 3f * b.fslope() + 0.2f);
-            });
-        }
-    }),
     kirmiteSteam = new Effect(110f, e -> {
         color(e.color, Color.valueOf("9265bd"), e.fin());
 
@@ -143,23 +128,5 @@ public class XenFx extends Fx {
 
         Fill.circle(e.x, e.y, e.fin() * 10);
         Drawf.light(e.x, e.y, e.fin() * 20f, Color.valueOf("e9bb59"), 0.7f);
-    }).followParent(true).rotWithParent(true),
-
-    mergeHitSquares = new Effect(14, e -> {
-        color(Color.valueOf("f0b467"), e.color, e.fin());
-
-        e.scaled(7f, s -> {
-            stroke(0.5f + s.fout());
-            Lines.circle(e.x, e.y, s.fin() * 5f);
-        });
-
-        stroke(0.5f + e.fout());
-
-        randLenVectors(e.id, 5, e.fin() * 17f, (x, y) -> {
-            float ang = Mathf.angle(x, y);
-            Fill.square(e.x + x, e.y + y, e.fout() * 3.2f, ang);
-        });
-
-        Drawf.light(e.x, e.y, 20f, e.color, 0.6f * e.fout());
-    });
+    }).followParent(true).rotWithParent(true);
 }
