@@ -2,14 +2,17 @@ package xenrose;
 
 import arc.Core;
 import arc.Events;
+import arc.util.Log;
+import arc.util.Reflect;
 import mindustry.Vars;
 import mindustry.game.EventType;
+import mindustry.mod.Mod;
 import mindustry.ui.fragments.MenuFragment;
 import xenrose.XenContent.*;
-import xenrose.graphics.*;
-import arc.util.*;
-import mindustry.mod.*;
-import xenrose.ui.DiscordDialog;
+import xenrose.graphics.EnvRenderer;
+import xenrose.graphics.XenMenuRenderer;
+import xenrose.tools.IconLoader;
+import xenrose.ui.XenStyles;
 import xenrose.util.XenIcons;
 
 public class Xenrose extends Mod {
@@ -23,6 +26,8 @@ public class Xenrose extends Mod {
         super.init();
         XenIcons.init();
         XenTeams.load();
+        IconLoader.loadIcons();
+        XenStyles.load();
 
         Events.on(EventType.ClientLoadEvent .class, e -> {
             if (Core.settings.getBool("xenrose-custom-menu", true)) {

@@ -1,32 +1,28 @@
 package xenrose.XenContent;
 
 import arc.graphics.Color;
-import arc.math.Mathf;
-import arc.math.geom.Vec3;
-import arc.struct.Seq;
-import mindustry.content.Items;
-import mindustry.world.meta.Env;
-import xenrose.PlanetGenerator.*;
 import mindustry.content.Planets;
 import mindustry.graphics.Pal;
 import mindustry.graphics.g3d.HexMesh;
 import mindustry.graphics.g3d.HexSkyMesh;
 import mindustry.graphics.g3d.MultiMesh;
 import mindustry.type.Planet;
-import xenrose.world.meta.*;
+import mindustry.world.meta.Env;
+import xenrose.PlanetGenerator.XenPlanetGenerator;
+import xenrose.world.meta.Environment;
 
 public class XenPlanets{
     public static Planet
             xenor;
 
     public static void load() {
-        xenor = new Planet("Xenor", Planets.sun, 1.4f, 3){{
+        xenor = new Planet("Xenor", Planets.sun, 1f, 3){{
             generator = new XenPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 5);
             cloudMeshLoader = () -> new MultiMesh(
-                    new HexSkyMesh(this, 2, 0.2f, 0.19f, 5, Color.valueOf("a595829c").a(0.55f), 4, 0.33f, 0.8f, 0.45f),
-                    new HexSkyMesh(this, 4, 0.8f, 0.21f, 5, Color.valueOf("b89767d9").a(0.75f), 3, 0.42f, 1f, 0.47f),
-                    new HexSkyMesh(this, 5, 0.5f, 0.16f, 5, Color.valueOf("cc9b5298").a(0.67f), 5, 0.32f, 0.96f, 0.47f)
+                    new HexSkyMesh(this, 2, 0.2f, 0.19f, 5, Color.valueOf("bf9c78ad").a(0.55f), 4, 0.33f, 0.8f, 0.45f),
+                    new HexSkyMesh(this, 4, 0.8f, 0.21f, 5, Color.valueOf("b3875bad").a(0.75f), 3, 0.42f, 1.1f, 0.47f),
+                    new HexSkyMesh(this, 5, 0.5f, 0.16f, 5, Color.valueOf("a3876aad").a(0.67f), 5, 0.32f, 0.96f, 0.47f)
             );
             launchCapacityMultiplier = 0.5f;
             sectorSeed = 2;
@@ -42,19 +38,18 @@ public class XenPlanets{
                 r.showSpawns = false;
                 r.coreDestroyClear = true;
                 r.ambientLight = Color.valueOf("c8793246");
-                r.coreDestroyClear = false;
                 r.onlyDepositCore = true;
             };
             unlockedOnLand.add(XenBlocks.coreSunrise);
             iconColor = Pal.shield;
             orbitRadius = 28.3f;
-            atmosphereColor = Color.valueOf("a595829c");
+            landCloudColor = Color.valueOf("ed6542");
+            atmosphereColor = Color.valueOf("e59537");
             atmosphereRadIn = 0.02f;
             atmosphereRadOut = 0.3f;
             startSector = 1;
             allowLaunchToNumbered = false;
             alwaysUnlocked = true;
-            landCloudColor = Pal.darkMetal.cpy().a(0.5f);
             updateLighting = false;
         }};
     }

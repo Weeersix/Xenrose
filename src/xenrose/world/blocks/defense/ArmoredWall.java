@@ -12,27 +12,19 @@ import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Eachable;
-import arc.util.Nullable;
 import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
-import mindustry.entities.Lightning;
 import mindustry.entities.units.BuildPlan;
-import mindustry.gen.Bullet;
 import mindustry.gen.Icon;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Layer;
-import mindustry.graphics.Pal;
-import mindustry.ui.Bar;
 import mindustry.ui.Styles;
-import mindustry.world.Block;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.world.meta.Stat;
-import mindustry.world.meta.StatUnit;
-import xenrose.XenContent.XenBlocks;
-import xenrose.core.XenVars;
+import xenrose.ui.XenStyles;
 import xenrose.util.XenIcons;
 
 import static mindustry.Vars.*;
@@ -57,6 +49,7 @@ public class ArmoredWall extends Wall{
         super(name);
         configurable = true;
         saveConfig = true;
+        clearOnDoubleTap = true;
         update = true;
     }
 
@@ -92,16 +85,16 @@ public class ArmoredWall extends Wall{
 
         @Override
         public void buildConfiguration(Table table){
-            Seq<Armor> armor = Seq.with(unlockedNow).map(u -> u.armored).retainAll(a -> unlockedNow());
+            Seq<Armor> armor = Seq.with(unlockedNow).map(u -> u.armored).retainAll(a -> unlockedNow() && !state.rules.isBanned(a));
             if(armor.any()){
-                table.button(XenIcons.armorAdd, Styles.cleari, () -> {
+                table.button(XenIcons.armorAdd, XenStyles.sandButton, () -> {
                     addArmor = true;
                     deselect();
-                }).size(45f);
-                table.button(XenIcons.armorRemove, Styles.cleari, () -> {
+                }).size(68f);
+                table.button(XenIcons.armorRemove, XenStyles.sandButton, () -> {
                     addArmor = false;
                     deselect();
-                }).size(45f);
+                }).size(68f);
                 }else{
                 table.button(Icon.lock, Styles.cleari, () -> {}).size(45f);
             }
@@ -121,7 +114,7 @@ public class ArmoredWall extends Wall{
                     hit -= Time.delta / 10f;
                     hit = Math.max(hit, 0f);
                 }
-                shieldRadius = Mathf.lerpDelta(shieldRadius, broken() ? 0f : 1f, 0.12f);
+                shieldRadius = Mathf.lerpDelta(shieldRadius, (broken() || !addArmor) ? 0f : 1f, 0.12f);
             }
 
         }
@@ -176,10 +169,6 @@ public class ArmoredWall extends Wall{
             }
         }
 
-        public @Nullable Armor armored(){
-            return currentPlan == - 1 ? null : unlockedNow.get(currentPlan).armored;
-        }
-
         @Override
         public void write(Writes write){
             super.write(write);
@@ -190,8 +179,7 @@ public class ArmoredWall extends Wall{
         public void read(Reads read, byte revision){
             super.read(read, revision);
             shield = read.f();
-            if(shield > 0 && addArmor) shieldRadius = 1f;
-            if(!addArmor) shieldRadius = 0f;
+            if(shield > 0) shieldRadius = 1f;
         }
     }
 }

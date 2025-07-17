@@ -1,39 +1,33 @@
 package xenrose.XenContent;
 
 import arc.graphics.Color;
-import arc.math.Interp;
 import arc.math.Mathf;
-import arc.struct.Seq;
 import mindustry.ai.UnitCommand;
-import mindustry.ai.types.*;
+import mindustry.ai.types.BuilderAI;
+import mindustry.ai.types.FlyingFollowAI;
 import mindustry.content.Fx;
-import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.entities.TargetPriority;
 import mindustry.entities.abilities.MoveEffectAbility;
 import mindustry.entities.abilities.ShieldArcAbility;
-import mindustry.entities.abilities.ShieldRegenFieldAbility;
-import mindustry.entities.abilities.SpawnDeathAbility;
-import mindustry.entities.bullet.*;
+import mindustry.entities.abilities.UnitSpawnAbility;
+import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.effect.ExplosionEffect;
+import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.entities.effect.WaveEffect;
-import mindustry.entities.part.*;
-import mindustry.entities.pattern.ShootAlternate;
+import mindustry.entities.part.HaloPart;
+import mindustry.entities.part.HoverPart;
+import mindustry.entities.part.RegionPart;
+import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootHelix;
-import mindustry.entities.pattern.ShootSine;
+import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
-import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
 import mindustry.type.Weapon;
-import mindustry.type.weapons.RepairBeamWeapon;
-import mindustry.world.meta.Env;
 import xenrose.type.XenUnitType;
-
-import static mindustry.Vars.tilesize;
-import static mindustry.gen.Nulls.unit;
 
 
 public class XenUnits {
@@ -43,7 +37,13 @@ public class XenUnits {
             //zanar tech tree
             zanar, inorn, manler, inzeran,
             //imitation tech tree
-            imitation, simulation, fusion;
+            imitation, simulation, fusion,
+            //sinar tech tree
+            sinar,
+            //xanit tech tree
+            xanit, manul, amiren,
+            //suport units
+            kinor;
 
     public static void load() {
              spraying = new UnitType("spraying"){{
@@ -147,15 +147,16 @@ public class XenUnits {
 
                  weapons.add(new Weapon("xenrose-spread-weapon"){{
                          shootSound = Sounds.blaster;
-                         x = 5;
-                         y = 0.25f;
-                         mirror = true;
-                         rotate = true;
-                         rotateSpeed = 7;
-                         rotationLimit = 90;
-                         reload = 15f;
-                         recoil = 1.2f;
-                         top = true;
+                         x = 0f;
+                         y = 5f;
+                         mirror = false;
+                         rotate = false;
+                         reload = 35;
+                         recoil = 1.5f;
+                         top = false;
+                         shoot.shots = 3;
+                         shoot.firstShotDelay = 15;
+                         inaccuracy = 14;
                          bullet = new BasicBulletType(5f, 15f) {{
                              width = 9f;
                              height = 12f;
@@ -1161,8 +1162,8 @@ public class XenUnits {
                  health = 3970;
                  armor = 6;
                  outlineColor = Color.valueOf("211c18");
-                 speed = 2f;
-                 drag = 0.09f;
+                 speed = 7f;
+                 drag = 0.18f;
                  rotateSpeed = 14f;
                  accel = 0.04f;
                  hitSize = 20f;
@@ -1172,24 +1173,18 @@ public class XenUnits {
                  );
 
                  abilities.add(
-                         new MoveEffectAbility(7.75f, -12.5f, Pal.sapBulletBack, XenFx.imitationTrail, 3f){{
+                         new MoveEffectAbility(7.75f, -11.5f, Pal.sapBulletBack, XenFx.imitationTrail, 3f){{
                              color = Color.valueOf("c696f2b7");
                              rotateEffect = true;
                          }},
-                         new MoveEffectAbility(-7.75f, -12.5f, Pal.sapBulletBack, XenFx.imitationTrail, 3f){{
+                         new MoveEffectAbility(-7.75f, -11.5f, Pal.sapBulletBack, XenFx.imitationTrail, 3f){{
                              color = Color.valueOf("c696f2b7");
                              rotateEffect = true;
                          }});
                  parts.add(
-                         new RegionPart("-blade"){{
-                             progress = PartProgress.warmup;
-                             mirror = true;
-                             moveY = -0.8f;
-                             moveRot = -8;
-                             moves.add(new PartMove(PartProgress.reload, 0f, -0.2f, -3f));
-                         }},
                          new RegionPart("-back"){{
                              moveY = 0.7f;
+                             mirror = true;
                              progress = PartProgress.warmup;
                          }});
 
@@ -1206,23 +1201,223 @@ public class XenUnits {
                      top = true;
                      layerOffset = 0.001f;
                      shootSound = XenSounds.imitationShoot;
-                     shoot.shots = 3;
-                     shoot.shotDelay = 13;
+                     shoot.shots = 25;
+                     shoot.shotDelay = 4;
                      shoot.firstShotDelay = 35;
+                     inaccuracy = 7;
 
-                     bullet = new BasicBulletType(6f, 50f, "xenrose-basic-bullet1"){{
-                         width = 9f;
-                         height = 15f;
-                         lifetime = 30f;
+                     bullet = new BasicBulletType(6f, 45f, "xenrose-basic-bullet1"){{
+                         width = 10;
+                         height = 12;
+                         lifetime = 60;
                          pierce = true;
                          pierceBuilding = true;
-                         pierceCap = 2;
-                         shootEffect = Fx.sparkShoot;
-                         hitColor = backColor = trailColor = Color.valueOf("6f42a4");
-                         frontColor = Color.valueOf("e5c9ff");
-                         trailLength = 13;
-                         trailWidth = 1.9f;
-                         lightColor = Color.valueOf("e5c9ff");
+                         pierceCap = 3;
+                         frontColor = trailColor = Color.valueOf("d5a8ff");
+                         backColor =  Color.valueOf("633e8f");
+                         trailWidth = 2.3f;
+                         trailLength = 12;
+                         trailEffect = XenFx.imitationTrail;
+                         trailRotation = true;
+                         trailInterval = 5;
+                         chargeEffect = new MultiEffect(
+                                 new WaveEffect(){{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 34;
+                                     sizeFrom = 7;
+                                     sizeTo = 0;
+                                     strokeFrom = 0;
+                                     strokeTo = 1.3f;
+                                     colorFrom = Color.valueOf("e5c9ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }},
+                                 new ParticleEffect(){{
+                                     particles = 2;
+                                     length = -50;
+                                     baseLength = 50;
+                                     cone = 50;
+                                     lifetime = 30;
+                                     sizeFrom = 0;
+                                     sizeTo = 2.5f;
+                                     colorFrom = Color.valueOf("d5a8ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }});
+                         despawnEffect = hitEffect = new MultiEffect(
+                                 new WaveEffect(){{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 36;
+                                     sizeFrom = 0;
+                                     sizeTo = 12;
+                                     strokeFrom = 2;
+                                     strokeTo = 0f;
+                                     colorFrom = Color.valueOf("e5c9ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }},
+                                 new ParticleEffect(){{
+                                     particles = 17;
+                                     length = 40;
+                                     baseLength = 0;
+                                     cone = 60;
+                                     lifetime = 65;
+                                     sizeFrom = 2.5f;
+                                     sizeTo = 0f;
+                                     colorFrom = Color.valueOf("d5a8ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }});
+                     }};
+                 }});
+                 weapons.add(new Weapon(){{
+                     x = 0f;
+                     y = 5f;
+                     rotate = false;
+                     mirror = false;
+                     recoil = 0f;
+                     reload = 285;
+                     shootSound = XenSounds.xanitShoot;
+                     shoot = new ShootSpread(3, 25);
+
+                     parts.add(
+                             new RegionPart("xenrose-fusion-blade"){{
+                                 y = -5.2f;
+                                 progress = PartProgress.warmup;
+                                 under = true;
+                                 mirror = true;
+                                 moveY = -0.4f;
+                                 moveRot = -4;
+                                 moves.add(new PartMove(PartProgress.recoil, 0f, -0.3f, -4f));
+                             }});
+
+                     bullet = new BasicBulletType(4f, 110f, "xenrose-basic-bullet1"){{
+                         width = 13;
+                         height = 15;
+                         lifetime = 124;
+                         trailInterval = 1.65f;
+                         trailLength = 10;
+                         trailWidth = 3.2f;
+                         homingPower = 0.19f;
+                         homingRange = 50;
+                         homingDelay = 15;
+                         frontColor = trailColor = Color.valueOf("e5c9ff");
+                         backColor = Color.valueOf("633e8f");
+                         trailEffect = hitEffect = despawnEffect = new ParticleEffect(){{
+                             colorFrom = Color.valueOf("e5c9ff");
+                             colorTo = Color.valueOf("cf9cff");
+                             particles = 1;
+                             sizeFrom = 3;
+                             sizeTo = 0;
+                         }};
+                         chargeEffect = new MultiEffect(
+                                 new WaveEffect(){{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 50;
+                                     sizeFrom = 7;
+                                     sizeTo = 0;
+                                     strokeFrom = 0;
+                                     strokeTo = 1.3f;
+                                     colorFrom = Color.valueOf("e5c9ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }},
+                                 new ParticleEffect(){{
+                                     particles = 10;
+                                     length = -70;
+                                     baseLength = 70;
+                                     cone = 50;
+                                     lifetime = 65;
+                                     sizeFrom = 0;
+                                     sizeTo = 2.5f;
+                                     colorFrom = Color.valueOf("d5a8ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }});
+                         despawnEffect = hitEffect = new MultiEffect(
+                                 new WaveEffect(){{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 70;
+                                     sizeFrom = 28;
+                                     sizeTo = 28;
+                                     strokeFrom = 2.8f;
+                                     strokeTo = 0f;
+                                     colorFrom = Color.valueOf("e5c9ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }},
+                                 new WaveEffect(){{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 58;
+                                     sizeFrom = 13;
+                                     sizeTo = 12;
+                                     strokeFrom = 1.9f;
+                                     strokeTo = 0f;
+                                     colorFrom = Color.valueOf("e5c9ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }},
+                                 new ParticleEffect(){{
+                                     particles = 10;
+                                     length = 40;
+                                     baseLength = 0;
+                                     lifetime = 65;
+                                     sizeFrom = 4;
+                                     sizeTo = 0f;
+                                     colorFrom = Color.valueOf("d5a8ff");
+                                     colorTo = Color.valueOf("cf9cff");
+                                 }});
+                     }};
+                 }});
+             }};
+
+             //sinar tech tree
+             sinar = new UnitType("sinar"){{
+                 constructor = UnitEntity::create;
+                 defaultCommand = UnitCommand.repairCommand;
+
+                 outlineColor = Color.valueOf("211c18");
+                 health = 1340;
+                 hitSize = 12f;
+
+                 flying = true;
+                 drag = 0.085f;
+                 speed = 4f;
+                 rotateSpeed = 7f;
+                 accel = 0.2f;
+                 itemCapacity = 12;
+                 engineSize = 3f;
+                 engineOffset = 20f / 4f;
+
+                 weapons.add(new Weapon("xenrose-sinar-weapon"){{
+                     x = 13f / 4f;
+                     y = 10.75f / 4f;
+                     reload = 48f;
+                     recoil = 0.6f;
+                     rotate = false;
+                     mirror = true;
+                     top = false;
+                     alternate = false;
+                     shootSound = XenSounds.weaponMinShoot1;
+
+                     shoot.shots = 2;
+                     shoot.shotDelay = 3.4f;
+                     shoot.firstShotDelay = 50;
+                     inaccuracy = 8;
+
+                     bullet = new BasicBulletType(3, 25, "xenrose-basic-bullet1"){{
+                         height = 11;
+                         width = 9;
+                         lifetime = 76;
+                         frontColor = trailColor = Color.valueOf("c6cfda");
+                         backColor = Color.valueOf("89939e");
+                         trailWidth = 2.1f;
+                         trailLength = 8;
+                         homingPower = 0.195f;
+                         homingRange = 35;
+                         homingDelay = 10;
+
+                         healColor = Color.valueOf("c6cfda");
+                         healPercent = 1.7f;
+                         collidesTeam = true;
+                         reflectable = false;
                          hitEffect = despawnEffect = new ExplosionEffect() {{
                              lifetime = 30f;
                              waveStroke = 1.6f;
@@ -1231,26 +1426,361 @@ public class XenUnits {
                              waveRad = 30f;
                              smokeSize = 2f;
                              smokeSizeBase = 1f;
-                             smokeColor = Color.valueOf("cf9cff");
+                             smokeColor = Color.valueOf("c6cfda");
                              sparks = 4;
                              sparkRad = 25f;
                              sparkLen = 7f;
                              sparkStroke = 2f;
                          }};
-                         chargeEffect = new WaveEffect(){{
-                             rotWithParent = true;
-                             followParent = true;
-                             lifetime = 34;
-                             sizeFrom = 7;
-                             sizeTo = 0;
-                             strokeFrom = 0;
-                             strokeTo = 1.3f;
-                             colorFrom = Color.valueOf("e5c9ff");
-                             colorTo = Color.valueOf("cf9cff");
-                         }};
                      }};
                  }});
              }};
+
+        //support units
+        kinor = new UnitType("kinor"){{
+            constructor = UnitEntity::create;
+            aiController = FlyingFollowAI::new;
+
+            outlineColor = Color.valueOf("211c18");
+            health = 340;
+            hitSize = 12f;
+
+            flying = true;
+            drag = 0.085f;
+            speed = 3.4f;
+            rotateSpeed = 10f;
+            accel = 0.2f;
+            itemCapacity = 15;
+            engineSize = 3.2f;
+            engineOffset = 22 / 4f;
+
+            weapons.add(new Weapon("xenrose-kinor-weapon"){{
+                x = 13f / 4f;
+                y = 1.3f;
+                reload = 40f;
+                recoil = 0.6f;
+                rotate = false;
+                mirror = true;
+                top = false;
+                shootSound = XenSounds.weaponMinShoot1;
+
+                shoot.shots = 4;
+                shoot.shotDelay = 5;
+                shoot.firstShotDelay = 50;
+                inaccuracy = 8;
+
+                bullet = new BasicBulletType(3.4f, 20, "xenrose-basic-bullet1") {{
+                    width = 6f;
+                    height = 8f;
+                    lifetime = 67f;
+                    frontColor = trailColor = Color.valueOf("cff4ed");
+                    backColor = Color.valueOf("5b8f92");
+                    trailWidth = 1.4f;
+                    trailLength = 7;
+                    homingPower = 0.195f;
+                    homingRange = 35;
+                    homingDelay = 10;
+                    hitEffect = despawnEffect = new ExplosionEffect() {{
+                        lifetime = 30f;
+                        waveStroke = 1.6f;
+                        waveColor = Color.white;
+                        sparkColor = trailColor;
+                        waveRad = 30f;
+                        smokeSize = 2f;
+                        smokeSizeBase = 1f;
+                        smokeColor = Color.valueOf("cff4ed");
+                        sparks = 4;
+                        sparkRad = 25f;
+                        sparkLen = 7f;
+                        sparkStroke = 2f;
+                    }};
+                }};
+            }});
+        }};
+
+             //xanit tech tree
+             xanit = new UnitType("xanit"){{
+                 constructor = UnitWaterMove::create;
+
+                 speed = 1.9f;
+                 drag = 0.13f;
+                 hitSize = 9f;
+                 health = 1420;
+                 armor = 2f;
+                 accel = 0.4f;
+                 rotateSpeed = 3.3f;
+                 faceTarget = false;
+                 outlineColor = Color.valueOf("211c18");
+
+                 trailLength = 18;
+                 waveTrailX = 3.4f;
+                 waveTrailY = -30f / 4f;
+                 trailScl = 1.8f;
+
+                 weapons.add(new Weapon("xenrose-xanit-weapon"){{
+                     x = 0;
+                     y = -0.15f;
+                     reload = 26f;
+                     shootY = 1.5f;
+                     rotate = true;
+                     rotateSpeed = 1.4f;
+                     ejectEffect = Fx.casing1;
+                     mirror = false;
+                     shootSound = XenSounds.xanitShoot;
+                     bullet = new BasicBulletType(2.5f, 35, "xenrose-basic-bullet1"){{
+                         width = 7f;
+                         height = 10f;
+                         lifetime = 86f;
+                         frontColor = trailColor = Color.valueOf("cff4ed");
+                         backColor = Color.valueOf("5b8f92");
+                         trailWidth = 1.8f;
+                         trailLength = 10;
+                         trailEffect = Fx.missileTrail;
+                         trailInterval = 5f;
+                         trailParam = 2.3f;
+                         homingPower = 0.19f;
+                         homingRange = 40;
+                         homingDelay = 15;
+                         hitEffect = despawnEffect = new MultiEffect(
+                                 new WaveEffect() {{
+                                     lifetime = 34f;
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                     sizeFrom = 10;
+                                     sizeTo = 6;
+                                     lightScl = 3;
+                                     lightOpacity = 1;
+                                     strokeFrom = 2f;
+                                     strokeTo = 0;
+                                 }},
+                                 new ParticleEffect(){{
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                     particles = 10;
+                                     cone = 360;
+                                     baseLength = 16;
+                                     lightScl = 3;
+                                     lightOpacity = 2;
+                                     spin = 0;
+                                     sizeFrom = 2.5f;
+                                     sizeTo = 0;
+                                     offset = 1;
+                                 }});
+                     }};
+                 }});
+             }};
+             manul = new UnitType("manul"){{
+                 constructor = UnitWaterMove::create;
+
+                 speed = 1.4f;
+                 drag = 0.13f;
+                 hitSize = 17f;
+                 health = 2630;
+                 armor = 2f;
+                 accel = 0.4f;
+                 rotateSpeed = 2.9f;
+                 faceTarget = false;
+                 outlineColor = Color.valueOf("211c18");
+
+                 trailLength = 21;
+                 waveTrailX = 6f;
+                 waveTrailY = -33f / 4f;
+                 trailScl = 1.8f;
+
+                 parts.add(
+                         new RegionPart("-blade"){{
+                             progress = PartProgress.warmup;
+                             moveY = -0.8f;
+                             moveX = - 0.7f;
+                             mirror = true;
+                             under = true;
+                             layerOffset = -0.0001f;
+                         }});
+
+                 weapons.add(new Weapon("xenrose-manul-weapon"){{
+                     x = 0;
+                     y = 1f;
+                     reload = 84f;
+                     shootY = 7f / 4f;
+                     rotate = true;
+                     rotateSpeed = 1.1f;
+                     ejectEffect = Fx.casing1;
+                     mirror = false;
+                     shootSound = XenSounds.xanitShoot;
+
+                     shoot.shots = 4;
+                     shoot.shotDelay = 9;
+                     shoot.firstShotDelay = 50;
+                     inaccuracy = 9;
+                     bullet = new BasicBulletType(3.1f, 50, "xenrose-basic-bullet1"){{
+                         width = 10f;
+                         height = 13f;
+                         lifetime = 105f;
+                         frontColor = trailColor = Color.valueOf("cff4ed");
+                         backColor = Color.valueOf("5b8f92");
+                         trailWidth = 2.1f;
+                         trailLength = 14;
+                         trailEffect = Fx.missileTrail;
+                         trailInterval = 4f;
+                         trailParam = 2.7f;
+                         homingPower = 0.19f;
+                         homingRange = 65;
+                         homingDelay = 15;
+                         chargeEffect = new MultiEffect(
+                                 new WaveEffect(){{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 20;
+                                     sizeFrom = 10;
+                                     sizeTo = 0;
+                                     strokeFrom = 0;
+                                     strokeTo = 1.5f;
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                 }},
+                                 new WaveEffect(){{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 29;
+                                     sizeFrom = 17;
+                                     sizeTo = 0;
+                                     strokeFrom = 0;
+                                     strokeTo = 1.5f;
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                 }});
+                         hitEffect = despawnEffect = new MultiEffect(
+                                 new WaveEffect() {{
+                                     lifetime = 40f;
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                     sizeFrom = 14;
+                                     sizeTo = 7;
+                                     lightScl = 3;
+                                     lightOpacity = 1;
+                                     strokeFrom = 3.2f;
+                                     strokeTo = 0;
+                                 }},
+                                 new ParticleEffect(){{
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                     particles = 10;
+                                     cone = 360;
+                                     baseLength = 16;
+                                     lightScl = 3;
+                                     lightOpacity = 2;
+                                     spin = 0;
+                                     sizeFrom = 2.5f;
+                                     sizeTo = 0;
+                                     offset = 1;
+                                 }});
+                     }};
+                 }});
+             }};
+             amiren = new UnitType("amiren"){{
+                 constructor = UnitWaterMove::create;
+
+                 speed = 1.1f;
+                 drag = 0.19f;
+                 hitSize = 29f;
+                 health = 5920;
+                 armor = 4f;
+                 accel = 0.2f;
+                 rotateSpeed = 1.8f;
+                 faceTarget = false;
+                 outlineColor = Color.valueOf("211c18");
+
+                 float spawnTime = 60f * 12f;
+
+                 abilities.add(new UnitSpawnAbility(XenUnits.kinor, spawnTime, 0f, -7.75f));
+
+                 trailLength = 27;
+                 waveTrailX = 43f / 4f;
+                 waveTrailY = -48f / 4f;
+                 trailScl = 1.95f;
+
+                 weapons.add(new Weapon("xenrose-amiren-weapon"){{
+                         x = 30f / 4f;
+                         y = 0.25f;
+                         reload = 50f;
+                         shootY = 1;
+                         rotate = true;
+                         rotateSpeed = 0.85f;
+                         ejectEffect = Fx.casing1;
+                         mirror = true;
+                         shootSound = XenSounds.xanitShoot;
+                         alternate = false;
+
+                         shoot.shots = 3;
+                         shoot.shotDelay = 5;
+                         shoot.firstShotDelay = 50;
+                         inaccuracy = 16;
+
+                     bullet = new BasicBulletType(2.6f, 60, "xenrose-basic-bullet1"){{
+                         width = 9f;
+                         height = 12f;
+                         lifetime = 153f;
+                         frontColor = trailColor = Color.valueOf("cff4ed");
+                         backColor = Color.valueOf("5b8f92");
+                         trailWidth = 2.1f;
+                         trailLength = 14;
+                         trailEffect = Fx.missileTrail;
+                         trailInterval = 6f;
+                         trailParam = 2.95f;
+                         homingPower = 0.195f;
+                         homingRange = 65;
+                         homingDelay = 15;
+                         chargeEffect = new MultiEffect(
+                                 new WaveEffect() {{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 20;
+                                     sizeFrom = 10;
+                                     sizeTo = 0;
+                                     strokeFrom = 0;
+                                     strokeTo = 1.5f;
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                 }},
+                                 new WaveEffect() {{
+                                     rotWithParent = true;
+                                     followParent = true;
+                                     lifetime = 29;
+                                     sizeFrom = 17;
+                                     sizeTo = 0;
+                                     strokeFrom = 0;
+                                     strokeTo = 1.5f;
+                                     colorFrom = Color.valueOf("cff4ed");
+                                     colorTo = Color.valueOf("5b8f92");
+                                 }});
+                             hitEffect = despawnEffect = new MultiEffect(
+                                     new WaveEffect() {{
+                                         lifetime = 40f;
+                                         colorFrom = Color.valueOf("cff4ed");
+                                         colorTo = Color.valueOf("5b8f92");
+                                         sizeFrom = 14;
+                                         sizeTo = 7;
+                                         lightScl = 3;
+                                         lightOpacity = 1;
+                                         strokeFrom = 3.2f;
+                                         strokeTo = 0;
+                                     }},
+                                     new ParticleEffect() {{
+                                         colorFrom = Color.valueOf("cff4ed");
+                                         colorTo = Color.valueOf("5b8f92");
+                                         particles = 10;
+                                         cone = 360;
+                                         baseLength = 16;
+                                         lightScl = 3;
+                                         lightOpacity = 2;
+                                         spin = 0;
+                                         sizeFrom = 2.5f;
+                                         sizeTo = 0;
+                                         offset = 1;
+                                     }});
+                         }};
+                     }});
+                 }};
     }
 }
 

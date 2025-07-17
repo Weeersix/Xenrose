@@ -13,7 +13,8 @@ public class XenSounds {
             weaponMinShoot1 = new Sound(),
             weaponMinShoot2 = new Sound(),
             largeShoot1 = new Sound(),
-            inzeranDash = new Sound();
+            inzeranDash = new Sound(),
+            xanitShoot = new Sound();
 
     public static void load(){
         zanarShoot = loadSound("zanar-shoot");
@@ -22,6 +23,7 @@ public class XenSounds {
         weaponMinShoot2 = loadSound("weapon-min-shoot2");
         largeShoot1 = loadSound("large-shoot1");
         inzeranDash = loadSound("inzeran-dash");
+        xanitShoot = loadSound("xanit-shoot");
     }
 
     private static Sound loadSound(String soundName){

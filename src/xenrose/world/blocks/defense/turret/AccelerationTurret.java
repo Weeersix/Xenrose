@@ -2,27 +2,17 @@ package xenrose.world.blocks.defense.turret;
 
 import arc.Core;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
-import arc.util.Eachable;
 import mindustry.content.Fx;
-import mindustry.content.Liquids;
-import mindustry.entities.units.BuildPlan;
-import mindustry.graphics.Drawf;
-import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.type.Liquid;
 import mindustry.ui.Bar;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
-import mindustry.world.draw.DrawDefault;
-import mindustry.world.draw.DrawMulti;
-import xenrose.world.draw.DrawAccelerationHeat;
-import mindustry.gen.Building.*;
 
 public class AccelerationTurret extends ItemTurret {
     public Color accelHeatColor = Color.valueOf("ce7746");
     public float glowMag = 0.6f, glowScl = 8f;
+    public float maxHeat = 36;
 
     public AccelerationTurret(String name){
         super(name);
@@ -37,20 +27,22 @@ public class AccelerationTurret extends ItemTurret {
                 new Bar("stat.ammo", Pal.ammo, () -> (float)entity.totalAmmo / maxAmmo)
         );
         addBar("heating", (AccelerationTurretBuild e) ->
-                new Bar(() -> Core.bundle.format("bar.heatingamount", (int)(e.accelHeat / 60f)), () -> Pal.lightOrange, () -> e.accelHeat)
+                new Bar(() -> Core.bundle.format("bar.heatingamount", (int)(e.accelHeat / maxHeat) * 100), () -> Pal.lightOrange, () -> (e.accelHeat / maxHeat) * 2.4f)
         );
     }
 
     public class AccelerationTurretBuild extends ItemTurretBuild {
         public float accelHeat;
+        public float liquidCurrent;
 
         @Override
         public void updateTile(){
             Liquid liquid = liquids.current();
             unit.ammo((float)unit.type().ammoCapacity * totalAmmo / maxAmmo);
 
-            if(liquids.currentAmount() >= 10f && liquid.temperature > 3f) {
+            if(liquids.currentAmount() >= 0.1f && liquid.temperature > 3f) {
                 accelHeat = liquid.temperature;
+                liquidCurrent = liquids.currentAmount();
                 damageContinuous(liquids.currentAmount()/(300 - liquid.temperature * 3));
                 if(Mathf.chanceDelta(0.05)) {
                     Fx.fire.at(x, y);

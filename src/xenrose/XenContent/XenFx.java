@@ -9,13 +9,11 @@ import arc.math.geom.Vec2;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
 import mindustry.graphics.Drawf;
-import mindustry.graphics.Pal;
 
 import static arc.graphics.g2d.Draw.alpha;
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.lineAngle;
 import static arc.graphics.g2d.Lines.stroke;
-import static arc.input.KeyCode.e;
 import static arc.math.Angles.randLenVectors;
 
 public class XenFx extends Fx {
@@ -26,6 +24,21 @@ public class XenFx extends Fx {
 
     crusherSmoke = new Effect(150f, e -> {
         color(Color.valueOf("d3ae8d"));
+        alpha(1.6f);
+
+        rand.setSeed(e.id);
+        for(int i = 0; i < 3; i++){
+            float len = rand.random(6f), rot = rand.range(35f) + e.rotation;
+
+            e.scaled(e.lifetime * rand.random(0.3f, 1f), b -> {
+                v.trns(rot, len * b.finpow());
+                Fill.circle(e.x + v.x, e.y + v.y, 3f * b.fslope() + 0.2f);
+            });
+        }
+    }),
+
+    pyrometallurgicalInstallationSmoke = new Effect(210f, e -> {
+        color(Color.valueOf("b76b19"));
         alpha(1.6f);
 
         rand.setSeed(e.id);
@@ -128,5 +141,23 @@ public class XenFx extends Fx {
 
         Fill.circle(e.x, e.y, e.fin() * 10);
         Drawf.light(e.x, e.y, e.fin() * 20f, Color.valueOf("e9bb59"), 0.7f);
-    }).followParent(true).rotWithParent(true);
+    }).followParent(true).rotWithParent(true),
+
+    mergeHitSquares = new Effect(14, e -> {
+        color(Color.valueOf("f0b467"), e.color, e.fin());
+
+        e.scaled(7f, s -> {
+            stroke(0.5f + s.fout());
+            Lines.circle(e.x, e.y, s.fin() * 5f);
+        });
+
+        stroke(0.5f + e.fout());
+
+        randLenVectors(e.id, 5, e.fin() * 17f, (x, y) -> {
+            float ang = Mathf.angle(x, y);
+            Fill.square(e.x + x, e.y + y, e.fout() * 3.2f, ang);
+        });
+
+        Drawf.light(e.x, e.y, 20f, e.color, 0.6f * e.fout());
+    });
 }

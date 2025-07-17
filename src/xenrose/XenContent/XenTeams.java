@@ -1,10 +1,7 @@
 package xenrose.XenContent;
 
-import arc.Core;
 import arc.graphics.Color;
 import arc.struct.Seq;
-import arc.util.Reflect;
-import arc.util.Scaling;
 import mindustry.game.Team;
 
 public class XenTeams {

@@ -1,8 +1,8 @@
 package xenrose.XenContent;
 
-import arc.graphics.*;
+import arc.graphics.Color;
 import arc.struct.Seq;
-import mindustry.type.*;
+import mindustry.type.Item;
 
 
 public class XenItems {
@@ -16,7 +16,7 @@ public class XenItems {
         }};
         zinc = new Item("zinc", Color.valueOf("54525d")){{
             hardness = 3;
-            cost = 3;
+            cost = 1.5f;
         }};
         gold = new Item("gold", Color.valueOf("ffa62a")){{
             cost = 3;

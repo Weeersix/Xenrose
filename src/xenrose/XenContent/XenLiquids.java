@@ -1,7 +1,7 @@
 package xenrose.XenContent;
 
-import arc.graphics.*;
-import mindustry.type.*;
+import arc.graphics.Color;
+import mindustry.type.Liquid;
 
 public class XenLiquids {
     public static Liquid liquidKirmit, liquidOrinil, oxygen;

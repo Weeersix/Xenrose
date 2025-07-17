@@ -1,13 +1,13 @@
 package xenrose.XenContent;
 
-import arc.*;
-import arc.graphics.*;
-import arc.graphics.gl.*;
-import arc.util.*;
-import mindustry.graphics.*;
+import arc.Core;
+import arc.graphics.Texture;
+import arc.graphics.gl.Shader;
+import arc.util.Time;
 
-import static mindustry.graphics.Shaders.*;
-import static mindustry.Vars.*;
+import static mindustry.Vars.renderer;
+import static mindustry.Vars.tree;
+import static mindustry.graphics.Shaders.getShaderFi;
 
 public class XenShaders {
 

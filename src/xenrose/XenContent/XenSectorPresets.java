@@ -1,13 +1,10 @@
 package xenrose.XenContent;
 
-import mindustry.content.SectorPresets;
-import mindustry.content.Weathers;
 import mindustry.type.SectorPreset;
-import mindustry.type.Weather;
 
 public class XenSectorPresets {
     public static SectorPreset
-            Landing, BurntHills, DryingThickets, LightLowland, KirmitCoast;
+            Landing, BurntHills, DryingThickets, LightLowland, KirmiteStrait, KirmitCoast;
     public static void load(){
         Landing = new SectorPreset("Landing", XenPlanets.xenor, 1){{
             alwaysUnlocked = true;
@@ -15,20 +12,30 @@ public class XenSectorPresets {
             captureWave = 6;
             overrideLaunchDefaults = true;
             startWaveTimeMultiplier = 3f;
+            showSectorLandInfo = true;
         }};
         BurntHills = new SectorPreset("Burnt-hills", XenPlanets.xenor, 13){{
             difficulty = 1;
             captureWave = 10;
+            showSectorLandInfo = true;
         }};
         DryingThickets = new SectorPreset("Drying-thickets", XenPlanets.xenor, 4){{
             difficulty = 1;
+            showSectorLandInfo = true;
         }};
         LightLowland = new SectorPreset("Light-lowland", XenPlanets.xenor, 24){{
             difficulty = 3;
             captureWave = 15;
+            showSectorLandInfo = true;
+        }};
+        KirmiteStrait = new SectorPreset("Kirmite-strait", XenPlanets.xenor, 35){{
+            difficulty = 3;
+            captureWave = 20;
+            showSectorLandInfo = true;
         }};
         KirmitCoast = new SectorPreset("Kirmit-coast", XenPlanets.xenor, 3){{
             difficulty = 3;
+            showSectorLandInfo = true;
         }};
     }
 }

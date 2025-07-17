@@ -1,32 +1,29 @@
 package xenrose.XenContent;
 
-import arc.Core;
 import arc.graphics.Blending;
 import arc.graphics.Color;
-import arc.graphics.g2d.Lines;
 import arc.math.Interp;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.content.StatusEffects;
-import mindustry.entities.Effect;
-import mindustry.entities.bullet.*;
+import mindustry.entities.bullet.ArtilleryBulletType;
+import mindustry.entities.bullet.BasicBulletType;
+import mindustry.entities.bullet.BulletType;
+import mindustry.entities.bullet.LightningBulletType;
 import mindustry.entities.effect.*;
-import mindustry.entities.part.DrawPart;
-import mindustry.entities.part.HaloPart;
 import mindustry.entities.part.RegionPart;
-import mindustry.entities.part.ShapePart;
+import mindustry.entities.pattern.ShootSpread;
 import mindustry.gen.Sounds;
 import mindustry.graphics.CacheLayer;
-import mindustry.graphics.Drawf;
-import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
-import mindustry.type.*;
-import mindustry.type.unit.MissileUnitType;
+import mindustry.type.Category;
+import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
+import mindustry.type.UnitType;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.ShieldWall;
-import mindustry.world.blocks.defense.Wall;
-import mindustry.world.blocks.defense.turrets.ItemTurret;
+import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.DuctBridge;
@@ -34,68 +31,67 @@ import mindustry.world.blocks.distribution.DuctRouter;
 import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.liquid.Conduit;
+import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.liquid.LiquidJunction;
-import mindustry.world.blocks.power.ConsumeGenerator;
-import mindustry.world.blocks.power.ThermalGenerator;
-import mindustry.world.blocks.production.BeamDrill;
+import mindustry.world.blocks.liquid.LiquidRouter;
+import mindustry.world.blocks.payloads.PayloadConveyor;
+import mindustry.world.blocks.payloads.PayloadRouter;
+import mindustry.world.blocks.power.BeamNode;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.Pump;
+import mindustry.world.blocks.production.Separator;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.consumers.ConsumeItemCharged;
-import mindustry.world.consumers.ConsumeItemExplode;
 import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.*;
 import mindustry.world.meta.BlockGroup;
 import mindustry.world.meta.BuildVisibility;
+import xenrose.XenAttributes;
+import xenrose.graphics.Rotor;
 import xenrose.world.blocks.defense.Armor;
 import xenrose.world.blocks.defense.ArmoredWall;
 import xenrose.world.blocks.defense.turret.AccelerationTurret;
-import xenrose.world.blocks.disbruction.*;
-import xenrose.*;
+import xenrose.world.blocks.disbruction.ShadedConveyor;
 import xenrose.world.blocks.enviroments.EffectFloor;
-import xenrose.world.blocks.enviroments.Pit;
-import xenrose.world.blocks.liquid.BreakableConduit;
-import xenrose.world.blocks.liquid.BreakableLiquidBridge;
-import xenrose.world.blocks.liquid.BreakableLiquidJunction;
-import xenrose.world.blocks.liquid.BreakableRouter;
-import xenrose.world.blocks.power.*;
-import xenrose.world.blocks.production.EnergyDrill;
+import xenrose.world.blocks.liquid.*;
+import xenrose.world.blocks.power.BetterConsumeGenerator;
 import xenrose.world.blocks.production.MechanicalDrill;
+import xenrose.world.blocks.units.StatusBlock;
 import xenrose.world.draw.DrawAccelerationHeat;
+import xenrose.world.draw.DrawRotor;
 
-import static arc.graphics.g2d.Draw.color;
-import static arc.graphics.g2d.Lines.stroke;
+import static arc.math.Interp.fastSlow;
 import static arc.math.Interp.pow3Out;
-import static mindustry.content.Fx.shootSmokeTitan;
-import static mindustry.gen.Sounds.none;
 import static mindustry.type.ItemStack.with;
 
 public class XenBlocks {
     public static Block
     //environments
     damascusWall, crackedDamascusWall, unevenDamascusWall, kirmiteStoneWall, oxidizedWall, burnedDamscusWall, graphiticStoneWall, burntDamascusWall, burnedKirmiteStoneWall, orinilWall, peatWall,
-    damascusStoneTree, damascusStoneTreeMin, damascusBoulder, damascusCluster, kirmiteStoneTree, kirmiteCrystalOrbs, kirmiteStoneBoulder, kirmiteLargeBoulder, kirmiteTree, oxidizedCluster, oxidizedBoulder, oxidizedPit, graphiticStoneBoulder, burnedDamscusBoulder, burnedDamscusTree, burnedDamscusLargeBoulder, burnedDamscusPit, orinilBoulder, orinilCrystal, peatBoulder,
-    softDamascusGround, damascusGround, crackedDamascusGround, deepenedDamascusFloor, damascusPit,  kirmiteStoneFloor, kirmiteStoneGround, solidifiedKirmiteLiquid, kirmite, orinil, deepKirnite, oxidizedFloor, oxidizedGround, burnedDamscusFloor, burnedDamscusGround, graphiticStoneFloor, burntDamascusFloor, burnedKirmiteStoneFloor, orinilGround, orinilFloor, peatFloor,
+    damascusStoneTree, damascusStoneTreeMin, damascusBoulder, damascusCluster, kirmiteStoneTree, kirmiteCrystalOrbs, kirmiteStoneBoulder, kirmiteLargeBoulder, kirmiteTree, oxidizedCluster, oxidizedBoulder, graphiticStoneBoulder, burnedDamscusBoulder, burnedDamscusTree, burnedDamscusLargeBoulder, orinilBoulder, orinilCrystal, peatBoulder,
+    softDamascusGround, damascusGround, crackedDamascusGround, deepenedDamascusFloor,  kirmiteStoneFloor, kirmiteStoneGround, solidifiedKirmiteLiquid, kirmite, orinil, deepKirnite, oxidizedFloor, oxidizedGround, burnedDamscusFloor, burnedDamscusGround, graphiticStoneFloor, burntDamascusFloor, burnedKirmiteStoneFloor, orinilGround, orinilFloor, peatFloor,
     zinkWallOre, protexideWallOre,
     //distribution
-    damascusConveyor, damascusJunction, damascusRouter, damascusBridge,
+    damascusConveyor, dantstalinConveyor, damascusJunction, damascusRouter, damascusBridge,
     //liquid
-    hydraulicPump, fragilePipeline, fragileLiquidRouter, fragileLiquidBridge, reinforcedPipelineJunction,
+    hydraulicPump, energyPump, fragilePipeline, hardenedPipeline, fragileLiquidRouter, hardenedPipelineRouter, fragileLiquidBridge, hardenedPipelineBridge, reinforcedPipelineJunction,
     //drills
     energyDrill, energyChargedDrill, airMechanicalDrill,
     //production
-    pyrometallurgicalInstallation, crusher, waterReformer, dantstalinSmelter, orinilCrucible, energyStabilizingBoiler,energyChargingSplitter,
+    pyrometallurgicalInstallation, crusher, waterReformer, siliconCentrifuge, liquidSeparator, dantstalinSmelter, waterCollerctor, orinilCrucible, energyStabilizingBoiler,energyChargingSplitter,
     //power
-    kirmiteEvaporator, cableNode, PowerUpgrader,
+    kirmiteEvaporator, cableNode,
     //walls
     reinforcedDamascusWall, reinforcedDamascusWallLarge, diocasiumArmor, enemyShieldWall, enemyShieldWallLarge,
     //units
-    groundUnitsAssembler, hoverUnitsAssembler, orinilReassembler,
+    groundUnitsAssembler, hoverUnitsAssembler, floatingUnitsAssembler, orinilReassembler, thermalReassemblingFactory, shieldTower,
+    //payload
+    cargoBelt, cargoRouter,
     //turrets
-    samum, desiccation, calmness, dehydration, merge,
+    samum, desiccation, overflow, tributary, merge, calmness,
     //storage
     coreSunrise, coreZenith;
 
@@ -170,9 +166,6 @@ public class XenBlocks {
                 oxidizedBoulder = new Prop("oxidized-boulder") {{
                     variants = 2;
                 }};
-                oxidizedPit = new OverlayFloor("oxidized-pit") {{
-                    variants = 2;
-                }};
                 graphiticStoneBoulder = new Prop("graphitic-stone-boulder") {{
                     variants = 2;
                 }};
@@ -183,7 +176,6 @@ public class XenBlocks {
                     variants = 2;
                     breakable = false;
                 }};
-                burnedDamscusPit = new Pit("burned-damscus-pit");
                 orinilBoulder = new Prop("orinil-boulder"){{
                     variants = 2;
                 }};
@@ -196,6 +188,9 @@ public class XenBlocks {
                     breakable = false;
                 }};
                 kirmiteTree = new TallBlock("kirmite-tree");
+                peatBoulder = new Prop("peat-boulder"){{
+                    variants = 2;
+                }};
 
                 softDamascusGround = new Floor("soft-damascus-ground") {{
                     variants = 2;
@@ -224,7 +219,7 @@ public class XenBlocks {
                     variants = 2;
                     liquidDrop = XenLiquids.liquidKirmit;
                     effect = XenFx.kirmiteSteam;
-                    effectChance = 0.0015f;
+                    effectChance = 0.0001f;
                     effectColor = Color.valueOf("9265bd");
                     isLiquid = true;
                     cacheLayer = CacheLayer.water;
@@ -237,11 +232,11 @@ public class XenBlocks {
                     variants = 2;
                     liquidDrop = XenLiquids.liquidKirmit;
                     effect = XenFx.kirmiteSteam;
-                    effectChance = 0.0015f;
+                    effectChance = 0.0001f;
                     effectColor = Color.valueOf("9265bd");
                     isLiquid = true;
-                    drownTime = 170f;
                     cacheLayer = CacheLayer.water;
+                    drownTime = 350;
                     albedo = 0.9f;
                     supportsOverlay = true;
                 }};
@@ -249,6 +244,8 @@ public class XenBlocks {
                     speedMultiplier = 0.18f;
                     variants = 2;
                     liquidDrop = XenLiquids.liquidOrinil;
+                    status = StatusEffects.melting;
+                    statusDuration = 390f;
                     effect = Fx.fire;
                     effectChance = 0.004f;
                     effectColor = Color.valueOf("9265bd");
@@ -317,6 +314,24 @@ public class XenBlocks {
                     underBullets = true;
                     researchCost = with(XenItems.damascus, 10);
                 }};
+                dantstalinConveyor = new ShadedConveyor("dantstalin-conveyor"){{
+                    requirements(Category.distribution, with(XenItems.damascus, 2, XenItems.dantstalin, 1));
+                    health = 360;
+                    speed = 0.12f;
+                    displayedSpeed = 6.5f;
+                    buildCostMultiplier = 2f;
+                    itemCapacity = 3;
+                    bridgeReplacement = damascusBridge;
+                    junctionReplacement = damascusJunction;
+
+                    hasPower = true;
+                    consumesPower = true;
+                    conductivePower = true;
+                    consumePower(0.25f / 60f);
+
+                    underBullets = true;
+                    researchCost = with(XenItems.damascus, 840, XenItems.dantstalin, 350);
+                }};
                 damascusJunction = new Junction("damascus-junction") {{
                     requirements(Category.distribution, with(XenItems.damascus, 5));
                     health = 80;
@@ -360,7 +375,7 @@ public class XenBlocks {
                 ((Conveyor)damascusConveyor).bridgeReplacement = damascusBridge;
 
                 //liquid
-                hydraulicPump = new Pump("hydraulic-pump"){{
+                hydraulicPump = new BreackablePump("hydraulic-pump"){{
                     requirements(Category.liquid, with(XenItems.damascus, 50, XenItems.zinc, 20, XenItems.gold, 10));
 
                     squareSprite = false;
@@ -369,6 +384,18 @@ public class XenBlocks {
                     size = 2;
 
                     researchCost = with(XenItems.damascus, 400, XenItems.zinc, 250, XenItems.gold, 100);
+                }};
+                energyPump = new Pump("energy-pump"){{
+                    requirements(Category.liquid, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 20));
+
+                    squareSprite = false;
+                    pumpAmount = 45f / 60f / 4f;
+                    liquidCapacity = 150f;
+                    size = 3;
+                    consumePower(100f / 60f);
+                    consumeLiquid(Liquids.hydrogen, 3f / 60f);
+
+                    researchCost = with(XenItems.damascus, 3950, XenItems.zinc, 3290, XenItems.dantstalin, 1420);
                 }};
                 fragilePipeline = new BreakableConduit("fragile-pipeline"){{
                     requirements(Category.liquid, with(XenItems.damascus, 3));
@@ -380,6 +407,15 @@ public class XenBlocks {
 
                     researchCost = with(XenItems.damascus, 50);
                 }};
+                hardenedPipeline = new ShadedConduit("hardened-pipeline"){{
+                    requirements(Category.liquid, with(XenItems.damascus, 2, XenItems.dantstalin, 1));
+
+                    liquidCapacity = 18f;
+                    health = 125;
+                    botColor = Color.valueOf("1e1c1b");
+
+                    researchCost = with(XenItems.damascus, 1830, XenItems.dantstalin, 850);
+                }};
                 fragileLiquidRouter = new BreakableRouter("fragile-liquid-router"){{
                     requirements(Category.liquid, with(XenItems.damascus, 8));
 
@@ -388,6 +424,14 @@ public class XenBlocks {
                     liquidLimit = 10;
 
                     researchCost = with(XenItems.damascus, 110);
+                }};
+                hardenedPipelineRouter = new LiquidRouter("hardened-pipeline-router"){{
+                    requirements(Category.liquid, with(XenItems.damascus, 4, XenItems.dantstalin, 2));
+
+                    health = 140;
+                    liquidCapacity = 25;
+
+                    researchCost = with(XenItems.damascus, 1540, XenItems.dantstalin, 620);
                 }};
                 fragileLiquidBridge = new BreakableLiquidBridge("fragile-liquid-bridge"){{
                     requirements(Category.liquid, with(XenItems.damascus, 8, XenItems.zinc, 2));
@@ -402,12 +446,25 @@ public class XenBlocks {
                     researchCost = with(XenItems.damascus, 100, XenItems.zinc, 80);
                 }};
                 ((Conduit)fragilePipeline).bridgeReplacement = fragileLiquidBridge;
+                hardenedPipelineBridge = new LiquidBridge("hardened-pipeline-bridge"){{
+                    requirements(Category.liquid, with(XenItems.damascus, 6, XenItems.dantstalin, 2));
+
+                    health = 140;
+                    fadeIn = moveArrows = false;
+                    arrowSpacing = 6f;
+                    range = 7;
+                    hasPower = false;
+                    liquidCapacity = 40f;
+
+                    researchCost = with(XenItems.damascus, 1850, XenItems.dantstalin, 680);
+                }};
+                ((Conduit)hardenedPipeline).bridgeReplacement = hardenedPipelineBridge;
                 reinforcedPipelineJunction =  new LiquidJunction("reinforced-pipeline-junction"){{
                     requirements(Category.liquid, with(XenItems.damascus, 6, XenItems.dantstalin, 2));
                     researchCost = with(XenItems.damascus, 650, XenItems.dantstalin, 550);
-                    solid = false;
                 }};
                 ((Conduit) fragilePipeline).junctionReplacement = reinforcedPipelineJunction;
+                ((Conduit) hardenedPipeline).junctionReplacement = reinforcedPipelineJunction;
 
                 //drills
                 energyDrill = new MechanicalDrill("energy-drill") {{
@@ -501,7 +558,7 @@ public class XenBlocks {
                     tier = 6;
                     drillTime = 430;
                     size = 3;
-                    consumeLiquid(XenLiquids.oxygen, 6f / 60f);
+                    consumeLiquid(XenLiquids.oxygen, 0.5f / 60f);
                     consumePower(220f / 60f);
                 }};
 
@@ -576,10 +633,11 @@ public class XenBlocks {
                 crusher = new GenericCrafter("crusher"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 10, XenItems.zinc, 5));
                     size = 2;
-                    outputItem = new ItemStack(Items.sand, 2);
-                    squareSprite = false;
+                    outputItem = new ItemStack(Items.sand, 3);
+                    consumeItem(XenItems.damascus, 1);
                     hasItems = true;
-                    craftTime = 1.5f * 60f;
+                    squareSprite = false;
+                    craftTime = 1.1f * 60f;
                     craftEffect = new RadialEffect(XenFx.crusherSmoke, 3, 90f, 0.8f);
 
                     drawer = new DrawMulti(new DrawRegion("-bottom"),
@@ -589,7 +647,6 @@ public class XenBlocks {
                             new DrawDefault()
                             );
 
-                    consumeItem(XenItems.damascus, 1);
                     consumePower(10f / 60f);
                     fogRadius = 2;
                     researchCost = with(XenItems.damascus, 50, XenItems.zinc, 30);
@@ -631,6 +688,85 @@ public class XenBlocks {
                     liquidOutputDirections = new int[]{1, 3};
                     researchCost = with(XenItems.damascus, 1300, XenItems.zinc, 1400, XenItems.gold, 800);
                 }};
+                siliconCentrifuge = new GenericCrafter("silicon-centrifuge"){{
+                    requirements(Category.crafting, ItemStack.with(XenItems.damascus, 100, XenItems.zinc, 80, XenItems.gold, 55));
+                    size = 3;
+                    squareSprite = false;
+                    hasItems = true;
+                    craftTime = 2f * 60f;
+                    itemCapacity = 20;
+                    liquidCapacity = 30f;
+                    outputItem = new ItemStack(Items.silicon, 3);
+
+                    drawer = new DrawMulti(
+                            new DrawRegion("-bottom"),
+                            new DrawRotor(
+                                    new Rotor("-rotor"){{
+                                        x = 0f;
+                                        y = 0f;
+
+                                        height = 3.5f;
+
+                                        pixelHeight = 7;
+
+                                        palLight = Color.valueOf("7c746b");
+                                        palMedium = Color.valueOf("57534e");
+                                        palDark = Color.valueOf("2f2d2a");
+                                    }},
+                                    new Rotor("-rotor"){{
+                                        x = 0f;
+                                        y = 0f;
+
+                                        height = 3.5f;
+
+                                        pixelHeight = 7;
+
+                                        palLight = Color.valueOf("7c746b");
+                                        palMedium = Color.valueOf("57534e");
+                                        palDark = Color.valueOf("2f2d2a");
+
+                                        icon = false;
+                                    }}),
+                            new DrawRegion()
+                    );
+
+                    consumePower(180f / 60f);
+                    consumeLiquid(XenLiquids.liquidKirmit, 12f / 60f);
+                    consumeItem(Items.sand, 2);
+                    researchCost = with(XenItems.damascus, 2870, XenItems.zinc, 2670, XenItems.gold, 2140);
+
+                }};
+                liquidSeparator = new Separator("liquid-separator"){{
+                    requirements(Category.crafting, ItemStack.with(XenItems.damascus, 60, XenItems.zinc, 35, XenItems.gold, 10));
+                    size = 2;
+                    squareSprite = false;
+                    hasItems = true;
+                    hasLiquids = true;
+                    hasPower = true;
+                    craftTime = 1.05f * 60f;
+                    itemCapacity = 20;
+                    liquidCapacity = 30;
+                    results = with(
+                            XenItems.damascus, 4,
+                            XenItems.zinc, 3,
+                            XenItems.gold, 1
+                    );
+                    drawer = new DrawMulti( new DrawRegion("-bottom"), new DrawLiquidTile(XenLiquids.liquidKirmit, 1.4f),
+                            new DrawParticles() {{
+                                particles = 10;
+                                color = Color.valueOf("cb94ff");
+                                blending = Blending.additive;
+                                particleInterp = Interp.linear;
+                                particleRad = 3f;
+                                particleSize = 3f;
+                            }},
+                            new DrawRegion("-top", 1.3f){{
+                                spinSprite = true;
+                    }}, new DrawDefault());
+                    consumePower(90f / 60f);
+                    consumeLiquids(LiquidStack.with(XenLiquids.liquidKirmit, 10f / 60f, Liquids.hydrogen, 2f / 60f));
+                    researchCost = with(XenItems.damascus, 2870, XenItems.zinc, 2670, XenItems.gold, 2140);
+                }};
                 dantstalinSmelter = new GenericCrafter("dantstalin-smelter"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 120, XenItems.zinc, 90, XenItems.gold, 60));
                     size = 2;
@@ -643,31 +779,28 @@ public class XenBlocks {
                     liquidCapacity = 25;
                     craftEffect = new MultiEffect(
                             new WaveEffect(){{
-                                lifetime = 20f;
-                                colorFrom = Color.valueOf("ffffff");
-                                colorTo = Color.valueOf("c6cfda");
                                 sizeFrom = 0;
-                                sizeTo = 10;
-                                lightScl = 3;
-                                lightOpacity = 1;
-                                strokeFrom = 2.4f;
-                                strokeTo = 0;
+                                sizeTo = 18;
+                                strokeFrom = 2;
+                                strokeTo = 0f;
+                                lifetime = 20;
+                                colorFrom = Color.valueOf("b8a0a0");
+                                colorTo = Color.valueOf("bf6f56");
                             }},
                             new ParticleEffect(){{
-                                lifetime = 28f;
-                                colorFrom = Color.valueOf("c6cfda");
-                                colorTo = Color.valueOf("ffffff");
-                                particles = 5;
-                                length = 10;
-                                baseLength = 2;
-                                spin = 0;
-                                sizeFrom = 2f;
+                                particles = 10;
+                                length = 28;
+                                lifetime = 30;
+                                sizeFrom = 4;
                                 sizeTo = 0;
-                                offset = 1;
+                                startDelay = 2;
+                                interp = fastSlow;
+                                colorFrom = Color.valueOf("b8a0a0");
+                                colorTo = Color.valueOf("bf6f56");
                             }});
 
-                    drawer = new DrawMulti(new DrawDefault(), new DrawGlowRegion(){{
-                        color = Color.valueOf("9ecaff");
+                    drawer = new DrawMulti(new DrawDefault(), new DrawRegion("-rotator", 1.2f){{
+                        spinSprite = true;
                     }});
 
                     ambientSound = Sounds.electricHum;
@@ -676,6 +809,44 @@ public class XenBlocks {
                     consumeLiquids(LiquidStack.with(XenLiquids.liquidKirmit, 46f / 60f, XenLiquids.oxygen, 2f / 60f));
                     consumePower(290f / 60f);
                     researchCost = with(XenItems.damascus, 2870, XenItems.zinc, 2670, XenItems.gold, 2140);
+                }};
+                waterCollerctor = new GenericCrafter("water-collector"){{
+                    requirements(Category.crafting, ItemStack.with(XenItems.damascus, 150, XenItems.zinc, 120, XenItems.dantstalin, 75, XenItems.gold, 50));
+                    size = 4;
+                    outputLiquid = new LiquidStack(Liquids.water, 18f / 60f);
+                    liquidCapacity = 120;
+                    squareSprite = false;
+                    hasLiquids = true;
+                    craftTime = 1.2f * 60f;
+                    drawer = new DrawMulti(new DrawRegion("-mid"), new DrawLiquidTile(Liquids.water, 3.2f), new DrawRegion("-bottom"), new DrawDefault(), new DrawGlowRegion(),
+                            new DrawParticles() {{
+                                particles = 12;
+                                color =  Color.valueOf("e0e4ffa0");
+                                blending = Blending.additive;
+                                particleInterp = Interp.linear;
+                                particleRad = 16f;
+                                particleSize = 2.5f;
+                    }},
+                            new DrawParticles() {{
+                                particles = 10;
+                                color =  Color.valueOf("b6bde99a");
+                                blending = Blending.additive;
+                                particleInterp = Interp.linear;
+                                particleRad = 19f;
+                                particleSize = 2.5f;
+                            }},
+                            new DrawParticles() {{
+                                particles = 18;
+                                color =  Color.valueOf("e0e4ffa0");
+                                blending = Blending.additive;
+                                particleInterp = Interp.linear;
+                                particleRad = 21f;
+                                particleSize = 2.5f;
+                    }});
+
+                    consumePower(250f / 60f);
+                    fogRadius = 4;
+                    researchCost = with(XenItems.damascus, 3950, XenItems.zinc, 3670, XenItems.dantstalin, 1630, XenItems.gold, 2740);
                 }};
                 orinilCrucible = new GenericCrafter("orinil-crucible"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 90, Items.tungsten, 80, XenItems.zinc, 65, XenItems.gold, 40));
@@ -865,21 +1036,12 @@ public class XenBlocks {
                     consume(new ConsumeItemCharged(4));
                     researchCost = with(XenItems.damascus, 15, XenItems.zinc, 20);
                 }};
-
-                cableNode = new CableNode("cable-node") {{
+                cableNode = new BeamNode("cable-node") {{
                     requirements(Category.power, with(XenItems.zinc, 5));
 
                     size = 1;
                     range = 7;
                     researchCost = with(XenItems.zinc, 20);
-                }};
-                PowerUpgrader = new PowerUpgrader("power-upgrader"){{
-                    requirements(Category.power, with(XenItems.damascus, 80, XenItems.zinc, 40));
-
-                    upgrade = 2;
-                    size = 2;
-                    consumeLiquid(XenLiquids.liquidOrinil, 8f / 60f);
-                    researchCost = with(XenItems.damascus, 1550, XenItems.zinc, 1300, XenItems.gold, 850);
                 }};
 
                 //walls
@@ -889,6 +1051,7 @@ public class XenBlocks {
                     health = 310;
                     armor = 2;
                     shieldHealth = 1200;
+                    floating = true;
                 }};
                 reinforcedDamascusWallLarge = new ArmoredWall("reinforced-damascus-wall-large") {{
                     researchCost = ItemStack.with(XenItems.damascus, 250f, XenItems.zinc, 100);
@@ -897,6 +1060,7 @@ public class XenBlocks {
                     armor = 2;
                     size = 2;
                     shieldHealth = 1200;
+                    floating = true;
                 }};
                 diocasiumArmor = new Armor("diocasium-armor"){{
                     researchCost = ItemStack.with(XenItems.damascus, 1f);
@@ -906,6 +1070,7 @@ public class XenBlocks {
                     health = 310;
                     armor = 2;
                     shieldHealth = 1200;
+                    floating = true;
                 }};
                 enemyShieldWallLarge = new ShieldWall("enemy-reinforced-damascus-wall-large"){{
                     requirements(Category.defense, ItemStack.with(XenItems.damascus, 6 * 4, XenItems.zinc, 3 * 4));
@@ -913,6 +1078,7 @@ public class XenBlocks {
                     armor = 2;
                     size = 2;
                     shieldHealth = 1200;
+                    floating = true;
                 }};
 
                 //units
@@ -920,23 +1086,34 @@ public class XenBlocks {
                     requirements(Category.units, with(XenItems.damascus, 150,XenItems.zinc, 120, XenItems.gold, 50));
                     size = 3;
                     configurable = false;
-                    plans.add(new UnitPlan(XenUnits.zanar, 60f * 38f, with(XenItems.zinc, 35, XenItems.gold, 20)));
+                    plans.add(new UnitPlan(XenUnits.zanar, 60f * 20f, with(XenItems.zinc, 35, XenItems.gold, 20)));
                     regionSuffix = "-dark";
                     fogRadius = 3;
                     consumePower(1.666666666666667f);
                     consumeLiquid(XenLiquids.liquidKirmit, 14f/60f);
                     researchCost = with(XenItems.damascus, 650,XenItems.zinc, 600, XenItems.gold, 300);
                 }};
-                hoverUnitsAssembler =new UnitFactory("hover-units-assembler"){{
+                hoverUnitsAssembler = new UnitFactory("hover-units-assembler"){{
                     requirements(Category.units, with(XenItems.damascus, 180,XenItems.zinc, 130, XenItems.gold, 60));
                     size = 3;
                     configurable = false;
-                    plans.add(new UnitPlan(XenUnits.imitation, 60f * 26f, with(XenItems.zinc, 40, XenItems.gold, 15)));
+                    plans.add(new UnitPlan(XenUnits.imitation, 60f * 17f, with(XenItems.zinc, 40, XenItems.gold, 15)));
                     regionSuffix = "-dark";
                     fogRadius = 3;
                     consumePower(1.666666666666667f);
                     consumeLiquid(XenLiquids.liquidKirmit, 20f/60f);
                     researchCost = with(XenItems.damascus, 1650, XenItems.zinc, 1460, XenItems.gold, 1100);
+                }};
+                floatingUnitsAssembler = new UnitFactory("floating-units-assembler"){{
+                    requirements(Category.units, with(XenItems.damascus, 200, XenItems.zinc, 120, XenItems.gold, 50));
+                    size = 3;
+                    configurable = false;
+                    plans.add(new UnitPlan(XenUnits.xanit, 60f * 20f, with(XenItems.zinc, 45, XenItems.gold, 25)));
+                    regionSuffix = "-dark";
+                    fogRadius = 3;
+                    consumePower(1.666666666666667f);
+                    consumeLiquid(XenLiquids.liquidKirmit, 30f/60f);
+                    researchCost = with(XenItems.damascus, 3860, XenItems.zinc, 3550, XenItems.gold, 2990);
                 }};
                 orinilReassembler = new Reconstructor("orinil-reassembler"){{
                     requirements(Category.units, with(XenItems.damascus, 340, XenItems.zinc, 250, XenItems.dantstalin, 70, XenItems.gold, 50));
@@ -947,11 +1124,52 @@ public class XenBlocks {
 
                     upgrades.addAll(
                             new UnitType[]{XenUnits.zanar, XenUnits.inorn},
-                            new UnitType[]{XenUnits.imitation, XenUnits.simulation}
+                            new UnitType[]{XenUnits.imitation, XenUnits.simulation},
+                            new UnitType[]{XenUnits.xanit, XenUnits.manul}
                     );
 
                     constructTime = 28f * 60f;
                     researchCost = with(XenItems.damascus, 4920, XenItems.zinc, 4560, XenItems.dantstalin, 3200, XenItems.gold, 1890);
+                }};
+                thermalReassemblingFactory = new Reconstructor("thermal-reassembling-factory"){{
+                    requirements(Category.units, with(XenItems.damascus, 500, XenItems.zinc, 320, XenItems.dantstalin, 240, XenItems.protexide, 100, XenItems.gold, 50));
+                    size = 5;
+                    consumePower(660f / 60f);
+                    consumeItems(with(XenItems.gold, 85, XenItems.dantstalin, 40, XenItems.protexide, 25, XenItems.isoteron, 5));
+                    consumeLiquids(LiquidStack.with(XenLiquids.liquidOrinil, 90f / 60f, Liquids.hydrogen, 25f / 60f));
+
+                    upgrades.addAll(
+                            new UnitType[]{XenUnits.inorn, XenUnits.manler},
+                            new UnitType[]{XenUnits.simulation, XenUnits.fusion},
+                            new UnitType[]{XenUnits.manul, XenUnits.amiren}
+                    );
+
+                    constructTime = 65f * 60f;
+                    researchCost = with(XenItems.damascus, 7740, XenItems.zinc, 7210, XenItems.dantstalin, 6320, XenItems.protexide, 4200, XenItems.gold, 4086);
+                }};
+                shieldTower = new StatusBlock("shield-tower"){{
+                    requirements(Category.units, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 20));
+
+                    size = 2;
+                    squareSprite = false;
+                    status = StatusEffects.shielded;
+                    statusDuration = 2100;
+                    researchCost = ItemStack.with(XenItems.damascus, 2530, XenItems.zinc, 2130, XenItems.dantstalin, 1437);
+                }};
+
+                //payload
+                cargoBelt = new PayloadConveyor("cargo-belt"){{
+                    requirements(Category.units, with(XenItems.damascus, 30, XenItems.zinc, 20));
+                    canOverdrive = false;
+                    underBullets = true;
+                    health = 420;
+                    researchCost = ItemStack.with(XenItems.damascus, 1670f, XenItems.zinc, 1520);
+                }};
+                cargoRouter = new PayloadRouter("cargo-router"){{
+                    requirements(Category.units, with(XenItems.damascus, 40, XenItems.zinc, 15));
+                    canOverdrive = false;
+                    health = 500;
+                    researchCost = ItemStack.with(XenItems.damascus, 1600, XenItems.zinc, 1220);
                 }};
 
                 //turrets
@@ -1060,10 +1278,12 @@ public class XenBlocks {
                         }});
                     }};
 
+                    floating = true;
                     outlineColor = Color.valueOf("211c18");
                     size = 2;
                     range = 247f;
                     reload = 60f;
+                    ammoPerShot = 2;
                     consumeAmmoOnce = false;
                     recoil = 1.8f;
                     shake = 1f;
@@ -1077,21 +1297,28 @@ public class XenBlocks {
                     requirements(Category.turret, with(XenItems.damascus, 50, XenItems.zinc, 20, XenItems.gold, 10));
 
                     ammo(
-                            Items.sand, new ArtilleryBulletType(2.3f, 30, "xenrose-sand-bullet") {{
-                                    splashDamage = 45;
+                            Items.sand, new ArtilleryBulletType(2.3f, 22, "xenrose-sand-bullet") {{
+                                    splashDamage = 50;
                                     splashDamageRadius = 20;
                                     width = 11f;
                                     height = 11.2f;
                                     lifetime = 80f;
                                     ammoMultiplier = 2;
                                     trailWidth = 2f;
-                                    trailLength = 4;
+                                    trailLength = 6;
                                     buildingDamageMultiplier = 0.2f;
                                     backColor = Color.valueOf("d3ae8d");
                                     frontColor = trailColor = Color.valueOf("f7cba4");
-                                    fragBullets = 4;
+                                    fragBullets = 2;
                                     fragSpread = 30;
                                     hitSound = Sounds.dullExplosion;
+                                    trailEffect = hitEffect = despawnEffect = new ParticleEffect(){{
+                                        colorFrom = Color.valueOf("ddba8c");
+                                        colorTo = Color.valueOf("b48758");
+                                        particles = 1;
+                                        sizeFrom = 2;
+                                        sizeTo = 0;
+                                    }};
                                     fragBullet = new ArtilleryBulletType(1.3f, 10) {{
                                         sprite = "xenrose-sand-bullet";
                                         splashDamage = 10;
@@ -1117,42 +1344,18 @@ public class XenBlocks {
                                             offset = 1;
                                         }};
                                     }};
-                                    intervalBullet = new ArtilleryBulletType(1,20){{
-                                        lifetime = 15;
-                                        splashDamage = 25;
-                                        splashDamageRadius = 15;
-                                        collidesAir = false;
-                                        ammoMultiplier = 1f;
-                                        buildingDamageMultiplier = 0.3f;
-                                        backColor = Color.valueOf("d3ae8d");
-                                        frontColor = trailColor = Color.valueOf("f7cba4");
-                                        hitSound = none;
-                                        despawnEffect = hitEffect = new ParticleEffect() {{
-                                                lifetime = 36f;
-                                                colorFrom = Color.valueOf("d3ae8d");
-                                                colorTo = Color.valueOf("f7cba4");
-                                                particles = 1;
-                                                cone = 45;
-                                                length = 10;
-                                                baseLength = 2;
-                                                spin = 0;
-                                                sizeFrom = 1.3f;
-                                                sizeTo = 0;
-                                                offset = 1;
-                                            }};
-                                    }};
-                                    bulletInterval = 8;
-                                    intervalBullets = 3;
-                                    intervalAngle = 180f;
-                                    intervalSpread = 300f;
-                                    }
+                            }
                             }
                     );
+                    shoot = new ShootSpread(5, 10);
+
+                    floating = true;
                     outlineColor = Color.valueOf("211c18");
                     targetAir = false;
                     size = 2;
                     range = 312f;
                     reload = 40f;
+                    ammoPerShot = 2;
                     consumeAmmoOnce = false;
                     recoil = 1;
                     shake = 0.3f;
@@ -1160,8 +1363,194 @@ public class XenBlocks {
                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 15f / 60f));
                     researchCost = ItemStack.with(XenItems.damascus, 900f, XenItems.zinc, 860, XenItems.gold, 550);
                 }};
+                overflow = new PowerTurret("overflow"){{
+                    requirements(Category.turret, with(XenItems.damascus, 90, XenItems.zinc, 75, XenItems.gold, 40));
+
+                    shootType = new BasicBulletType(8.6f,30, "xenrose-basic-bullet1"){{
+                            width = 9;
+                            height = 11;
+                            lifetime = 40;
+                            trailWidth = 2.7f;
+                            trailLength = 14;
+                            frontColor = trailColor = Color.valueOf("d4fcf4");
+                            backColor = hitColor = Color.valueOf("5b898c");
+                            pierceArmor = true;
+                            buildingDamageMultiplier = 0.15f;
+                            fragBullets = 5;
+                            fragBullet = new LightningBulletType(){{
+                                damage = 20;
+                                lightningColor = Color.valueOf("d4e6e3");
+                                lightningLength = 13;
+                                lightningType = new BulletType(0.0001f, 1f) {{
+                                    lifetime = Fx.lightning.lifetime;
+                                    hitEffect = despawnEffect = Fx.none;
+                                    hittable = false;
+                                    lightColor = Color.valueOf("d4e6e3");
+                                    collidesAir = false;
+                                    buildingDamageMultiplier = 0.25f;
+                                }};
+                            }};
+                        }};
+                    shootEffect = Fx.none;
+                    floating = true;
+                    outlineColor = Color.valueOf("211c18");
+                    size = 2;
+                    range = 253;
+                    reload = 75;
+                    rotateSpeed = 1.9f;
+                    targetAir = false;
+                    consumePower(150f / 60f);
+                    shootY = 0f;
+                    recoil = 1.45f;
+                    shootSound = Sounds.spark;
+                    researchCost = ItemStack.with(XenItems.damascus, 2310, XenItems.zinc, 2100, XenItems.gold, 1260);
+                }};
+                tributary = new LiquidTurret("tributary"){{
+                    requirements(Category.turret, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 30, XenItems.gold, 20));
+                    ammo(
+                            Liquids.hydrogen, new BasicBulletType(5,8){{
+                                width = 18;
+                                height = 14;
+                                lifetime = 40f;
+                                drag = 0.03f;
+                                trailInterval = 4f;
+                                knockback = 1.5f;
+                                buildingDamageMultiplier = 0.15f;
+                                trailEffect = hitEffect = despawnEffect = new ParticleEffect(){{
+                                    colorFrom = Color.valueOf("d7f7ff");
+                                    colorTo = Color.valueOf("7797ab");
+                                    particles = 2;
+                                    sizeFrom = 4;
+                                    sizeTo = 0;
+                                }};
+                            }},
+                            XenLiquids.oxygen, new BasicBulletType(5,11){{
+                                width = 18;
+                                height = 14;
+                                lifetime = 40f;
+                                drag = 0.03f;
+                                trailInterval = 4f;
+                                status = StatusEffects.burning;
+                                statusDuration = 14 * 60;
+                                knockback = 1.5f;
+                                buildingDamageMultiplier = 0.15f;
+                                trailEffect = hitEffect = despawnEffect = new ParticleEffect(){{
+                                    colorFrom = Color.valueOf("e3e3e3");
+                                    colorTo = Color.valueOf("ababab");
+                                    particles = 2;
+                                    sizeFrom = 4;
+                                    sizeTo = 0;
+                                }};
+                            }},
+                            XenLiquids.liquidOrinil, new BasicBulletType(6.8f,19,"xenrose-basic-bullet1"){{
+                                width = 14;
+                                height = 16;
+                                lifetime = 80f;
+                                drag = 0.03f;
+                                trailInterval = 6f;
+                                backColor = Color.valueOf("e18d47");
+                                frontColor = trailColor = Color.valueOf("ffd297");
+                                trailWidth = 3;
+                                trailLength = 8;
+                                status = StatusEffects.burning;
+                                statusDuration = 15 * 60;
+                                knockback = 2f;
+                                pierce = true;
+                                pierceBuilding = true;
+                                pierceCap = 2;
+                                buildingDamageMultiplier = 0.15f;
+                                trailEffect = hitEffect = despawnEffect = new ParticleEffect(){{
+                                    colorFrom = Color.valueOf("ffd297");
+                                    colorTo = Color.valueOf("e18d47");
+                                    particles = 1;
+                                    sizeFrom = 3;
+                                    sizeTo = 0;
+                                }};
+                            }});
+                    shoot = new ShootSpread(11,6);
+
+                    floating = true;
+                    outlineColor = Color.valueOf("211c18");
+                    size = 2;
+                    range = 116f;
+                    reload = 40;
+                    rotateSpeed = 2.3f;
+                    shootY = 19f / 4f;
+                    recoil = 1.2f;
+                    shootSound = Sounds.dullExplosion;
+                    researchCost = ItemStack.with(XenItems.damascus, 4760, XenItems.zinc, 4360, XenItems.dantstalin, 2900, XenItems.gold, 2750);
+
+                }};
+                merge = new AccelerationTurret("merge"){{
+                    requirements(Category.turret, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 30, XenItems.gold, 20));
+                    ammo(
+                            XenItems.damascus, new BasicBulletType(4.8f, 45, "xenrose-basic-bullet1"){{
+                                width = 13;
+                                height = 15;
+                                lifetime = 74;
+                                trailWidth = 3f;
+                                trailLength = 5;
+                                buildingDamageMultiplier = 0.3f;
+                                backColor = Color.valueOf("807569");
+                                frontColor = trailColor = Color.valueOf("d6c6b4");
+                                trailEffect = Fx.hitSquaresColor;
+                                trailParam = 3;
+                                trailInterval = 8f;
+                                trailEffect = new ParticleEffect(){{
+                                    colorFrom = Color.valueOf("d6c6b4");
+                                    colorTo = Color.valueOf("807569");
+                                    particles = 1;
+                                    sizeFrom = 2;
+                                    sizeTo = 0;
+                                }};
+                                hitEffect = despawnEffect = new ExplosionEffect() {{
+                                    lifetime = 34f;
+                                    waveStroke = 2f;
+                                    waveColor = sparkColor = trailColor;
+                                    waveRad = 24f;
+                                    smokeSize = 3f;
+                                    smokeSizeBase = 1f;
+                                    sparks = 5;
+                                    sparkRad = 16f;
+                                    sparkLen = 6f;
+                                    sparkStroke = 2f;
+                                }};
+                            }});
+
+                    drawer = new DrawTurret() {{
+                        parts.add(new RegionPart("-side") {{
+                            progress = PartProgress.warmup;
+                            moveY = -0.4f;
+                            moveX = -0.35f;
+                            moveRot = -4f;
+                            mirror = true;
+                            under = false;
+                            moves.add(new PartMove(PartProgress.recoil, 0, 0, -0.7f));
+                        }});
+                    }};
+
+                    floating = true;
+                    outlineColor = Color.valueOf("211c18");
+                    size = 2;
+                    range = 294f;
+                    reload = 60;
+                    rotateSpeed = 2.3f;
+                    ammoPerShot = 6;
+                    consumeAmmoOnce = false;
+                    targetGround = false;
+                    consumePower(140f / 60f);
+                    shootY = 22f / 4f;
+                    recoil = 1.45f;
+                    shoot.shots = 15;
+                    shoot.firstShotDelay = 20;
+                    inaccuracy = 19;
+                    shootSound = Sounds.dullExplosion;
+                    researchCost = ItemStack.with(XenItems.damascus, 4760, XenItems.zinc, 4360, XenItems.dantstalin, 2900, XenItems.gold, 2750);
+                    coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 12f / 60f));
+                }};
                 calmness = new AccelerationTurret("calmness"){{
                         requirements(Category.turret, with(XenItems.damascus, 150, XenItems.zinc, 100, XenItems.gold, 80, XenItems.protexide, 50));
+
                         ammo(
                                 XenItems.gold, new BasicBulletType(5.4f, 70, "xenrose-rhomb-bullet"){{
                                     width = 13f;
@@ -1271,216 +1660,25 @@ public class XenBlocks {
                                                     moves.add(new PartMove(PartProgress.recoil, 0, -0.6f, 0f));
                                                 }});
                                     }};
-
-                                    outlineColor = Color.valueOf("211c18");
-                                    size = 3;
-                                    range = 423f;
-                                    reload = 355f;
-                                    consumeAmmoOnce = false;
-                                    recoil = 1.8f;
-                                    shake = 1f;
                                     shoot.shots = 12;
                                     shoot.shotDelay = 6f;
                                     shoot.firstShotDelay = 70;
                                     inaccuracy = 14;
+
+                                    floating = true;
+                                    outlineColor = Color.valueOf("211c18");
+                                    size = 3;
+                                    range = 423f;
+                                    reload = 355f;
+                                    ammoPerShot = 5;
+                                    consumeAmmoOnce = false;
+                                    recoil = 1.8f;
+                                    shake = 1f;
                                     shootSound = Sounds.dullExplosion;
                                     consumePower(80f / 60f);
                                     researchCost = ItemStack.with(XenItems.damascus, 2890, XenItems.zinc, 2800, XenItems.gold, 2550, XenItems.protexide, 2350);
                                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 15f / 60f));
                     }};
-                merge = new ItemTurret("merge"){{
-                    requirements(Category.turret, with(XenItems.damascus, 250, XenItems.zinc, 150, XenItems.protexide, 100, XenItems.gold, 80, Items.tungsten, 50, XenItems.diocasium, 15));
-                    ammo(
-                            XenItems.diocasium, new ArtilleryBulletType(6, 90){{
-                                width = height = 23;
-                                lifetime = 80;
-                                pierce = true;
-                                pierceBuilding = true;
-                                pierceCap = 2;
-                                frontColor = Color.valueOf("fbbb67");
-                                backColor = trailColor = hitColor = Color.valueOf("e18d47");
-                                trailLength = 17;
-                                trailWidth = 4.6f;
-                                buildingDamageMultiplier = 0.25f;
-                                homingPower = 0.17f;
-                                homingDelay = 20f;
-                                homingRange = 100f;
-                                trailEffect = Fx.artilleryTrailSmoke;
-                                trailRotation = true;
-                                trailInterval = 8f;
-                                despawnShake = 2;
-                                splashDamage = 80;
-                                splashDamageRadius = 35;
-
-                                despawnEffect = new MultiEffect(
-                                    new ExplosionEffect(){{
-                                    lifetime = 130;
-                                    waveStroke = 9;
-                                    waveLife = 16;
-                                    waveColor = Color.valueOf("ffd8a6");
-                                    sparkColor = Color.valueOf("f0b467");
-                                    waveRad = 57;
-                                    smokeSize = 9;
-                                    smokes = 9;
-                                    smokeRad = 55;
-                                    smokeColor = Color.valueOf("f0b467");
-                                    smokeSizeBase = 0;
-                                    sparks = 12;
-                                    sparkRad = 60;
-                                    sparkLen = 8;
-                                    sparkStroke = 2f;
-                                }});
-
-                                smokeEffect = Fx.shootSmokeTitan;
-
-                                fragBullets = 1;
-                                fragSpread = 0;
-                                fragRandomSpread = 0f;
-                                fragBullet = new ArtilleryBulletType(7, 90){{
-                                        width = height = 23;
-                                        lifetime = 50;
-                                        pierce = true;
-                                        pierceBuilding = true;
-                                        pierceCap = 2;
-                                        pierceArmor = true;
-                                        frontColor = Color.valueOf("fbbb67");
-                                        backColor = trailColor = hitColor = Color.valueOf("e18d47");
-                                        trailLength = 17;
-                                        trailWidth = 4.6f;
-                                        buildingDamageMultiplier = 0.25f;
-                                        homingPower = 0.17f;
-                                        homingDelay = 20f;
-                                        homingRange = 100f;
-                                        trailEffect = Fx.artilleryTrailSmoke;
-                                        trailRotation = true;
-                                        trailInterval = 8f;
-                                        despawnShake = 2;
-                                        splashDamage = 110;
-                                        splashDamageRadius = 35;
-
-                                        despawnEffect = new MultiEffect(
-                                                new ExplosionEffect() {{
-                                                    lifetime = 130;
-                                                    waveStroke = 9;
-                                                    waveLife = 16;
-                                                    waveColor = Color.valueOf("ffd8a6");
-                                                    sparkColor = Color.valueOf("f0b467");
-                                                    waveRad = 57;
-                                                    smokeSize = 9;
-                                                    smokes = 9;
-                                                    smokeRad = 55;
-                                                    smokeColor = Color.valueOf("f0b467");
-                                                    smokeSizeBase = 0;
-                                                    sparks = 12;
-                                                    sparkRad = 60;
-                                                    sparkLen = 8;
-                                                    sparkStroke = 2f;
-                                                }});
-
-                                        smokeEffect = Fx.shootSmokeTitan;
-
-                                        fragBullets = 1;
-                                        fragSpread = 0;
-                                        fragRandomSpread = 50f;
-                                        fragBullet = new LaserBulletType(80f) {{
-                                            colors = new Color[]{Color.valueOf("e9bd85").cpy().a(0.4f), Color.valueOf("fbbb67"), Color.white};
-                                            buildingDamageMultiplier = 0.25f;
-                                            width = 30f;
-                                            hitEffect = Fx.hitLancer;
-                                            sideAngle = 175f;
-                                            sideWidth = 1f;
-                                            sideLength = 40f;
-                                            lifetime = 110f;
-                                            drawSize = 400f;
-                                            length = 130f;
-                                            pierceArmor = true;
-                                            pierceCap = 2;
-                                        }};
-                                    }};
-                            }});
-
-                    drawer = new DrawTurret() {{
-                        new DrawAccelerationHeat("-accelheat");
-                        parts.add(new RegionPart("-side") {{
-                            progress = PartProgress.warmup;
-                            moveY = -0.8f;
-                            moveRot = -2f;
-                            mirror = true;
-                            under = false;
-                            moves.add(new PartMove(PartProgress.recoil, 0, -0.4f, -0.7f));
-                            researchCost = ItemStack.with(XenItems.damascus, 60, XenItems.zinc, 40);
-                        }},
-                                new ShapePart(){{
-                                    progress = PartProgress.warmup.blend(PartProgress.reload, 1.2f);
-                                    color = Color.valueOf("fbbb67");
-                                    circle = false;
-                                    hollow = true;
-                                    stroke = 1f;
-                                    strokeTo = 1.5f;
-                                    radius = 5f;
-                                    sides = 8;
-                                    layer = Layer.effect;
-                                    y = -4;
-                                    rotateSpeed = 1;
-                                }},
-                                new HaloPart(){{
-                                    color = Color.valueOf("fbbb67");
-                                    layer = Layer.effect;
-                                    y = -1;
-                                    haloRotation = 90f;
-                                    shapes = 4;
-                                    triLength = 0f;
-                                    triLengthTo = 10f;
-                                    haloRadius = 8f;
-                                    tri = true;
-                                    radius = 4f;
-                                    haloRotateSpeed = 1;
-                                    y = -4;
-                                }},
-                                new HaloPart(){{
-                                    color = Color.valueOf("fbbb67");;
-                                    layer = Layer.effect;
-                                    y = -1;
-                                    haloRotation = 90f;
-                                    shapes = 4;
-                                    triLength = 0f;
-                                    triLengthTo = 5f;
-                                    haloRadius = 8f;
-                                    tri = true;
-                                    radius = 4f;
-                                    shapeRotation = 180f;
-                                    haloRotateSpeed = 1;
-                                    y = -4;
-                                }});
-                        parts.add(new ShapePart(){{
-                            color = Color.valueOf("fbbb67");
-                            circle = false;
-                            hollow = true;
-                            stroke = 1.8f;
-                            radius = 0.8f;
-                            sides = 9;
-                            layer = Layer.effect;
-                            y = -4;
-                            rotateSpeed = -1;
-                        }});
-                    }};
-
-                    outlineColor = Color.valueOf("211c18");
-                    size = 3;
-                    range = 386f;
-                    reload = 320f;
-                    consumeAmmoOnce = false;
-                    consumePower(220f / 60f);
-                    consumeLiquid(Liquids.hydrogen, 6f / 60f);
-                    shootY = 1;
-                    recoil = 1.5f;
-                    shake = 1.4f;
-                    shoot.shots = 3;
-                    shoot.firstShotDelay = 50;
-                    inaccuracy = 18;
-                    shootSound = Sounds.dullExplosion;
-                    researchCost = ItemStack.with(XenItems.damascus, 4600f, XenItems.zinc, 4550, XenItems.protexide, 4050, XenItems.gold, 3650, XenItems.diocasium, 1200);
-                }};
 
                 //storage
                 coreSunrise = new CoreBlock("core-sunrise") {{
