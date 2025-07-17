@@ -345,6 +345,7 @@ public class XenBlocks {
                     researchCost = with(XenItems.damascus, 30);
                 }};
                 ((Conveyor)damascusConveyor).junctionReplacement = damascusJunction;
+                ((Conveyor)dantstalinConveyor).junctionReplacement = damascusJunction;
                 damascusRouter = new DuctRouter("damascus-router") {{
                     requirements(Category.distribution, with(XenItems.damascus, 8));
                     health = 80;
@@ -470,7 +471,7 @@ public class XenBlocks {
                 energyDrill = new MechanicalDrill("energy-drill") {{
                     requirements(Category.production, ItemStack.with(XenItems.damascus, 15));
 
-                    drillTime = 505;
+                    drillTime = 390;
                     size = 2;
                     range = 6;
                     fogRadius = 2;
@@ -478,7 +479,7 @@ public class XenBlocks {
 
                     drillEffect = new MultiEffect(
                             new ParticleEffect(){{
-                                particles = 8;
+                                particles = 4;
                                 length = 170;
                                 lifetime = 520;
                                 sizeFrom = 2f;
@@ -502,7 +503,7 @@ public class XenBlocks {
 
                     drillEffect = new MultiEffect(
                             new ParticleEffect(){{
-                                particles = 18;
+                                particles = 10;
                                 length = 170;
                                 lifetime = 520;
                                 sizeFrom = 2f;
@@ -528,7 +529,7 @@ public class XenBlocks {
 
                     drillEffect = new MultiEffect(
                             new ParticleEffect(){{
-                                particles = 9;
+                                particles = 4;
                                 length = 170;
                                 lifetime = 520;
                                 sizeFrom = 2f;
@@ -542,7 +543,7 @@ public class XenBlocks {
                                 layer = 100.2f;
                             }},
                             new ParticleEffect(){{
-                                particles = 9;
+                                particles = 3;
                                 length = 170;
                                 lifetime = 520;
                                 sizeFrom = 2f;
@@ -556,7 +557,7 @@ public class XenBlocks {
                                 layer = 100.2f;
                     }});
                     tier = 6;
-                    drillTime = 430;
+                    drillTime = 300;
                     size = 3;
                     consumeLiquid(XenLiquids.oxygen, 0.5f / 60f);
                     consumePower(220f / 60f);
@@ -573,7 +574,7 @@ public class XenBlocks {
                     craftTime = 3 * 60f;
                     craftEffect = new MultiEffect(
                         new ParticleEffect(){{
-                        particles = 8;
+                        particles = 4;
                         length = 210;
                         lifetime = 670;
                         sizeFrom = 1.5f;
@@ -587,7 +588,7 @@ public class XenBlocks {
                         layer = 100.2f;
                     }},
                     new ParticleEffect(){{
-                        particles = 6;
+                        particles = 3;
                         length = 210;
                         lifetime = 670;
                         sizeFrom = 1.5f;
@@ -857,7 +858,7 @@ public class XenBlocks {
                     craftTime = 2f * 60f;
                     craftEffect = new MultiEffect(
                             new ParticleEffect(){{
-                                particles = 6;
+                                particles = 4;
                                 length = 210;
                                 lifetime = 670;
                                 sizeFrom = 1.5f;
@@ -871,7 +872,7 @@ public class XenBlocks {
                                 layer = 100.2f;
                             }},
                             new ParticleEffect(){{
-                                particles = 10;
+                                particles = 5;
                                 length = 210;
                                 lifetime = 670;
                                 sizeFrom = 1.5f;
@@ -1283,14 +1284,13 @@ public class XenBlocks {
                     size = 2;
                     range = 247f;
                     reload = 60f;
-                    ammoPerShot = 2;
                     consumeAmmoOnce = false;
                     recoil = 1.8f;
                     shake = 1f;
                     shoot.shots = 5;
                     shoot.shotDelay = 3f;
                     shootSound = Sounds.dullExplosion;
-                    researchCost = ItemStack.with(XenItems.damascus, 150f, XenItems.zinc, 60);
+                    researchCost = ItemStack.with(XenItems.damascus, 50f, XenItems.zinc, 25);
                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 15f / 60f));
                 }};
                 desiccation = new AccelerationTurret("desiccation"){{
@@ -1443,7 +1443,7 @@ public class XenBlocks {
                                 }};
                             }},
                             XenLiquids.liquidOrinil, new BasicBulletType(6.8f,19,"xenrose-basic-bullet1"){{
-                                width = 14;
+                                width = 10;
                                 height = 16;
                                 lifetime = 80f;
                                 drag = 0.03f;
@@ -1463,7 +1463,7 @@ public class XenBlocks {
                                     colorFrom = Color.valueOf("ffd297");
                                     colorTo = Color.valueOf("e18d47");
                                     particles = 1;
-                                    sizeFrom = 3;
+                                    sizeFrom = 3.5f;
                                     sizeTo = 0;
                                 }};
                             }});
@@ -1482,7 +1482,7 @@ public class XenBlocks {
 
                 }};
                 merge = new AccelerationTurret("merge"){{
-                    requirements(Category.turret, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 30, XenItems.gold, 20));
+                    requirements(Category.turret, with(XenItems.damascus, 85, XenItems.zinc, 60, XenItems.dantstalin, 45, XenItems.gold, 20));
                     ammo(
                             XenItems.damascus, new BasicBulletType(4.8f, 45, "xenrose-basic-bullet1"){{
                                 width = 13;
@@ -1550,7 +1550,6 @@ public class XenBlocks {
                 }};
                 calmness = new AccelerationTurret("calmness"){{
                         requirements(Category.turret, with(XenItems.damascus, 150, XenItems.zinc, 100, XenItems.gold, 80, XenItems.protexide, 50));
-
                         ammo(
                                 XenItems.gold, new BasicBulletType(5.4f, 70, "xenrose-rhomb-bullet"){{
                                     width = 13f;
