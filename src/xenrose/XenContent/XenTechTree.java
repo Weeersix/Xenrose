@@ -14,8 +14,8 @@ public class XenTechTree {
         XenPlanets.xenor.techTree = TechTree.nodeRoot("Xenor", XenBlocks.coreSunrise, () -> {
             //Drills
             node(XenBlocks.energyDrill, Seq.with(new Objectives.Produce(XenItems.damascus)), () -> {
-                node(XenBlocks.airMechanicalDrill, Seq.with(new Objectives.Produce(XenItems.dantstalin)), () -> {});
-                node(XenBlocks.energyChargedDrill, Seq.with(new Objectives.Produce(XenItems.gold)), () -> {});
+                node(XenBlocks.airMechanicalDrill, () -> {});
+                node(XenBlocks.energyChargedDrill, () -> {});
             });
             //Logistics
             node(XenBlocks.damascusConveyor, Seq.with(new Objectives.Produce(XenItems.damascus)), () -> {
@@ -27,12 +27,12 @@ public class XenTechTree {
             });
             //Defense
             node(XenBlocks.samum, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
-                node(XenBlocks.desiccation, Seq.with(new Objectives.Produce(XenItems.gold)), () -> {
+                node(XenBlocks.desiccation, () -> {
                     node(XenBlocks.merge, Seq.with(new Objectives.OnSector(XenSectorPresets.BurntHills)), () -> {});
                     node(XenBlocks.tributary, () -> {});
                     node(XenBlocks.overflow, Seq.with(new Objectives.OnSector(XenSectorPresets.BurntHills)), () -> {});
                 });
-                node(XenBlocks.calmness, Seq.with(new Objectives.Produce(XenItems.protexide)), () -> {});
+                node(XenBlocks.calmness, () -> {});
                 node(XenBlocks.reinforcedDamascusWall, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
                     node(XenBlocks.reinforcedDamascusWallLarge, () -> {
                         node(XenBlocks.diocasiumArmor, Seq.with(new Objectives.Produce(XenItems.diocasium)), () -> {});
@@ -52,7 +52,7 @@ public class XenTechTree {
                         });
                     });
                 });
-                node(XenBlocks.energyPump, Seq.with(new Objectives.Produce(XenItems.dantstalin)), () -> {});
+                node(XenBlocks.energyPump, () -> {});
             });
             //Power Blocks
             node(XenBlocks.kirmiteEvaporator, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
@@ -67,8 +67,8 @@ public class XenTechTree {
                         node(XenBlocks.waterReformer, () -> {});
                     });
                     node(XenBlocks.orinilCrucible, Seq.with(new Objectives.Produce(XenLiquids.liquidOrinil)), () -> {
-                        node(XenBlocks.energyChargingSplitter, Seq.with(new Objectives.Produce(XenItems.isoteron)), () -> {});
-                        node(XenBlocks.energyStabilizingBoiler, Seq.with(new Objectives.Produce(XenItems.diocasium)), () -> {});
+                        node(XenBlocks.energyChargingSplitter, () -> {});
+                        node(XenBlocks.energyStabilizingBoiler, () -> {});
                     });
                 });
             });
@@ -136,7 +136,7 @@ public class XenTechTree {
                 });
             });
             //Cores
-            node(XenBlocks.coreZenith, Seq.with(new Objectives.Produce(XenItems.protexide)), () -> {});
+            node(XenBlocks.coreZenith, () -> {});
         });
     }
 }
