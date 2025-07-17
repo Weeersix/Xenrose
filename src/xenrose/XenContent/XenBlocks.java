@@ -54,7 +54,7 @@ import xenrose.graphics.Rotor;
 import xenrose.world.blocks.defense.Armor;
 import xenrose.world.blocks.defense.ArmoredWall;
 import xenrose.world.blocks.defense.turret.AccelerationTurret;
-import xenrose.world.blocks.disbruction.ShadedConveyor;
+import xenrose.world.blocks.distribution.ShadedConveyor;
 import xenrose.world.blocks.enviroments.EffectFloor;
 import xenrose.world.blocks.liquid.*;
 import xenrose.world.blocks.power.BetterConsumeGenerator;
