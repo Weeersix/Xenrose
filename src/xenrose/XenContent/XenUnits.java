@@ -304,7 +304,7 @@ public class XenUnits {
                      recoil = 1.5f;
                      reload = 80f;
                      top = false;
-                     shoot.shots = 4;
+                     shoot.shots = 6;
                      shoot.shotDelay = 9;
                      shoot.firstShotDelay = 30;
                      inaccuracy = 12f;
@@ -533,7 +533,7 @@ public class XenUnits {
 
                          bullet = new BasicBulletType(6f, 20f) {{
                                  sprite = "xenrose-basic-bullet1";
-                                 width = 9f;
+                                 width = 6f;
                                  height = 9f;
                                  lifetime = 60f;
                                  pierceCap = 3;
