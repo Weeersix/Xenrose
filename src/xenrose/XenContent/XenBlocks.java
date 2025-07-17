@@ -59,6 +59,7 @@ import xenrose.world.blocks.enviroments.EffectFloor;
 import xenrose.world.blocks.liquid.*;
 import xenrose.world.blocks.power.BetterConsumeGenerator;
 import xenrose.world.blocks.production.MechanicalDrill;
+import xenrose.world.blocks.storage.RecoveringCore;
 import xenrose.world.blocks.units.StatusBlock;
 import xenrose.world.draw.DrawAccelerationHeat;
 import xenrose.world.draw.DrawRotor;
@@ -1279,6 +1280,7 @@ public class XenBlocks {
                         }});
                     }};
 
+                    squareSprite = false;
                     floating = true;
                     outlineColor = Color.valueOf("211c18");
                     size = 2;
@@ -1349,6 +1351,7 @@ public class XenBlocks {
                     );
                     shoot = new ShootSpread(5, 10);
 
+                    squareSprite = false;
                     floating = true;
                     outlineColor = Color.valueOf("211c18");
                     targetAir = false;
@@ -1391,6 +1394,7 @@ public class XenBlocks {
                                 }};
                             }};
                         }};
+                    squareSprite = false;
                     shootEffect = Fx.none;
                     floating = true;
                     outlineColor = Color.valueOf("211c18");
@@ -1469,6 +1473,7 @@ public class XenBlocks {
                             }});
                     shoot = new ShootSpread(11,6);
 
+                    squareSprite = false;
                     floating = true;
                     outlineColor = Color.valueOf("211c18");
                     size = 2;
@@ -1529,6 +1534,7 @@ public class XenBlocks {
                         }});
                     }};
 
+                    squareSprite = false;
                     floating = true;
                     outlineColor = Color.valueOf("211c18");
                     size = 2;
@@ -1663,7 +1669,8 @@ public class XenBlocks {
                                     shoot.shotDelay = 6f;
                                     shoot.firstShotDelay = 70;
                                     inaccuracy = 14;
-
+                                    
+                                    squareSprite = false;
                                     floating = true;
                                     outlineColor = Color.valueOf("211c18");
                                     size = 3;
@@ -1695,7 +1702,7 @@ public class XenBlocks {
 
                     unitCapModifier = 8;
                 }};
-                coreZenith = new CoreBlock("core-zenith"){{
+                coreZenith = new RecoveringCore("core-zenith"){{
                     requirements(Category.effect, BuildVisibility.shown, with(XenItems.damascus, 1250, XenItems.zinc, 1100, XenItems.gold, 950, XenItems.dantstalin, 550));
 
                     unitType = XenUnits.spread;
