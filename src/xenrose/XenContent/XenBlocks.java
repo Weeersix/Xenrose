@@ -1175,7 +1175,7 @@ public class XenBlocks {
 
                 //turrets
                 samum = new AccelerationTurret("samum") {{
-                    requirements(Category.turret, with(XenItems.damascus, 70, XenItems.zinc, 40));
+                    requirements(Category.turret, with(XenItems.damascus, 45, XenItems.zinc, 20));
 
                     ammo(
                             XenItems.zinc, new BasicBulletType(4f, 25){{
