@@ -27,7 +27,7 @@ public class AccelerationTurret extends ItemTurret {
                 new Bar("stat.ammo", Pal.ammo, () -> (float)entity.totalAmmo / maxAmmo)
         );
         addBar("heating", (AccelerationTurretBuild e) ->
-                new Bar(() -> Core.bundle.format("bar.heatingamount", (int)(e.accelHeat / maxHeat) * 100), () -> Pal.lightOrange, () -> (e.accelHeat / maxHeat) * 2.4f)
+                new Bar(() -> Core.bundle.format("bar.heatingamount", (int)(e.accelHeat / maxHeat) * 100), () -> Pal.lightOrange, () -> (e.accelHeat / maxHeat) * 3.8f)
         );
     }
 
