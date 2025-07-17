@@ -384,7 +384,7 @@ public class XenBlocks {
                     liquidCapacity = 80f;
                     size = 2;
 
-                    researchCost = with(XenItems.damascus, 400, XenItems.zinc, 250, XenItems.gold, 100);
+                    researchCost = with(XenItems.damascus, 250, XenItems.zinc, 170, XenItems.gold, 50);
                 }};
                 energyPump = new Pump("energy-pump"){{
                     requirements(Category.liquid, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 20));
@@ -1092,7 +1092,7 @@ public class XenBlocks {
                     fogRadius = 3;
                     consumePower(1.666666666666667f);
                     consumeLiquid(XenLiquids.liquidKirmit, 14f/60f);
-                    researchCost = with(XenItems.damascus, 650,XenItems.zinc, 600, XenItems.gold, 300);
+                    researchCost = with(XenItems.damascus, 250,XenItems.zinc, 250, XenItems.gold, 150);
                 }};
                 hoverUnitsAssembler = new UnitFactory("hover-units-assembler"){{
                     requirements(Category.units, with(XenItems.damascus, 180,XenItems.zinc, 130, XenItems.gold, 60));
@@ -1696,7 +1696,7 @@ public class XenBlocks {
                     unitCapModifier = 8;
                 }};
                 coreZenith = new CoreBlock("core-zenith"){{
-                    requirements(Category.effect, BuildVisibility.shown, with(XenItems.damascus, 950, XenItems.zinc, 670, XenItems.gold, 350));
+                    requirements(Category.effect, BuildVisibility.shown, with(XenItems.damascus, 1250, XenItems.zinc, 1100, XenItems.gold, 950, XenItems.dantstalin, 550));
 
                     unitType = XenUnits.spread;
                     health = 6930;
@@ -1707,6 +1707,7 @@ public class XenBlocks {
                     buildCostMultiplier = 1.5f;
 
                     unitCapModifier = 18;
+                    researchCost = ItemStack.with(XenItems.damascus, 3850, XenItems.zinc, 3580, XenItems.gold, 2160, XenItems.dantstalin, 1420);
                 }};
             }
         }
