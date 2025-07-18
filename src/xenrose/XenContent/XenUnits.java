@@ -194,8 +194,8 @@ public class XenUnits {
                  targetPriority = TargetPriority.core;
                  speed = 0.6f;
                  hitSize = 10f;
-                 health = 570;
-                 armor = 6;
+                 health = 520;
+                 armor = 5;
                  researchCostMultiplier = 0f;
 
                  weapons.add(new Weapon("xenrose-zanar-weapon"){{
@@ -310,7 +310,7 @@ public class XenUnits {
                      inaccuracy = 12f;
                      shootSound = XenSounds.zanarShoot;
 
-                     bullet = new BasicBulletType(3.9f, 30f) {{
+                     bullet = new BasicBulletType(3.9f, 35f) {{
                          sprite = "xenrose-basic-bullet1";
                          width = 11f;
                          height = 11f;
