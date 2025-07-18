@@ -688,7 +688,7 @@ public class XenBlocks {
                     regionRotated1 = 3;
                     outputLiquids = LiquidStack.with(XenLiquids.oxygen, 6f / 60, Liquids.hydrogen, 5f / 60);
                     liquidOutputDirections = new int[]{1, 3};
-                    researchCost = with(XenItems.damascus, 1300, XenItems.zinc, 1400, XenItems.gold, 800);
+                    researchCost = with(XenItems.damascus, 1300, XenItems.zinc, 1240, XenItems.gold, 800);
                 }};
                 siliconCentrifuge = new GenericCrafter("silicon-centrifuge"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 100, XenItems.zinc, 80, XenItems.gold, 55));
@@ -810,7 +810,7 @@ public class XenBlocks {
                     consumeItem(XenItems.zinc, 2);
                     consumeLiquids(LiquidStack.with(XenLiquids.liquidKirmit, 46f / 60f, XenLiquids.oxygen, 2f / 60f));
                     consumePower(290f / 60f);
-                    researchCost = with(XenItems.damascus, 2870, XenItems.zinc, 2670, XenItems.gold, 2140);
+                    researchCost = with(XenItems.damascus, 2110, XenItems.zinc, 1670, XenItems.gold, 1000);
                 }};
                 waterCollerctor = new GenericCrafter("water-collector"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 150, XenItems.zinc, 120, XenItems.dantstalin, 75, XenItems.gold, 50));
@@ -1131,7 +1131,7 @@ public class XenBlocks {
                     );
 
                     constructTime = 28f * 60f;
-                    researchCost = with(XenItems.damascus, 4920, XenItems.zinc, 4560, XenItems.dantstalin, 3200, XenItems.gold, 1890);
+                    researchCost = with(XenItems.damascus, 4920, XenItems.zinc, 3560, XenItems.gold, 1890, XenItems.dantstalin, 200);
                 }};
                 thermalReassemblingFactory = new Reconstructor("thermal-reassembling-factory"){{
                     requirements(Category.units, with(XenItems.damascus, 500, XenItems.zinc, 320, XenItems.dantstalin, 240, XenItems.protexide, 100, XenItems.gold, 50));

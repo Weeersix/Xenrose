@@ -109,7 +109,7 @@ public class RecoveringCore extends CoreBlock {
             if(charge >= healReload && canHeal && health() < maxHealth()){
                 charge = 0f;
 
-                heal((maxHealth() / 5) * (healPercent) / 100f);
+                heal((maxHealth() / 2) * (healPercent) / 100f);
                 recentlyHealed();
                 Fx.healBlockFull.at(x, y, block.size, team.color, block);
             }
