@@ -375,6 +375,7 @@ public class XenBlocks {
                     researchCost = with(XenItems.damascus, 50);
                 }};
                 ((Conveyor)damascusConveyor).bridgeReplacement = damascusBridge;
+                ((Conveyor)dantstalinConveyor).bridgeReplacement = damascusBridge;
 
                 //liquid
                 hydraulicPump = new BreackablePump("hydraulic-pump"){{
