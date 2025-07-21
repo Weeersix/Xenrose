@@ -50,11 +50,12 @@ import mindustry.world.draw.*;
 import mindustry.world.meta.BlockGroup;
 import mindustry.world.meta.BuildVisibility;
 import xenrose.XenAttributes;
+import xenrose.core.XenVars;
 import xenrose.graphics.Rotor;
 import xenrose.world.blocks.defense.Armor;
 import xenrose.world.blocks.defense.ArmoredWall;
 import xenrose.world.blocks.defense.turret.AccelerationTurret;
-import xenrose.world.blocks.distribution.ShadedConveyor;
+import xenrose.world.blocks.distribution.*;
 import xenrose.world.blocks.enviroments.EffectFloor;
 import xenrose.world.blocks.liquid.*;
 import xenrose.world.blocks.power.BetterConsumeGenerator;
@@ -219,9 +220,13 @@ public class XenBlocks {
                     speedMultiplier = 0.5f;
                     variants = 2;
                     liquidDrop = XenLiquids.liquidKirmit;
-                    effect = XenFx.kirmiteSteam;
-                    effectChance = 0.0001f;
-                    effectColor = Color.valueOf("9265bd");
+                    if(XenVars.xenroseBlocksEffects) {
+                        effect = XenFx.kirmiteSteam;
+                        effectChance = 0.00095f;
+                        effectColor = Color.valueOf("9265bd");
+                    }else{
+                        effect = Fx.none;
+                    }
                     isLiquid = true;
                     cacheLayer = CacheLayer.water;
                     albedo = 0.9f;
@@ -232,9 +237,13 @@ public class XenBlocks {
                     speedMultiplier = 0.5f;
                     variants = 2;
                     liquidDrop = XenLiquids.liquidKirmit;
-                    effect = XenFx.kirmiteSteam;
-                    effectChance = 0.0001f;
-                    effectColor = Color.valueOf("9265bd");
+                    if(XenVars.xenroseBlocksEffects) {
+                        effect = XenFx.kirmiteSteam;
+                        effectChance = 0.00095f;
+                        effectColor = Color.valueOf("9265bd");
+                    }else{
+                        effect = Fx.none;
+                    }
                     isLiquid = true;
                     cacheLayer = CacheLayer.water;
                     drownTime = 350;
@@ -247,9 +256,13 @@ public class XenBlocks {
                     liquidDrop = XenLiquids.liquidOrinil;
                     status = StatusEffects.melting;
                     statusDuration = 390f;
-                    effect = Fx.fire;
-                    effectChance = 0.004f;
-                    effectColor = Color.valueOf("9265bd");
+                    if(XenVars.xenroseBlocksEffects) {
+                        effect = Fx.fire;
+                        effectChance = 0.004f;
+                        effectColor = Color.valueOf("9265bd");
+                    }else{
+                        effect = Fx.none;
+                    }
                     isLiquid = true;
                     drownTime = 200f;
                     cacheLayer = XenCacheLayer.orinil;
@@ -346,7 +359,6 @@ public class XenBlocks {
                     researchCost = with(XenItems.damascus, 30);
                 }};
                 ((Conveyor)damascusConveyor).junctionReplacement = damascusJunction;
-                ((Conveyor)dantstalinConveyor).junctionReplacement = damascusJunction;
                 damascusRouter = new DuctRouter("damascus-router") {{
                     requirements(Category.distribution, with(XenItems.damascus, 8));
                     health = 80;
@@ -375,7 +387,6 @@ public class XenBlocks {
                     researchCost = with(XenItems.damascus, 50);
                 }};
                 ((Conveyor)damascusConveyor).bridgeReplacement = damascusBridge;
-                ((Conveyor)dantstalinConveyor).bridgeReplacement = damascusBridge;
 
                 //liquid
                 hydraulicPump = new BreackablePump("hydraulic-pump"){{
@@ -386,7 +397,7 @@ public class XenBlocks {
                     liquidCapacity = 80f;
                     size = 2;
 
-                    researchCost = with(XenItems.damascus, 250, XenItems.zinc, 170, XenItems.gold, 50);
+                    researchCost = with(XenItems.damascus, 150, XenItems.zinc, 60, XenItems.gold, 15);
                 }};
                 energyPump = new Pump("energy-pump"){{
                     requirements(Category.liquid, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 20));
@@ -473,27 +484,32 @@ public class XenBlocks {
                 energyDrill = new MechanicalDrill("energy-drill") {{
                     requirements(Category.production, ItemStack.with(XenItems.damascus, 15));
 
-                    drillTime = 390;
+                    squareSprite = false;
+                    drillTime = 505;
                     size = 2;
                     range = 6;
                     fogRadius = 2;
                     tier = 3;
 
-                    drillEffect = new MultiEffect(
-                            new ParticleEffect(){{
-                                particles = 4;
-                                length = 170;
-                                lifetime = 520;
-                                sizeFrom = 2f;
-                                sizeTo = 6.5f;
-                                cone = 6;
-                                baseRotation = 50;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("aab3bfa1");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                            }});
+                    if(XenVars.xenroseBlocksEffects) {
+                        drillEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 8;
+                                    length = 170;
+                                    lifetime = 520;
+                                    sizeFrom = 2f;
+                                    sizeTo = 6.5f;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("aab3bfa1");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }else{
+                        drillEffect = Fx.none;
+                    }
 
                     consumePower(25f / 60f);
                     consumeLiquid(XenLiquids.oxygen, 0.8f / 60f).boost();
@@ -503,21 +519,27 @@ public class XenBlocks {
                 energyChargedDrill = new Drill("energy-charged-drill"){{
                     requirements(Category.production, with(XenItems.damascus, 80, XenItems.protexide, 65, XenItems.zinc, 50, XenItems.gold, 15));
 
-                    drillEffect = new MultiEffect(
-                            new ParticleEffect(){{
-                                particles = 10;
-                                length = 170;
-                                lifetime = 520;
-                                sizeFrom = 2f;
-                                sizeTo = 6.5f;
-                                cone = 6;
-                                baseRotation = 50;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("aab3bfa1");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                            }});
+                    if(XenVars.xenroseBlocksEffects) {
+                        drillEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 18;
+                                    length = 170;
+                                    lifetime = 520;
+                                    sizeFrom = 2f;
+                                    sizeTo = 6.5f;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("aab3bfa1");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }else{
+                        drillEffect = Fx.none;
+                    }
+
+                    squareSprite = false;
                     tier = 6;
                     drillTime = 380;
                     size = 3;
@@ -529,37 +551,43 @@ public class XenBlocks {
                 airMechanicalDrill = new MechanicalDrill("air-mechanical-drill"){{
                     requirements(Category.production, with(XenItems.damascus, 120, XenItems.dantstalin, 65, XenItems.zinc, 50, XenItems.gold, 15));
 
-                    drillEffect = new MultiEffect(
-                            new ParticleEffect(){{
-                                particles = 4;
-                                length = 170;
-                                lifetime = 520;
-                                sizeFrom = 2f;
-                                sizeTo = 6.5f;
-                                cone = 6;
-                                baseRotation = 50;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("c6cfdab1");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                            }},
-                            new ParticleEffect(){{
-                                particles = 3;
-                                length = 170;
-                                lifetime = 520;
-                                sizeFrom = 2f;
-                                sizeTo = 6.5f;
-                                cone = 6;
-                                baseRotation = 40;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("9fadbc77");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                    }});
+                    if(XenVars.xenroseBlocksEffects) {
+                        drillEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 9;
+                                    length = 170;
+                                    lifetime = 520;
+                                    sizeFrom = 2f;
+                                    sizeTo = 6.5f;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("c6cfdab1");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 9;
+                                    length = 170;
+                                    lifetime = 520;
+                                    sizeFrom = 2f;
+                                    sizeTo = 6.5f;
+                                    cone = 6;
+                                    baseRotation = 40;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("9fadbc77");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }else{
+                        drillEffect = Fx.none;
+                    }
+
+                    squareSprite = false;
                     tier = 6;
-                    drillTime = 300;
+                    drillTime = 430;
                     size = 3;
                     consumeLiquid(XenLiquids.oxygen, 0.5f / 60f);
                     consumePower(220f / 60f);
@@ -574,35 +602,81 @@ public class XenBlocks {
                     hasItems = true;
                     liquidCapacity = 35f;
                     craftTime = 3 * 60f;
-                    craftEffect = new MultiEffect(
-                        new ParticleEffect(){{
-                        particles = 4;
-                        length = 210;
-                        lifetime = 670;
-                        sizeFrom = 1.5f;
-                        sizeTo = 6;
-                        cone = 6;
-                        baseRotation = 50;
-                        useRotation = false;
-                        interp = pow3Out;
-                        colorFrom = Color.valueOf("ffbd7f9d");
-                        colorTo = Color.valueOf("f29d4e00");
-                        layer = 100.2f;
-                    }},
-                    new ParticleEffect(){{
-                        particles = 3;
-                        length = 210;
-                        lifetime = 670;
-                        sizeFrom = 1.5f;
-                        sizeTo = 5;
-                        cone = 6;
-                        baseRotation = 50;
-                        useRotation = false;
-                        interp = pow3Out;
-                        colorFrom = Color.valueOf("ff8a1c95");
-                        colorTo = Color.valueOf("f29d4e00");
-                        layer = 100.2f;
-                    }});
+                    if(XenVars.xenroseBlocksEffects) {
+                        craftEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 8;
+                                    length = 210;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 6;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffbd7f9d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 10;
+                                    length = 210;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 6;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffbd7f9d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 8;
+                                    length = 210;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 5;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ff8a1c95");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }else{
+                        craftEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 2;
+                                    length = 125;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 6;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffbd7f9d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 3;
+                                    length = 130;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 5;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ff8a1c95");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }
 
                     drawer = new DrawMulti(new DrawRegion("-bottom"),
                             new DrawParticles() {{
@@ -631,7 +705,7 @@ public class XenBlocks {
                     consumeLiquid(Liquids.water, 4f / 60f);
                     consumeItems(with(XenItems.damascus, 1, XenItems.zinc, 1));
                     consumePower(80f / 60f);
-                    researchCost = with(XenItems.damascus, 50, XenItems.zinc, 50);
+                    researchCost = with(XenItems.damascus, 50, XenItems.zinc, 30);
                 }};
                 crusher = new GenericCrafter("crusher"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 10, XenItems.zinc, 5));
@@ -652,7 +726,7 @@ public class XenBlocks {
 
                     consumePower(10f / 60f);
                     fogRadius = 2;
-                    researchCost = with(XenItems.damascus, 50, XenItems.zinc, 30);
+                    researchCost = with(XenItems.damascus, 80, XenItems.zinc, 55);
                 }};
                 waterReformer = new GenericCrafter("water-reformer"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 100, XenItems.zinc, 80, XenItems.gold, 55));
@@ -689,7 +763,7 @@ public class XenBlocks {
                     regionRotated1 = 3;
                     outputLiquids = LiquidStack.with(XenLiquids.oxygen, 6f / 60, Liquids.hydrogen, 5f / 60);
                     liquidOutputDirections = new int[]{1, 3};
-                    researchCost = with(XenItems.damascus, 1300, XenItems.zinc, 1240, XenItems.gold, 800);
+                    researchCost = with(XenItems.damascus, 1300, XenItems.zinc, 1400, XenItems.gold, 800);
                 }};
                 siliconCentrifuge = new GenericCrafter("silicon-centrifuge"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 100, XenItems.zinc, 80, XenItems.gold, 55));
@@ -811,13 +885,13 @@ public class XenBlocks {
                     consumeItem(XenItems.zinc, 2);
                     consumeLiquids(LiquidStack.with(XenLiquids.liquidKirmit, 46f / 60f, XenLiquids.oxygen, 2f / 60f));
                     consumePower(290f / 60f);
-                    researchCost = with(XenItems.damascus, 2110, XenItems.zinc, 1670, XenItems.gold, 1000);
+                    researchCost = with(XenItems.damascus, 2870, XenItems.zinc, 2670, XenItems.gold, 2140);
                 }};
                 waterCollerctor = new GenericCrafter("water-collector"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 150, XenItems.zinc, 120, XenItems.dantstalin, 75, XenItems.gold, 50));
                     size = 4;
-                    outputLiquid = new LiquidStack(Liquids.water, 18f / 60f);
-                    liquidCapacity = 120;
+                    outputLiquid = new LiquidStack(Liquids.water, 44f / 60f);
+                    liquidCapacity = 160;
                     squareSprite = false;
                     hasLiquids = true;
                     craftTime = 1.2f * 60f;
@@ -837,7 +911,7 @@ public class XenBlocks {
                                 particleInterp = Interp.linear;
                                 particleRad = 19f;
                                 particleSize = 2.5f;
-                            }},
+                    }},
                             new DrawParticles() {{
                                 particles = 18;
                                 color =  Color.valueOf("e0e4ffa0");
@@ -858,35 +932,81 @@ public class XenBlocks {
                     squareSprite = false;
                     hasItems = true;
                     craftTime = 2f * 60f;
-                    craftEffect = new MultiEffect(
-                            new ParticleEffect(){{
-                                particles = 4;
-                                length = 210;
-                                lifetime = 670;
-                                sizeFrom = 1.5f;
-                                sizeTo = 5;
-                                cone = 6;
-                                baseRotation = 50;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("ffc77d8d");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                            }},
-                            new ParticleEffect(){{
-                                particles = 5;
-                                length = 210;
-                                lifetime = 670;
-                                sizeFrom = 1.5f;
-                                sizeTo = 5;
-                                cone = 6;
-                                baseRotation = 50;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("ffaa3b8d");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                            }});
+                    if(XenVars.xenroseBlocksEffects) {
+                        craftEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 8;
+                                    length = 210;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 5;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffc77d8d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 11;
+                                    length = 210;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 5;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffc77d8d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 10;
+                                    length = 210;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 5;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffaa3b8d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }else{
+                        craftEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 2;
+                                    length = 110;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 5;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffc77d8d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 4;
+                                    length = 105;
+                                    lifetime = 670;
+                                    sizeFrom = 1.5f;
+                                    sizeTo = 5;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("ffaa3b8d");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }
 
                     drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(XenLiquids.liquidOrinil, 2.8f),
                             new DrawParticles() {{
@@ -949,35 +1069,66 @@ public class XenBlocks {
                     liquidCapacity = 50;
                     hasLiquids = true;
                     craftTime = 1.6f * 60f;
-                    craftEffect = new MultiEffect(
-                            new ParticleEffect(){{
-                                particles = 14;
-                                length = 270;
-                                lifetime = 730;
-                                sizeFrom = 2.3f;
-                                sizeTo = 6;
-                                cone = 6;
-                                baseRotation = 50;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("e1c1ffaa");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                            }},
-                            new ParticleEffect(){{
-                                particles = 10;
-                                length = 270;
-                                lifetime = 730;
-                                sizeFrom = 2.3f;
-                                sizeTo = 6;
-                                cone = 6;
-                                baseRotation = 50;
-                                useRotation = false;
-                                interp = pow3Out;
-                                colorFrom = Color.valueOf("c29cffab");
-                                colorTo = Color.valueOf("f29d4e00");
-                                layer = 100.2f;
-                            }});
+                    if(XenVars.xenroseBlocksEffects) {
+                        craftEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 14;
+                                    length = 270;
+                                    lifetime = 730;
+                                    sizeFrom = 2.3f;
+                                    sizeTo = 6;
+                                    cone = 6;
+                                    baseRotation = 42;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("e1c1ffaa");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 14;
+                                    length = 270;
+                                    lifetime = 730;
+                                    sizeFrom = 2.3f;
+                                    sizeTo = 6;
+                                    cone = 6;
+                                    baseRotation = 60;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("e1c1ffaa");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 10;
+                                    length = 270;
+                                    lifetime = 730;
+                                    sizeFrom = 2.3f;
+                                    sizeTo = 6;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("c29cffab");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }else{
+                        craftEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    length = 125;
+                                    lifetime = 730;
+                                    sizeFrom = 2.3f;
+                                    sizeTo = 6;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("e1c1ffaa");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                        }});
+                    }
 
                     drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(XenLiquids.liquidKirmit, 3.5f),
                             new DrawParticles() {{
@@ -1094,7 +1245,7 @@ public class XenBlocks {
                     fogRadius = 3;
                     consumePower(1.666666666666667f);
                     consumeLiquid(XenLiquids.liquidKirmit, 14f/60f);
-                    researchCost = with(XenItems.damascus, 250,XenItems.zinc, 250, XenItems.gold, 150);
+                    researchCost = with(XenItems.damascus, 260,XenItems.zinc, 220, XenItems.gold, 100);
                 }};
                 hoverUnitsAssembler = new UnitFactory("hover-units-assembler"){{
                     requirements(Category.units, with(XenItems.damascus, 180,XenItems.zinc, 130, XenItems.gold, 60));
@@ -1132,7 +1283,7 @@ public class XenBlocks {
                     );
 
                     constructTime = 28f * 60f;
-                    researchCost = with(XenItems.damascus, 4920, XenItems.zinc, 3560, XenItems.gold, 1890, XenItems.dantstalin, 200);
+                    researchCost = with(XenItems.damascus, 4920, XenItems.zinc, 4560, XenItems.dantstalin, 3200, XenItems.gold, 1890);
                 }};
                 thermalReassemblingFactory = new Reconstructor("thermal-reassembling-factory"){{
                     requirements(Category.units, with(XenItems.damascus, 500, XenItems.zinc, 320, XenItems.dantstalin, 240, XenItems.protexide, 100, XenItems.gold, 50));
@@ -1166,18 +1317,18 @@ public class XenBlocks {
                     canOverdrive = false;
                     underBullets = true;
                     health = 420;
-                    researchCost = ItemStack.with(XenItems.damascus, 1670f, XenItems.zinc, 1520);
+                    researchCost = ItemStack.with(XenItems.damascus, 860, XenItems.zinc, 750);
                 }};
                 cargoRouter = new PayloadRouter("cargo-router"){{
                     requirements(Category.units, with(XenItems.damascus, 40, XenItems.zinc, 15));
                     canOverdrive = false;
                     health = 500;
-                    researchCost = ItemStack.with(XenItems.damascus, 1600, XenItems.zinc, 1220);
+                    researchCost = ItemStack.with(XenItems.damascus, 950, XenItems.zinc, 820);
                 }};
 
                 //turrets
                 samum = new AccelerationTurret("samum") {{
-                    requirements(Category.turret, with(XenItems.damascus, 45, XenItems.zinc, 20));
+                    requirements(Category.turret, with(XenItems.damascus, 70, XenItems.zinc, 40));
 
                     ammo(
                             XenItems.zinc, new BasicBulletType(4f, 25){{
@@ -1287,13 +1438,14 @@ public class XenBlocks {
                     size = 2;
                     range = 247f;
                     reload = 60f;
+                    ammoPerShot = 2;
                     consumeAmmoOnce = false;
                     recoil = 1.8f;
                     shake = 1f;
                     shoot.shots = 5;
                     shoot.shotDelay = 3f;
                     shootSound = Sounds.dullExplosion;
-                    researchCost = ItemStack.with(XenItems.damascus, 50f, XenItems.zinc, 25);
+                    researchCost = ItemStack.with(XenItems.damascus, 100, XenItems.zinc, 60);
                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 15f / 60f));
                 }};
                 desiccation = new AccelerationTurret("desiccation"){{
@@ -1365,7 +1517,7 @@ public class XenBlocks {
                     shake = 0.3f;
                     shootSound = Sounds.dullExplosion;
                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 15f / 60f));
-                    researchCost = ItemStack.with(XenItems.damascus, 900f, XenItems.zinc, 860, XenItems.gold, 550);
+                    researchCost = ItemStack.with(XenItems.damascus, 480f, XenItems.zinc, 410, XenItems.gold, 240);
                 }};
                 overflow = new PowerTurret("overflow"){{
                     requirements(Category.turret, with(XenItems.damascus, 90, XenItems.zinc, 75, XenItems.gold, 40));
@@ -1395,7 +1547,6 @@ public class XenBlocks {
                                 }};
                             }};
                         }};
-                    squareSprite = false;
                     shootEffect = Fx.none;
                     floating = true;
                     outlineColor = Color.valueOf("211c18");
@@ -1448,7 +1599,7 @@ public class XenBlocks {
                                 }};
                             }},
                             XenLiquids.liquidOrinil, new BasicBulletType(6.8f,19,"xenrose-basic-bullet1"){{
-                                width = 10;
+                                width = 14;
                                 height = 16;
                                 lifetime = 80f;
                                 drag = 0.03f;
@@ -1468,7 +1619,7 @@ public class XenBlocks {
                                     colorFrom = Color.valueOf("ffd297");
                                     colorTo = Color.valueOf("e18d47");
                                     particles = 1;
-                                    sizeFrom = 3.5f;
+                                    sizeFrom = 3;
                                     sizeTo = 0;
                                 }};
                             }});
@@ -1488,7 +1639,7 @@ public class XenBlocks {
 
                 }};
                 merge = new AccelerationTurret("merge"){{
-                    requirements(Category.turret, with(XenItems.damascus, 85, XenItems.zinc, 60, XenItems.dantstalin, 45, XenItems.gold, 20));
+                    requirements(Category.turret, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 30, XenItems.gold, 20));
                     ammo(
                             XenItems.damascus, new BasicBulletType(4.8f, 45, "xenrose-basic-bullet1"){{
                                 width = 13;
@@ -1557,6 +1708,7 @@ public class XenBlocks {
                 }};
                 calmness = new AccelerationTurret("calmness"){{
                         requirements(Category.turret, with(XenItems.damascus, 150, XenItems.zinc, 100, XenItems.gold, 80, XenItems.protexide, 50));
+
                         ammo(
                                 XenItems.gold, new BasicBulletType(5.4f, 70, "xenrose-rhomb-bullet"){{
                                     width = 13f;
@@ -1670,7 +1822,7 @@ public class XenBlocks {
                                     shoot.shotDelay = 6f;
                                     shoot.firstShotDelay = 70;
                                     inaccuracy = 14;
-                                    
+
                                     squareSprite = false;
                                     floating = true;
                                     outlineColor = Color.valueOf("211c18");

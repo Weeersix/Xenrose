@@ -1,17 +1,20 @@
 package xenrose.util;
 
-import arc.*;
-import arc.scene.style.*;
-import mindustry.content.*;
+import arc.Core;
+import arc.scene.style.TextureRegionDrawable;
 
 public class XenIcons {
 
     public static TextureRegionDrawable
-            armorAdd, armorRemove, xenDiscord;
+            armorAdd, armorRemove, craftItem, craftLiquid, xenroseSetting, graphicsIcon, xenDiscord;
 
     public static void init() {
         armorAdd = get("armorAdd");
         armorRemove = get("armorRemove");
+        craftItem = get("craft-item");
+        craftLiquid = get("craft-liquid");
+        xenroseSetting = get("xenrose-setting");
+        graphicsIcon = get("xenrose-graphics-icon");
         xenDiscord = get("xenrose-discord");
     }
 
