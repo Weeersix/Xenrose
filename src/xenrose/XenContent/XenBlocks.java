@@ -485,7 +485,7 @@ public class XenBlocks {
                     requirements(Category.production, ItemStack.with(XenItems.damascus, 15));
 
                     squareSprite = false;
-                    drillTime = 505;
+                    drillTime = 410;
                     size = 2;
                     range = 6;
                     fogRadius = 2;
@@ -515,38 +515,6 @@ public class XenBlocks {
                     consumeLiquid(XenLiquids.oxygen, 0.8f / 60f).boost();
 
                     researchCost = ItemStack.with(XenItems.damascus, 20);
-                }};
-                energyChargedDrill = new Drill("energy-charged-drill"){{
-                    requirements(Category.production, with(XenItems.damascus, 80, XenItems.protexide, 65, XenItems.zinc, 50, XenItems.gold, 15));
-
-                    if(XenVars.xenroseBlocksEffects) {
-                        drillEffect = new MultiEffect(
-                                new ParticleEffect() {{
-                                    particles = 18;
-                                    length = 170;
-                                    lifetime = 520;
-                                    sizeFrom = 2f;
-                                    sizeTo = 6.5f;
-                                    cone = 6;
-                                    baseRotation = 50;
-                                    useRotation = false;
-                                    interp = pow3Out;
-                                    colorFrom = Color.valueOf("aab3bfa1");
-                                    colorTo = Color.valueOf("f29d4e00");
-                                    layer = 100.2f;
-                                }});
-                    }else{
-                        drillEffect = Fx.none;
-                    }
-
-                    squareSprite = false;
-                    tier = 6;
-                    drillTime = 380;
-                    size = 3;
-                    consumeLiquid(Liquids.hydrogen, 3f / 60f);
-                    consumePower(120f / 60f);
-
-                    researchCost = with(XenItems.damascus, 1450,XenItems.protexide, 1350, XenItems.zinc, 1300, XenItems.gold, 900);
                 }};
                 airMechanicalDrill = new MechanicalDrill("air-mechanical-drill"){{
                     requirements(Category.production, with(XenItems.damascus, 120, XenItems.dantstalin, 65, XenItems.zinc, 50, XenItems.gold, 15));
@@ -587,10 +555,42 @@ public class XenBlocks {
 
                     squareSprite = false;
                     tier = 6;
-                    drillTime = 430;
+                    drillTime = 300;
                     size = 3;
                     consumeLiquid(XenLiquids.oxygen, 0.5f / 60f);
                     consumePower(220f / 60f);
+                }};
+                energyChargedDrill = new Drill("energy-charged-drill"){{
+                    requirements(Category.production, with(XenItems.damascus, 80, XenItems.protexide, 65, XenItems.zinc, 50, XenItems.gold, 15));
+
+                    if(XenVars.xenroseBlocksEffects) {
+                        drillEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 18;
+                                    length = 170;
+                                    lifetime = 520;
+                                    sizeFrom = 2f;
+                                    sizeTo = 6.5f;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("aab3bfa1");
+                                    colorTo = Color.valueOf("f29d4e00");
+                                    layer = 100.2f;
+                                }});
+                    }else{
+                        drillEffect = Fx.none;
+                    }
+
+                    squareSprite = false;
+                    tier = 6;
+                    drillTime = 380;
+                    size = 3;
+                    consumeLiquid(Liquids.hydrogen, 3f / 60f);
+                    consumePower(120f / 60f);
+
+                    researchCost = with(XenItems.damascus, 1450,XenItems.protexide, 1350, XenItems.zinc, 1300, XenItems.gold, 900);
                 }};
 
                 //production
