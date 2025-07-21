@@ -895,7 +895,7 @@ public class XenBlocks {
                     squareSprite = false;
                     hasLiquids = true;
                     craftTime = 1.2f * 60f;
-                    drawer = new DrawMulti(new DrawRegion("-mid"), new DrawLiquidTile(Liquids.water, 3.2f), new DrawRegion("-bottom"), new DrawDefault(), new DrawGlowRegion(),
+                    drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.water, 3.2f), new DrawDefault(),
                             new DrawParticles() {{
                                 particles = 12;
                                 color =  Color.valueOf("e0e4ffa0");
