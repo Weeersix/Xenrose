@@ -7,11 +7,11 @@ import mindustry.graphics.g3d.HexMesh;
 import mindustry.graphics.g3d.HexSkyMesh;
 import mindustry.graphics.g3d.MultiMesh;
 import mindustry.type.Planet;
-import mindustry.world.meta.Env;
 import xenrose.PlanetGenerator.XenPlanetGenerator;
+import xenrose.core.XenVars;
 import xenrose.world.meta.Environment;
 
-public class XenPlanets{
+public class XenPlanets {
     public static Planet
             xenor;
 
@@ -30,7 +30,7 @@ public class XenPlanets{
             allowLaunchSchematics = true;
             prebuildBase = false;
             defaultCore = XenBlocks.coreSunrise;
-            defaultEnv = Environment.warm | Env.terrestrial;
+            defaultEnv = XenVars.xenroseParticles ? (Environment.warm | Environment.terrestrial) : (Environment.warmLite | Environment.terrestrial);
             clearSectorOnLose = false;
             ruleSetter = r -> {
                 r.waveTeam = XenTeams.renars;

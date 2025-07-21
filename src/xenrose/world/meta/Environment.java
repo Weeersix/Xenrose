@@ -4,6 +4,7 @@ import mindustry.world.meta.Env;
 
 public class Environment extends Env {
     public static final int
-            warm = 1 << 18;
+            warm = 1 << 18,
+            warmLite = 1 << 19;
 }
 
