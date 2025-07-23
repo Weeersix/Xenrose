@@ -36,6 +36,7 @@ import mindustry.world.blocks.liquid.LiquidJunction;
 import mindustry.world.blocks.liquid.LiquidRouter;
 import mindustry.world.blocks.payloads.PayloadConveyor;
 import mindustry.world.blocks.payloads.PayloadRouter;
+import mindustry.world.blocks.power.Battery;
 import mindustry.world.blocks.power.BeamNode;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
@@ -85,7 +86,7 @@ public class XenBlocks {
     //production
     pyrometallurgicalInstallation, crusher, waterReformer, siliconCentrifuge, liquidSeparator, dantstalinSmelter, waterCollerctor, orinilCrucible, energyStabilizingBoiler,energyChargingSplitter,
     //power
-    kirmiteEvaporator, cableNode,
+    kirmiteEvaporator, cableNode, accumulator,
     //walls
     reinforcedDamascusWall, reinforcedDamascusWallLarge, diocasiumArmor, enemyShieldWall, enemyShieldWallLarge,
     //units
@@ -1196,6 +1197,16 @@ public class XenBlocks {
                     size = 1;
                     range = 7;
                     researchCost = with(XenItems.zinc, 20);
+                }};
+                accumulator = new Battery("accumulator"){{
+                    requirements(Category.power, with(XenItems.zinc, 40, XenItems.gold, 15));
+
+                    size = 2;
+                    emptyLightColor = Color.valueOf("332155");
+                    fullLightColor = Color.valueOf("9265bd");
+                    consumePowerBuffered(4200);
+
+                    researchCost = ItemStack.with(XenItems.zinc, 420, XenItems.gold, 100);
                 }};
 
                 //walls
