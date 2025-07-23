@@ -1,29 +1,22 @@
 package xenrose.PlanetGenerator;
 
-import arc.graphics.*;
-import arc.math.*;
-import arc.math.geom.*;
-import arc.util.*;
-import arc.util.noise.*;
-import mindustry.content.Blocks;
+import arc.graphics.Color;
+import arc.math.Mathf;
+import arc.math.geom.Vec3;
+import arc.util.Tmp;
+import arc.util.noise.Ridged;
+import arc.util.noise.Simplex;
 import mindustry.game.Schematics;
-import mindustry.game.SectorInfo;
-import mindustry.game.Team;
-import mindustry.maps.generators.*;
-import mindustry.type.Sector;
+import mindustry.maps.generators.PlanetGenerator;
 import mindustry.world.Block;
 import xenrose.XenContent.XenBlocks;
-import xenrose.XenContent.XenPlanets;
-import xenrose.XenContent.XenTeams;
-
-import static arc.graphics.Color.valueOf;
 
 public class XenPlanetGenerator extends PlanetGenerator{
     public float heightScl = 0.9f, octaves = 8, persistence = 0.7f, heightPow = 3f, heightMult = 1.6f;
 
     Color c1 = Color.valueOf("5057a6"), c2 = Color.valueOf("272766");
 
-    Block[] terrain = {XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.damascusWall,XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall};
+    Block[] terrain = {XenBlocks.orinilWall, XenBlocks.orinilWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.damascusWall,XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall};
 
     public static float arkThresh = 0.28f, arkScl = 0.83f;
     public static int arkSeed = 7, arkOct = 2;
@@ -49,9 +42,6 @@ public class XenPlanetGenerator extends PlanetGenerator{
     @Override
     public Color getColor(Vec3 position){
         Block block = getBlock(position);
-
-        float depth = Simplex.noise3d(seed, 2, 0.56, 1.7f, position.x, position.y, position.z) / 2f;
-        c1.set(c1).lerp(c2, Mathf.clamp(Mathf.round(depth, 0.15f))).a(1f - 0.2f).toFloatBits();
 
         if(block == XenBlocks.burnedDamscusWall) block = XenBlocks.burnedDamscusWall;
 
@@ -103,6 +93,8 @@ public class XenPlanetGenerator extends PlanetGenerator{
             result = XenBlocks.kirmiteStoneWall;
         }else if(ice > redThresh - 0.4){
             result = XenBlocks.burnedDamscusWall;
+        }else if(ice > redThresh - 0.6) {
+            result = XenBlocks.orinilWall;
         }
 
         return result;
