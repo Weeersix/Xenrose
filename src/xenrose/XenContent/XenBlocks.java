@@ -924,7 +924,7 @@ public class XenBlocks {
 
                     consumePower(250f / 60f);
                     fogRadius = 4;
-                    researchCost = with(XenItems.damascus, 3950, XenItems.zinc, 3670, XenItems.dantstalin, 1630, XenItems.gold, 2740);
+                    researchCost = with(XenItems.damascus, 3950, XenItems.zinc, 3670, XenItems.dantstalin, 1630, XenItems.gold, 930);
                 }};
                 orinilCrucible = new GenericCrafter("orinil-crucible"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 90, Items.tungsten, 80, XenItems.zinc, 65, XenItems.gold, 40));
