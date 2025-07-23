@@ -1634,7 +1634,7 @@ public class XenBlocks {
                                     sizeTo = 0;
                                 }};
                             }});
-                    shoot = new ShootSpread(11,6);
+                    shoot = new ShootSpread(16,6);
 
                     squareSprite = false;
                     floating = true;
@@ -1696,6 +1696,7 @@ public class XenBlocks {
                             moves.add(new PartMove(PartProgress.recoil, 0, 0, -0.7f));
                         }});
                     }};
+                    shoot = new ShootSpread(10, 5);
 
                     squareSprite = false;
                     floating = true;
@@ -1710,9 +1711,6 @@ public class XenBlocks {
                     consumePower(140f / 60f);
                     shootY = 22f / 4f;
                     recoil = 1.45f;
-                    shoot.shots = 15;
-                    shoot.firstShotDelay = 20;
-                    inaccuracy = 19;
                     shootSound = Sounds.dullExplosion;
                     researchCost = ItemStack.with(XenItems.damascus, 4760, XenItems.zinc, 4360, XenItems.dantstalin, 2900, XenItems.gold, 2750);
                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 12f / 60f));
@@ -1834,6 +1832,7 @@ public class XenBlocks {
                                     shoot.firstShotDelay = 70;
                                     inaccuracy = 14;
 
+                                    itemCapacity = 30;
                                     squareSprite = false;
                                     floating = true;
                                     outlineColor = Color.valueOf("211c18");

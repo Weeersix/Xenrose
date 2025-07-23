@@ -56,6 +56,7 @@ public class XenTechTree {
             });
             //Power Blocks
             node(XenBlocks.kirmiteEvaporator, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
+                node(XenBlocks.accumulator, Seq.with(new Objectives.SectorComplete(XenSectorPresets.BurntHills)), () -> {});
                 node(XenBlocks.cableNode, () -> {});
             });
             //Production
