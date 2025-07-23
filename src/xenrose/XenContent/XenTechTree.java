@@ -60,10 +60,11 @@ public class XenTechTree {
             });
             //Production
             node(XenBlocks.pyrometallurgicalInstallation, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
-                node(XenBlocks.liquidSeparator, Seq.with(new Objectives.Research(XenBlocks.waterReformer)), () -> {});
                 node(XenBlocks.crusher, () -> {
                     node(XenBlocks.waterReformer, Seq.with(new Objectives.SectorComplete(XenSectorPresets.KirmitCoast)), () -> {
-                        node(XenBlocks.dantstalinSmelter, Seq.with(new Objectives.OnSector(XenSectorPresets.OrinilFault)), () -> {});
+                        node(XenBlocks.dantstalinSmelter, Seq.with(new Objectives.OnSector(XenSectorPresets.OrinilFault)), () -> {
+                            node(XenBlocks.waterCollerctor, Seq.with(new Objectives.Produce(XenItems.dantstalin)), () -> {});
+                        });
                     });
                     node(XenBlocks.orinilCrucible, Seq.with(new Objectives.Produce(XenLiquids.liquidOrinil)), () -> {
                         node(XenBlocks.energyChargingSplitter, () -> {});
@@ -103,7 +104,6 @@ public class XenTechTree {
                     node(XenSectorPresets.LightLowland, Seq.with(new Objectives.SectorComplete(XenSectorPresets.BurntHills)), () -> {
                         node(XenSectorPresets.OrinilFault, Seq.with(new Objectives.SectorComplete(XenSectorPresets.LightLowland), new Objectives.Research(XenBlocks.waterReformer), new Objectives.Research(XenBlocks.overflow)), () -> {});
                     });
-                    node(XenSectorPresets.KirmiteStrait, Seq.with(new Objectives.SectorComplete(XenSectorPresets.BurntHills)), () -> {});
                 });
                 node(XenSectorPresets.DryingThickets, Seq.with(new Objectives.SectorComplete(XenSectorPresets.Landing)), () -> {
                     node(XenSectorPresets.KirmitCoast, Seq.with(new Objectives.Research(XenBlocks.hoverUnitsAssembler)), () -> {});

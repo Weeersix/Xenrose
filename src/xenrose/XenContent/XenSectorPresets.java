@@ -4,7 +4,7 @@ import mindustry.type.SectorPreset;
 
 public class XenSectorPresets {
     public static SectorPreset
-            Landing, BurntHills, DryingThickets, LightLowland, KirmiteStrait, KirmitCoast, OrinilFault;
+            Landing, BurntHills, DryingThickets, LightLowland, KirmitCoast, OrinilFault;
     public static void load(){
         Landing = new SectorPreset("Landing", XenPlanets.xenor, 1){{
             alwaysUnlocked = true;
@@ -26,11 +26,6 @@ public class XenSectorPresets {
         LightLowland = new SectorPreset("Light-lowland", XenPlanets.xenor, 24){{
             difficulty = 3;
             captureWave = 15;
-            showSectorLandInfo = true;
-        }};
-        KirmiteStrait = new SectorPreset("Kirmite-strait", XenPlanets.xenor, 35){{
-            difficulty = 3;
-            captureWave = 20;
             showSectorLandInfo = true;
         }};
         KirmitCoast = new SectorPreset("Kirmit-coast", XenPlanets.xenor, 3){{
