@@ -486,7 +486,7 @@ public class XenBlocks {
                     requirements(Category.production, ItemStack.with(XenItems.damascus, 15));
 
                     squareSprite = false;
-                    drillTime = 410;
+                    drillTime = 320;
                     size = 2;
                     range = 6;
                     fogRadius = 2;
@@ -556,7 +556,7 @@ public class XenBlocks {
 
                     squareSprite = false;
                     tier = 6;
-                    drillTime = 300;
+                    drillTime = 240;
                     size = 3;
                     consumeLiquid(XenLiquids.oxygen, 0.5f / 60f);
                     consumePower(220f / 60f);
