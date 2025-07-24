@@ -44,6 +44,8 @@ public class XenPlanetGenerator extends PlanetGenerator{
         Block block = getBlock(position);
 
         if(block == XenBlocks.burnedDamscusWall) block = XenBlocks.burntDamascusWall;
+
+        out.set(block.mapColor).a(1f - block.albedo);
     }
 
     float rawHeight(Vec3 position){
