@@ -71,7 +71,7 @@ public class RecoveringCore extends CoreBlock {
     public void load(){
         super.load();
         glowRegion = Core.atlas.find(name + "-glow");
-        uiIcon = fullIcon = editorIcon = Core.atlas.find(name + "-full");
+        uiIcon = fullIcon = Core.atlas.find(name + "-full");
     }
 
     public class RecoveringCoreBuild extends CoreBuild{

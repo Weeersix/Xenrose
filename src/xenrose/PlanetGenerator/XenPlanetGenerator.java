@@ -16,7 +16,7 @@ public class XenPlanetGenerator extends PlanetGenerator{
 
     Color c1 = Color.valueOf("5057a6"), c2 = Color.valueOf("272766");
 
-    Block[] terrain = {XenBlocks.orinilWall, XenBlocks.orinilWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.damascusWall,XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall};
+    Block[] terrain = {XenBlocks.orinilWall, XenBlocks.orinilWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.burnedDamscusWall, XenBlocks.damascusWall, XenBlocks.damascusWall,XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall, XenBlocks.burnedDamscusWall};
 
     public static float arkThresh = 0.28f, arkScl = 0.83f;
     public static int arkSeed = 7, arkOct = 2;
@@ -40,12 +40,10 @@ public class XenPlanetGenerator extends PlanetGenerator{
     }
 
     @Override
-    public Color getColor(Vec3 position){
+    public void getColor(Vec3 position, Color out){
         Block block = getBlock(position);
 
-        if(block == XenBlocks.burnedDamscusWall) block = XenBlocks.burnedDamscusWall;
-
-        return Tmp.c1.set(block.mapColor).a(1f - block.albedo);
+        if(block == XenBlocks.burnedDamscusWall) block = XenBlocks.burntDamascusWall;
     }
 
     float rawHeight(Vec3 position){

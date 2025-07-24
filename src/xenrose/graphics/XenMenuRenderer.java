@@ -120,7 +120,7 @@ public class XenMenuRenderer extends MenuRenderer {
 
 
                         if(wall != Blocks.air && Mathf.chance(0.7)){
-                            wall = XenBlocks.burnedDamscusFloor;
+                            wall = XenBlocks.burnedDamscusWall;
                         }
                     }
                 }
