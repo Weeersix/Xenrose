@@ -32,7 +32,7 @@ public class XenSectorPresets {
             difficulty = 3;
             showSectorLandInfo = true;
         }};
-        OrinilFault = new SectorPreset("Orinil-fault", XenPlanets.xenor, 43){{
+        OrinilFault = new SectorPreset("Orinil-fault", XenPlanets.xenor, 20){{
             difficulty = 5;
             showSectorLandInfo = true;
         }};
