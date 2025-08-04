@@ -28,9 +28,14 @@ public class XenTechTree {
             //Defense
             node(XenBlocks.samum, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
                 node(XenBlocks.desiccation, () -> {
-                    node(XenBlocks.merge, Seq.with(new Objectives.OnSector(XenSectorPresets.BurntHills)), () -> {});
+                    node(XenBlocks.alignment, Seq.with(new Objectives.SectorComplete(XenSectorPresets.OrinilFault)), () -> {
+                        node(XenBlocks.merge, Seq.with(new Objectives.OnSector(XenSectorPresets.BurntHills)), () -> {
+                        });
+                    });
                     node(XenBlocks.tributary, () -> {});
-                    node(XenBlocks.overflow, Seq.with(new Objectives.OnSector(XenSectorPresets.BurntHills)), () -> {});
+                    node(XenBlocks.overflow, Seq.with(new Objectives.OnSector(XenSectorPresets.BurntHills)), () -> {
+                        node(XenBlocks.shimmer, () -> {});
+                    });
                 });
                 node(XenBlocks.calmness, () -> {});
                 node(XenBlocks.reinforcedDamascusWall, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {

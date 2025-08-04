@@ -23,6 +23,7 @@ import mindustry.type.LiquidStack;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.ShieldWall;
+import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
 import mindustry.world.blocks.distribution.Conveyor;
@@ -94,7 +95,7 @@ public class XenBlocks {
     //payload
     cargoBelt, cargoRouter,
     //turrets
-    samum, desiccation, overflow, tributary, merge, calmness,
+    samum, desiccation, overflow, tributary, merge, shimmer, calmness, alignment,
     //storage
     coreSunrise, coreZenith;
 
@@ -1715,6 +1716,141 @@ public class XenBlocks {
                     researchCost = ItemStack.with(XenItems.damascus, 4760, XenItems.zinc, 4360, XenItems.dantstalin, 2900, XenItems.gold, 2750);
                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 12f / 60f));
                 }};
+                shimmer = new ItemTurret("shimmer"){{
+                    requirements(Category.turret, with(XenItems.damascus, 100, XenItems.zinc, 75, XenItems.gold, 40, XenItems.dantstalin, 35));
+
+                    ammo(
+                            XenItems.dantstalin, new ArtilleryBulletType(5.2f, 55, "xenrose-star-bullet"){{
+                                width = height = 10f;
+                                lifetime = 70f;
+                                drag = 0.02f;
+                                splashDamage = 135;
+                                splashDamageRadius = 54;
+                                ammoMultiplier = 2;
+                                trailWidth = 2.8f;
+                                trailLength = 13;
+                                lifeScaleRandMin = 2;
+                                lifeScaleRandMax = 4;
+                                velocityRnd = 0.6f;
+                                buildingDamageMultiplier = 0.2f;
+                                backColor = Color.valueOf("6c9395");
+                                frontColor = trailColor = Color.valueOf("c4e6e0");
+                                trailEffect = Fx.none;
+                                despawnSound = Sounds.dullExplosion;
+
+                                chargeEffect = new MultiEffect(
+                                        new WaveEffect(){{
+                                            lifetime = 50;
+                                            strokeFrom = 0;
+                                            strokeTo = 3;
+                                            colorFrom = Color.valueOf("c4e6e0");
+                                            colorTo = Color.valueOf("6c9395");
+                                            sizeFrom = 28;
+                                            sizeTo = 0;
+                                            sides = 7;
+                                        }},
+                                        new WaveEffect(){{
+                                            lifetime = 80;
+                                            strokeFrom = 0;
+                                            strokeTo = 3;
+                                            colorFrom = Color.valueOf("c4e6e0");
+                                            colorTo = Color.valueOf("6c9395");
+                                            sizeFrom = 20;
+                                            sizeTo = 0;
+                                            sides = 9;
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 4;
+                                            length = -60;
+                                            baseLength = 60;
+                                            cone = 60;
+                                            lifetime = 50;
+                                            sizeFrom = 0;
+                                            sizeTo = 2.5f;
+                                            colorFrom = Color.valueOf("c4e6e0");
+                                            colorTo = Color.valueOf("6c9395");
+                                        }}
+                                );
+                                despawnEffect = hitEffect = new MultiEffect(
+                                        new WaveEffect(){{
+                                            lifetime = 28;
+                                            strokeFrom = 2.3f;
+                                            strokeTo = 0;
+                                            colorFrom = Color.valueOf("c4e6e0");
+                                            colorTo = Color.valueOf("6c9395");
+                                            sizeFrom = 3;
+                                            sizeTo = 19;
+                                        }}
+                                );
+                                fragBullets = 5;
+                                fragBullet = new BasicBulletType(3.6f, 30){{
+                                    lifetime = 52;
+                                    width = height = 9;
+                                    frontColor = trailColor = Color.valueOf("c4e6e0");
+                                    backColor = Color.valueOf("6c9395");
+                                    trailLength = 4;
+                                    trailWidth = 1.5f;
+                                    rotateSpeed = 9;
+                                    despawnEffect = hitEffect = new MultiEffect(
+                                            new WaveEffect(){{
+                                                lifetime = 18;
+                                                strokeFrom = 1.6f;
+                                                strokeTo = 0;
+                                                colorFrom = Color.valueOf("c4e6e0");
+                                                colorTo = Color.valueOf("6c9395");
+                                                sizeFrom = 0;
+                                                sizeTo = 9;
+                                            }}
+                                    );
+                                }};
+                            }});
+
+                    drawer = new DrawTurret() {{
+                        parts.add(new RegionPart("-blade") {{
+                                      progress = PartProgress.warmup;
+                                      moveY = -1.4f;
+                                      mirror = true;
+                                      under = false;
+                                      moves.add(new PartMove(PartProgress.recoil, 0, 0.58f, 0));
+
+                                      children.add(new RegionPart("-hand"){{
+                                          progress = PartProgress.recoil;
+                                          under = false;
+                                          mirror = true;
+                                          moveRot = -8f;
+                                          moveX = -0.7f;
+                                      }});
+                                  }},
+                                new RegionPart("-mid") {{
+                                    progress = PartProgress.warmup;
+                                    moveY = 1.7f;
+                                    mirror = false;
+                                    under = false;
+                                    moves.add(new PartMove(PartProgress.recoil, 0, -0.7f, 0f));
+                                }});
+
+                        shoot.shots = 11;
+                        shoot.firstShotDelay = 50;
+                        inaccuracy = 24;
+
+                        rotateSpeed = 3;
+                        itemCapacity = 20;
+                        scaleLifetimeOffset = 1.2f / 9f;
+                        squareSprite = false;
+                        floating = true;
+                        outlineColor = Color.valueOf("211c18");
+                        size = 3;
+                        range = 266f;
+                        reload = 355f;
+                        ammoPerShot = 2;
+                        consumeAmmoOnce = false;
+                        recoil = 1.8f;
+                        shake = 1f;
+                        shootSound = Sounds.shootAltLong;
+                        consumePower(80f / 60f);
+                        researchCost = ItemStack.with(XenItems.damascus, 2890, XenItems.zinc, 2800, XenItems.gold, 2550, XenItems.protexide, 2350);
+                    }};
+                }};
                 calmness = new AccelerationTurret("calmness"){{
                         requirements(Category.turret, with(XenItems.damascus, 150, XenItems.zinc, 100, XenItems.gold, 80, XenItems.protexide, 50));
 
@@ -1848,6 +1984,131 @@ public class XenBlocks {
                                     researchCost = ItemStack.with(XenItems.damascus, 2890, XenItems.zinc, 2800, XenItems.gold, 2550, XenItems.protexide, 2350);
                                     coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 15f / 60f));
                     }};
+                alignment = new AccelerationTurret("alignment"){{
+                    requirements(Category.turret, with(XenItems.damascus, 120, XenItems.zinc, 85, XenItems.gold, 60, XenItems.protexide, 35));
+
+                    ammo(
+                            Items.sand, new ArtilleryBulletType(2, 135, "xenrose-basic-bullet1"){{
+                                status = StatusEffects.blasted;
+                                width = 15f;
+                                height = 19f;
+                                lifetime = 145f;
+                                splashDamage = 135;
+                                splashDamageRadius = 57;
+                                ammoMultiplier = 2;
+                                trailWidth = 4.2f;
+                                trailLength = 11;
+                                buildingDamageMultiplier = 0.2f;
+                                backColor = Color.valueOf("d3ae8d");
+                                frontColor = trailColor = Color.valueOf("ffdfc2");
+                                despawnShake = 6;
+                                despawnSound = Sounds.titanExplosion;
+                                trailInterval = 1.5f;
+                                trailEffect = new ParticleEffect(){{
+                                    colorFrom = Color.valueOf("ffdfc2");
+                                    colorTo = Color.valueOf("d3ae8d");
+                                    particles = 1;
+                                    sizeFrom = 3.4f;
+                                    sizeTo = 0;
+                                }};
+                                despawnEffect = hitEffect = new MultiEffect(
+                                        new WaveEffect(){{
+                                            lifetime = 50;
+                                            colorFrom = Color.valueOf("ffdfc2");
+                                            colorTo = Color.valueOf("d3ae8d");
+                                            strokeFrom = 3;
+                                            strokeTo = 0;
+                                            sizeTo = 40;
+                                            sizeFrom = 39;
+                                        }},
+                                        new WaveEffect(){{
+                                            lifetime = 47;
+                                            colorFrom = Color.valueOf("ffdfc2");
+                                            colorTo = Color.valueOf("d3ae8d");
+                                            strokeFrom = 3.2f;
+                                            strokeTo = 0;
+                                            sizeTo = 57;
+                                            sizeFrom = 0;
+                                        }},
+                                        new ParticleEffect(){{
+                                            lifetime = 55;
+                                            length = 50;
+                                            baseLength = 0;
+                                            sizeFrom = 1.5f;
+                                            sizeTo = 0;
+                                            colorFrom = Color.valueOf("ffdfc2");
+                                            colorTo = Color.valueOf("d3ae8d");
+                                        }});
+                                fragBullets = 3;
+                                fragRandomSpread = 50;
+                                fragBullet = new ArtilleryBulletType(2f, 45, "xenrose-basic-bullet1"){{
+                                    splashDamage = 45;
+                                    splashDamageRadius = 28;
+                                    lifetime = 80;
+                                    width = 12;
+                                    height = 15;
+                                    frontColor = trailColor = Color.valueOf("ffdfc2");
+                                    backColor = Color.valueOf("d3ae8d");
+                                    trailLength = 4;
+                                    trailWidth = 1.9f;
+                                    trailInterval = 1.5f;
+                                    trailEffect = new ParticleEffect(){{
+                                        colorFrom = Color.valueOf("ffdfc2");
+                                        colorTo = Color.valueOf("d3ae8d");
+                                        particles = 1;
+                                        sizeFrom = 2.4f;
+                                        sizeTo = 0;
+                                    }};
+                                    despawnEffect = hitEffect = new MultiEffect(
+                                            new WaveEffect(){{
+                                                lifetime = 50;
+                                                colorFrom = Color.valueOf("ffdfc2");
+                                                colorTo = Color.valueOf("d3ae8d");
+                                                strokeFrom = 3;
+                                                strokeTo = 0;
+                                                sizeTo = 28;
+                                                sizeFrom = 30;
+                                            }},
+                                            new ParticleEffect(){{
+                                                lifetime = 40;
+                                                length = 27;
+                                                baseLength = 0;
+                                                sizeFrom = 1.8f;
+                                                sizeTo = 0;
+                                                colorFrom = Color.valueOf("ffdfc2");
+                                                colorTo = Color.valueOf("d3ae8d");
+                                            }});
+                                }};
+                            }});
+                    drawer = new DrawTurret() {{
+                        parts.add(new RegionPart("-blade") {{
+                            progress = PartProgress.warmup;
+                            moveX = -0.6f;
+                            mirror = true;
+                            under = false;
+                            moves.add(new PartMove(PartProgress.recoil, 0, -0.85f, 0));
+                        }});
+                    }};
+
+                    shoot.shots = 4;
+                    shoot.shotDelay = 2f;
+                    inaccuracy = 28;
+
+                    shootY = 10f / 4f;
+                    squareSprite = false;
+                    floating = true;
+                    outlineColor = Color.valueOf("211c18");
+                    size = 3;
+                    range = 455f;
+                    reload = 395f;
+                    ammoPerShot = 3;
+                    consumeAmmoOnce = false;
+                    recoil = 1.8f;
+                    shake = 1f;
+                    shootSound = Sounds.mediumCannon;
+                    researchCost = ItemStack.with(XenItems.damascus, 3639, XenItems.zinc, 3320, XenItems.gold, 2230, XenItems.protexide, 1100);
+                    coolant = consume(new ConsumeLiquid(XenLiquids.liquidOrinil, 18f / 60f));
+                }};
 
                 //storage
                 coreSunrise = new CoreBlock("core-sunrise") {{
