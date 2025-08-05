@@ -1284,7 +1284,7 @@ public class XenBlocks {
                 orinilReassembler = new Reconstructor("orinil-reassembler"){{
                     requirements(Category.units, with(XenItems.damascus, 340, XenItems.zinc, 250, XenItems.dantstalin, 70, XenItems.gold, 50));
                     size = 4;
-                    consumePower(380f / 60f);
+                    consumePower(300f / 60f);
                     consumeItems(with(XenItems.gold, 50, XenItems.dantstalin, 30));
                     consumeLiquids(LiquidStack.with(XenLiquids.liquidOrinil, 20f / 60f, XenLiquids.oxygen, 5f / 60f));
 
@@ -1294,7 +1294,7 @@ public class XenBlocks {
                             new UnitType[]{XenUnits.xanit, XenUnits.manul}
                     );
 
-                    constructTime = 28f * 60f;
+                    constructTime = 15f * 60f;
                     researchCost = with(XenItems.damascus, 4920, XenItems.zinc, 4560, XenItems.dantstalin, 3200, XenItems.gold, 1890);
                 }};
                 thermalReassemblingFactory = new Reconstructor("thermal-reassembling-factory"){{
