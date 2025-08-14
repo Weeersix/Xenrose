@@ -11,8 +11,6 @@ import arc.util.io.Writes;
 import mindustry.content.Fx;
 import mindustry.entities.units.BuildPlan;
 import mindustry.world.blocks.defense.Wall;
-import mindustry.world.meta.Stat;
-import mindustry.world.meta.StatUnit;
 import xenrose.XenContent.BlocksModifiers;
 import xenrose.type.Modifier;
 import xenrose.type.SecondModifier;
@@ -24,7 +22,6 @@ import static mindustry.Vars.state;
 public class ArmoredWall extends Wall{
     public float healReload = 1;
     public float healPercent = 7f;
-    public float healthReload = 280;
 
     public TextureRegion armorRegion;
 
@@ -34,13 +31,6 @@ public class ArmoredWall extends Wall{
         saveConfig = true;
         clearOnDoubleTap = true;
         update = true;
-    }
-
-    @Override
-    public void setStats(){
-        super.setStats();
-
-        stats.add(Stat.repairSpeed, (int)(health * healPercent / 100 * 60 / healReload), StatUnit.perSecond);
     }
 
     @Override
@@ -84,6 +74,7 @@ public class ArmoredWall extends Wall{
                         table.button(XenIcons.maxHealth, XenStyles.maxHealthButton, () -> {
                             repair = true;
                             used = true;
+                            recharge = 10000;
                             deselect();
                         }).size(68f);
                     } else {
@@ -115,6 +106,7 @@ public class ArmoredWall extends Wall{
                     table.button(XenIcons.maxHealth, XenStyles.maxHealthButton, () -> {
                         repair = true;
                         used = true;
+                        recharge = 400;
                         deselect();
                     }).size(68f);
                 }else{
@@ -135,13 +127,13 @@ public class ArmoredWall extends Wall{
 
         @Override
         public void updateTile() {
+            //Armor
             if(addArmor){
                 if(armor <= 0) {
                     maxHealth(maxHealth * 5f);
                     armor = 1;
                     health(maxHealth());
                     Fx.dooropen.at(x, y, block.size, block);
-                    lightningChance = 0.1f;
                 }
             }
 
@@ -150,27 +142,19 @@ public class ArmoredWall extends Wall{
                 Fx.dooropen.at(x, y, block.size, block);
             }
 
+            //Heal
             if(used){
-                recharge = Time.delta;
-                if(recharge >= healthReload) {
-                    used = false;
-                    if(health() >= maxHealth()) {
-                        recharge = 0;
-                    }
-                }
+                recharge -= Time.delta;
+                if(recharge <= 0) used = false;
             }
-
-            if(health() >= maxHealth()) repair = false;
-
-            if(repair) {
-                charge += Time.delta;
-            } else canHeal = false;
-
-            if(charge >= healReload && canHeal && health() < maxHealth()) {
+            charge += Time.delta;
+            if(charge >= healReload && canHeal && repair && health() < maxHealth()) {
                 charge = 0f;
 
                 heal((maxHealth() / 5) * (healPercent) / 100f);
                 recentlyHealed();
+
+                if(health() >= maxHealth()) repair = false;
             }
         }
 
