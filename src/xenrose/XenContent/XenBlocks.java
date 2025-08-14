@@ -362,6 +362,8 @@ public class XenBlocks {
                     researchCost = with(XenItems.damascus, 30);
                 }};
                 ((Conveyor)damascusConveyor).junctionReplacement = damascusJunction;
+                ((Conveyor)dantstalinConveyor).junctionReplacement = damascusJunction;
+
                 damascusRouter = new DuctRouter("damascus-router") {{
                     requirements(Category.distribution, with(XenItems.damascus, 8));
                     health = 80;
@@ -390,6 +392,7 @@ public class XenBlocks {
                     researchCost = with(XenItems.damascus, 50);
                 }};
                 ((Conveyor)damascusConveyor).bridgeReplacement = damascusBridge;
+                ((Conveyor)dantstalinConveyor).bridgeReplacement = damascusBridge;
 
                 //liquid
                 hydraulicPump = new BreackablePump("hydraulic-pump"){{
