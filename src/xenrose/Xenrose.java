@@ -53,6 +53,7 @@ public class Xenrose extends Mod {
         Log.info("Loading some example content.");
         XenShaders.load();
         XenCacheLayer.load();
+        XenStatusEffects.load();
         XenItems.load();
         XenLiquids.load();
         XenSounds.load();
@@ -61,6 +62,7 @@ public class Xenrose extends Mod {
         XenBlocks.load();
         XenPlanets.load();
         XenSectorPresets.load();
+        BlocksModifiers.load();
         XenTechTree.load();
 
         EnvRenderer.init();
@@ -75,6 +77,7 @@ public class Xenrose extends Mod {
         ui.settings.addCategory(bundle.get("setting.xenrose-graphics-title"), XenIcons.graphicsIcon, t -> {
             t.checkPref("@settings.particles", true);
             t.checkPref("@settings.blocks-effects", true);
+            t.checkPref("@settings.units-effects", true);
         });
     }
 }

@@ -40,7 +40,8 @@ public class XenTechTree {
                 node(XenBlocks.calmness, () -> {});
                 node(XenBlocks.reinforcedDamascusWall, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
                     node(XenBlocks.reinforcedDamascusWallLarge, () -> {
-                        node(XenBlocks.diocasiumArmor, Seq.with(new Objectives.Produce(XenItems.diocasium)), () -> {});
+                        node(BlocksModifiers.diocasiumArmor, () -> {});
+                        node(BlocksModifiers.healTechTree, () -> {});
                     });
                 });
             });

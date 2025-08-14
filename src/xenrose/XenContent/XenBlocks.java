@@ -56,6 +56,7 @@ import xenrose.core.XenVars;
 import xenrose.graphics.Rotor;
 import xenrose.world.blocks.defense.Armor;
 import xenrose.world.blocks.defense.ArmoredWall;
+import xenrose.world.blocks.defense.EnemyArmoredWall;
 import xenrose.world.blocks.defense.turret.AccelerationTurret;
 import xenrose.world.blocks.distribution.*;
 import xenrose.world.blocks.enviroments.EffectFloor;
@@ -89,7 +90,7 @@ public class XenBlocks {
     //power
     kirmiteEvaporator, cableNode, accumulator,
     //walls
-    reinforcedDamascusWall, reinforcedDamascusWallLarge, diocasiumArmor, enemyShieldWall, enemyShieldWallLarge,
+    reinforcedDamascusWall, reinforcedDamascusWallLarge, enemyShieldWall, enemyShieldWallLarge,
     //units
     groundUnitsAssembler, hoverUnitsAssembler, floatingUnitsAssembler, orinilReassembler, thermalReassemblingFactory, shieldTower,
     //payload
@@ -1216,7 +1217,6 @@ public class XenBlocks {
                     requirements(Category.defense, ItemStack.with(XenItems.damascus, 6f, XenItems.zinc, 3));
                     health = 310;
                     armor = 2;
-                    shieldHealth = 1200;
                     floating = true;
                 }};
                 reinforcedDamascusWallLarge = new ArmoredWall("reinforced-damascus-wall-large") {{
@@ -1225,25 +1225,20 @@ public class XenBlocks {
                     health = 310 * 4;
                     armor = 2;
                     size = 2;
-                    shieldHealth = 1200;
                     floating = true;
                 }};
-                diocasiumArmor = new Armor("diocasium-armor"){{
-                    researchCost = ItemStack.with(XenItems.damascus, 1f);
-                }};
-                enemyShieldWall = new ShieldWall("enemy-reinforced-damascus-wall"){{
+
+                enemyShieldWall = new EnemyArmoredWall("enemy-reinforced-damascus-wall"){{
                     requirements(Category.defense, ItemStack.with(XenItems.damascus, 6f, XenItems.zinc, 3));
-                    health = 310;
+                    health = 1550;
                     armor = 2;
-                    shieldHealth = 1200;
                     floating = true;
                 }};
-                enemyShieldWallLarge = new ShieldWall("enemy-reinforced-damascus-wall-large"){{
+                enemyShieldWallLarge = new EnemyArmoredWall("enemy-reinforced-damascus-wall-large"){{
                     requirements(Category.defense, ItemStack.with(XenItems.damascus, 6 * 4, XenItems.zinc, 3 * 4));
-                    health = 310 * 4;
+                    health = 6200;
                     armor = 2;
                     size = 2;
-                    shieldHealth = 1200;
                     floating = true;
                 }};
 

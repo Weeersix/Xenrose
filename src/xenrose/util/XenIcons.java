@@ -6,16 +6,19 @@ import arc.scene.style.TextureRegionDrawable;
 public class XenIcons {
 
     public static TextureRegionDrawable
-            armorAdd, armorRemove, craftItem, craftLiquid, xenroseSetting, graphicsIcon, xenDiscord;
+            armorAdd, armorAddUsed, maxHealth, maxHealthUsed, moduleLock, craftItem, craftLiquid, xenroseSetting, graphicsIcon, xenDiscord;
 
     public static void init() {
         armorAdd = get("armorAdd");
-        armorRemove = get("armorRemove");
+        armorAddUsed = get("armorAdd-used");
+        maxHealth = get("maxHealth");
+        maxHealthUsed = get("maxHealth-used");
+        moduleLock = get("module-lock");
         craftItem = get("craft-item");
         craftLiquid = get("craft-liquid");
         xenroseSetting = get("xenrose-setting");
         graphicsIcon = get("xenrose-graphics-icon");
-        xenDiscord = get("xenrose-discord");
+        xenDiscord = get("discord");
     }
 
     static TextureRegionDrawable get(String name){
