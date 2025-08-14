@@ -141,6 +141,7 @@ public class ArmoredWall extends Wall{
                     armor = 1;
                     health(maxHealth());
                     Fx.dooropen.at(x, y, block.size, block);
+                    lightningChance = 0.1f;
                 }
             }
 

@@ -14,6 +14,7 @@ public class EnemyArmoredWall extends Wall {
     public EnemyArmoredWall(String name){
         super(name);
         update = true;
+        lightningChance = 0.1f;
     }
 
     @Override

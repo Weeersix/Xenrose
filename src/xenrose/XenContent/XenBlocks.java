@@ -1233,6 +1233,7 @@ public class XenBlocks {
                     health = 1550;
                     armor = 2;
                     floating = true;
+                    lightningChance = 0.1f;
                 }};
                 enemyShieldWallLarge = new EnemyArmoredWall("enemy-reinforced-damascus-wall-large"){{
                     requirements(Category.defense, ItemStack.with(XenItems.damascus, 6 * 4, XenItems.zinc, 3 * 4));
@@ -1240,6 +1241,7 @@ public class XenBlocks {
                     armor = 2;
                     size = 2;
                     floating = true;
+                    lightningChance = 0.1f;
                 }};
 
                 //units
