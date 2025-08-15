@@ -118,9 +118,7 @@ public class XenTechTree {
             });
             //Items & Liquids
             nodeProduce(XenItems.damascus, () -> {
-                nodeProduce(Items.sand, () -> {
-                    nodeProduce(Items.silicon, () -> {});
-                });
+                nodeProduce(Items.sand, () -> {});
                 nodeProduce(XenItems.zinc, () -> {
                     nodeProduce(XenItems.gold, () -> {
                         nodeProduce(XenLiquids.liquidKirmit, () -> {});

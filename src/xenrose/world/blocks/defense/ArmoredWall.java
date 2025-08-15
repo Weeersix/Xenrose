@@ -49,10 +49,10 @@ public class ArmoredWall extends Wall{
         Draw.rect(region, plan.drawx(), plan.drawy());
     }
 
-    public boolean canApplyOne(SecondModifier m){
+    private boolean canApplyOne(SecondModifier m){
         return m.unlockedNow() && !m.isBanned();
     }
-    public boolean canApplyTwo(Modifier m2){
+    private boolean canApplyTwo(Modifier m2){
         return m2.unlockedNow() && !m2.isBanned();
     }
 
@@ -74,7 +74,7 @@ public class ArmoredWall extends Wall{
                         table.button(XenIcons.maxHealth, XenStyles.maxHealthButton, () -> {
                             repair = true;
                             used = true;
-                            recharge = 10000;
+                            recharge = 12000;
                             deselect();
                         }).size(68f);
                     } else {
@@ -85,7 +85,7 @@ public class ArmoredWall extends Wall{
                     //Armor Module
                     if(!canApplyTwo(BlocksModifiers.diocasiumArmor)) {
                         table.button(XenIcons.moduleLock, XenStyles.lockButton, () -> {}).size(68f);
-                    }else{
+                    }else {
                         if (!addArmor) {
                             table.button(XenIcons.armorAdd, XenStyles.armorButton, () -> {
                                 addArmor = true;
@@ -96,10 +96,12 @@ public class ArmoredWall extends Wall{
                             }).size(68f);
                         }
                     }
+
                 }else{
                     table.button(XenIcons.moduleLock, XenStyles.lockButton, () -> {}).size(68f);
                     table.button(XenIcons.moduleLock, XenStyles.lockButton, () -> {}).size(68f);
                 }
+
             }else{
                 //Sandbox Configurations
                 if(!used){
@@ -113,6 +115,7 @@ public class ArmoredWall extends Wall{
                     table.button(XenIcons.maxHealthUsed, XenStyles.maxHealthButtonUsed, () -> {
                     }).size(68f);
                 }
+
                 if(!addArmor){
                     table.button(XenIcons.armorAdd, XenStyles.armorButton, () -> {
                         addArmor = true;
@@ -127,6 +130,7 @@ public class ArmoredWall extends Wall{
 
         @Override
         public void updateTile() {
+
             //Armor
             if(addArmor){
                 if(armor <= 0) {
@@ -147,6 +151,7 @@ public class ArmoredWall extends Wall{
                 recharge -= Time.delta;
                 if(recharge <= 0) used = false;
             }
+
             charge += Time.delta;
             if(charge >= healReload && canHeal && repair && health() < maxHealth()) {
                 charge = 0f;
