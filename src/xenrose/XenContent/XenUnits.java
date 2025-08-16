@@ -805,8 +805,6 @@ public class XenUnits {
                      mirror = false;
                      shake = 5f;
                      shoot.firstShotDelay = 70;
-                     shootStatus = StatusEffects.unmoving;
-                     shootStatusDuration = 60f * 0.9f;
                      shoot.shots = 4;
                      shoot.shotDelay = 24;
                      shootSound = XenSounds.inzeranDash;
