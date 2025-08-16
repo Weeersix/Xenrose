@@ -5,7 +5,7 @@ import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
 import mindustry.type.ItemStack;
 
-public class Modifier extends UnlockableContent {
+public abstract class Modifier extends UnlockableContent {
     public @Nullable ItemStack[] researchCost;
 
     public Modifier(String name){

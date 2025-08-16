@@ -12,8 +12,8 @@ import mindustry.content.Fx;
 import mindustry.entities.units.BuildPlan;
 import mindustry.world.blocks.defense.Wall;
 import xenrose.XenContent.BlocksModifiers;
-import xenrose.type.Modifier;
-import xenrose.type.SecondModifier;
+import xenrose.type.ArmorModifier;
+import xenrose.type.RepairModifier;
 import xenrose.ui.XenStyles;
 import xenrose.util.XenIcons;
 
@@ -49,10 +49,10 @@ public class ArmoredWall extends Wall{
         Draw.rect(region, plan.drawx(), plan.drawy());
     }
 
-    private boolean canApplyOne(SecondModifier m){
+    private boolean canApplyOne(RepairModifier m){
         return m.unlockedNow() && !m.isBanned();
     }
-    private boolean canApplyTwo(Modifier m2){
+    private boolean canApplyTwo(ArmorModifier m2){
         return m2.unlockedNow() && !m2.isBanned();
     }
 
@@ -69,7 +69,7 @@ public class ArmoredWall extends Wall{
             if(state.isCampaign()) {
 
                 //Heal Module
-                if(canApplyOne((SecondModifier) BlocksModifiers.healTechTree)) {
+                if(canApplyOne((RepairModifier) BlocksModifiers.healTechTree)) {
                     if (!used) {
                         table.button(XenIcons.maxHealth, XenStyles.maxHealthButton, () -> {
                             repair = true;
@@ -83,7 +83,7 @@ public class ArmoredWall extends Wall{
                     }
 
                     //Armor Module
-                    if(!canApplyTwo(BlocksModifiers.diocasiumArmor)) {
+                    if(!canApplyTwo((ArmorModifier) BlocksModifiers.diocasiumArmor)) {
                         table.button(XenIcons.moduleLock, XenStyles.lockButton, () -> {}).size(68f);
                     }else {
                         if (!addArmor) {
