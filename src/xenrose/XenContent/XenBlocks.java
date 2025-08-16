@@ -98,7 +98,7 @@ public class XenBlocks {
     //turrets
     samum, desiccation, overflow, tributary, merge, shimmer, calmness, alignment,
     //storage
-    coreSunrise, coreZenith;
+    coreSunrise, coreZenith, coreSunset;
 
     public static void load() {
         {
@@ -2139,6 +2139,23 @@ public class XenBlocks {
 
                     unitCapModifier = 18;
                     researchCost = ItemStack.with(XenItems.damascus, 3850, XenItems.zinc, 3580, XenItems.gold, 2160, XenItems.dantstalin, 1420);
+                }};
+                coreSunset = new RecoveringCore("core-sunset") {{
+                    requirements(Category.effect, BuildVisibility.shown, with(XenItems.damascus, 3500, XenItems.zinc, 2000, XenItems.gold, 1400, XenItems.dantstalin, 1100, XenItems.protexide, 850, XenItems.isoteron, 200));
+                    alwaysUnlocked = true;
+
+                    isFirstTier = true;
+                    unitType = XenUnits.spraying;
+                    health = 10550;
+                    itemCapacity = 16000;
+                    size = 5;
+                    squareSprite = false;
+                    healReload = 40;
+
+                    buildCostMultiplier = 1.5f;
+
+                    unitCapModifier = 28;
+                    researchCost = ItemStack.with(XenItems.damascus, 18500, XenItems.zinc, 18000, XenItems.gold, 12500, XenItems.dantstalin, 10560, XenItems.protexide, 10350, XenItems.isoteron, 5000);
                 }};
             }
         }

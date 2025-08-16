@@ -142,7 +142,9 @@ public class XenTechTree {
                 });
             });
             //Cores
-            node(XenBlocks.coreZenith, () -> {});
+            node(XenBlocks.coreZenith, () -> {
+                node(XenBlocks.coreSunset, () -> {});
+            });
         });
     }
 }
