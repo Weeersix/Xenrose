@@ -108,7 +108,7 @@ public class ArmoredWall extends Wall{
                     table.button(XenIcons.maxHealth, XenStyles.maxHealthButton, () -> {
                         repair = true;
                         used = true;
-                        recharge = 400;
+                        recharge = 12000;
                         deselect();
                     }).size(68f);
                 }else{

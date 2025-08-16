@@ -72,10 +72,6 @@ public class BetterConsumeGenerator extends ConsumeGenerator {
         stats.remove(generationType);
         stats.add(generationType, powerProduction * 60.0f / displayEfficiencyScale, StatUnit.powerSecond);
 
-        if(hasItems){
-            stats.add(Stat.productionTime, itemDuration / 60f, StatUnit.seconds);
-        }
-
         if(outputLiquid != null){
             stats.add(Stat.output, StatValues.liquid(outputLiquid.liquid, outputLiquid.amount * size * size * 60f, true));
         }
