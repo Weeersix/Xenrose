@@ -5,6 +5,8 @@ import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
 import mindustry.type.ItemStack;
 
+import static mindustry.ctype.ContentType.loadout_UNUSED;
+
 public abstract class Modifier extends UnlockableContent {
     public @Nullable ItemStack[] researchCost;
 
@@ -20,7 +22,7 @@ public abstract class Modifier extends UnlockableContent {
     }
 
     @Override
-    public ContentType getContentType(){
-        return ContentType.status;
+    public ContentType getContentType() {
+        return loadout_UNUSED;
     }
 }

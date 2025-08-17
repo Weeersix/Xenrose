@@ -1868,10 +1868,10 @@ public class XenUnits {
                              angle = 280f;
                              regen = 1.9f;
                              cooldown = 60f * 10f;
-                             max = 9400f;
+                             max = 11400f;
                              y = 2f;
-                             baseRotateSpeed = 4;
                              width = 6f;
+                             whenShooting = false;
                          }});
 
                  trailLength = 26;
