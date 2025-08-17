@@ -650,7 +650,7 @@ public class XenUnits {
                  targetPriority = TargetPriority.core;
                  speed = 0.39f;
                  hitSize = 32f;
-                 health = 14690;
+                 health = 15690;
                  armor = 12;
                  crushDamage = 10f;
                  stepShake = 1.2f;
@@ -1178,7 +1178,7 @@ public class XenUnits {
                  constructor = UnitEntity::create;
 
                  flying = true;
-                 health = 3970;
+                 health = 6970;
                  armor = 6;
                  outlineColor = Color.valueOf("211c18");
                  speed = 4.4f;
@@ -1642,7 +1642,7 @@ public class XenUnits {
                  speed = 1.4f;
                  drag = 0.13f;
                  hitSize = 17f;
-                 health = 2630;
+                 health = 3630;
                  armor = 2f;
                  accel = 0.4f;
                  rotateSpeed = 2.9f;
@@ -1750,7 +1750,7 @@ public class XenUnits {
                  speed = 1.1f;
                  drag = 0.19f;
                  hitSize = 29f;
-                 health = 7920;
+                 health = 8920;
                  armor = 4f;
                  accel = 0.2f;
                  rotateSpeed = 1.8f;
@@ -1854,8 +1854,8 @@ public class XenUnits {
                  speed = 1f;
                  drag = 0.19f;
                  hitSize = 32f;
-                 health = 14520;
-                 armor = 9f;
+                 health = 15520;
+                 armor = 10f;
                  accel = 0.2f;
                  rotateSpeed = 1.4f;
                  faceTarget = false;
