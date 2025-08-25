@@ -324,8 +324,10 @@ public class ModularWall extends Wall{
         public void updateTile() {
 
             //Reflect Module
-            if(reflect) chanceDeflect = 20f;
-            else chanceDeflect = 0;
+            if(reflect) {
+                chanceDeflect = 20f;
+                Fx.dooropen.at(x, y, block.size, block);
+            } else chanceDeflect = 0;
 
             //Armor
             if(addArmor){

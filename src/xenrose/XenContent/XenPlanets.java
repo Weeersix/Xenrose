@@ -36,9 +36,9 @@ public class XenPlanets {
                 r.waveTeam = XenTeams.renars;
                 r.placeRangeCheck = false;
                 r.showSpawns = false;
-                r.coreDestroyClear = true;
+                r.coreDestroyClear = false;
                 r.ambientLight = Color.valueOf("c8793246");
-                r.onlyDepositCore = true;
+                r.onlyDepositCore = false;
             };
             unlockedOnLand.add(XenBlocks.coreSunrise);
             iconColor = Pal.shield;
