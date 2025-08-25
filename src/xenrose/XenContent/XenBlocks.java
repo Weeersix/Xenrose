@@ -22,7 +22,6 @@ import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
-import mindustry.world.blocks.defense.ShieldWall;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
@@ -54,8 +53,7 @@ import mindustry.world.meta.BuildVisibility;
 import xenrose.XenAttributes;
 import xenrose.core.XenVars;
 import xenrose.graphics.Rotor;
-import xenrose.world.blocks.defense.Armor;
-import xenrose.world.blocks.defense.ArmoredWall;
+import xenrose.world.blocks.defense.ModularWall;
 import xenrose.world.blocks.defense.EnemyArmoredWall;
 import xenrose.world.blocks.defense.turret.AccelerationTurret;
 import xenrose.world.blocks.distribution.*;
@@ -1215,14 +1213,14 @@ public class XenBlocks {
                 }};
 
                 //walls
-                reinforcedDamascusWall = new ArmoredWall("reinforced-damascus-wall") {{
+                reinforcedDamascusWall = new ModularWall("reinforced-damascus-wall") {{
                     researchCost = ItemStack.with(XenItems.damascus, 80f, XenItems.zinc, 20);
                     requirements(Category.defense, ItemStack.with(XenItems.damascus, 6f, XenItems.zinc, 3));
                     health = 310;
                     armor = 2;
                     floating = true;
                 }};
-                reinforcedDamascusWallLarge = new ArmoredWall("reinforced-damascus-wall-large") {{
+                reinforcedDamascusWallLarge = new ModularWall("reinforced-damascus-wall-large") {{
                     researchCost = ItemStack.with(XenItems.damascus, 250f, XenItems.zinc, 100);
                     requirements(Category.defense, ItemStack.with(XenItems.damascus, 6 * 4, XenItems.zinc, 3 * 4));
                     health = 310 * 4;
