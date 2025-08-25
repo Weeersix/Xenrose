@@ -775,9 +775,9 @@ public class XenBlocks {
                     squareSprite = false;
                     hasItems = true;
                     craftTime = 2f * 60f;
-                    itemCapacity = 20;
+                    itemCapacity = 24;
                     liquidCapacity = 30f;
-                    outputItem = new ItemStack(Items.silicon, 3);
+                    outputItem = new ItemStack(Items.silicon, 4);
                     craftEffect = new RadialEffect(){{
                         rotationSpacing = 180;
                         rotationOffset = 90;
@@ -1281,7 +1281,7 @@ public class XenBlocks {
                     requirements(Category.units, with(XenItems.damascus, 340, XenItems.zinc, 250, XenItems.dantstalin, 70, XenItems.gold, 50));
                     size = 4;
                     consumePower(300f / 60f);
-                    consumeItems(with(XenItems.gold, 50, XenItems.dantstalin, 30));
+                    consumeItems(with(XenItems.gold, 50, Items.silicon, 30));
                     consumeLiquids(LiquidStack.with(XenLiquids.liquidOrinil, 20f / 60f, XenLiquids.oxygen, 5f / 60f));
 
                     upgrades.addAll(
@@ -1956,11 +1956,11 @@ public class XenBlocks {
                         shake = 1f;
                         shootSound = Sounds.shootAltLong;
                         consumePower(80f / 60f);
-                        researchCost = ItemStack.with(XenItems.damascus, 2890, XenItems.zinc, 2800, XenItems.gold, 2550, XenItems.protexide, 2350);
+                        researchCost = ItemStack.with(XenItems.damascus, 2890, XenItems.zinc, 2800, XenItems.gold, 2550, XenItems.protexide, 2350, Items.silicon, 1250);
                     }};
                 }};
                 calmness = new AccelerationTurret("calmness"){{
-                    requirements(Category.turret, with(XenItems.damascus, 150, XenItems.zinc, 100, XenItems.gold, 80, XenItems.protexide, 50));
+                    requirements(Category.turret, with(XenItems.damascus, 150, XenItems.zinc, 100, XenItems.gold, 80, Items.silicon, 45, XenItems.protexide, 30));
 
                     ammo(
                             XenItems.gold, new BasicBulletType(2f, 70, "xenrose-basic-bullet1"){{
@@ -2423,7 +2423,7 @@ public class XenBlocks {
                     unitCapModifier = 8;
                 }};
                 coreZenith = new RecoveringCore("core-zenith"){{
-                    requirements(Category.effect, BuildVisibility.shown, with(XenItems.damascus, 1250, XenItems.zinc, 1100, XenItems.gold, 950, XenItems.dantstalin, 550));
+                    requirements(Category.effect, BuildVisibility.shown, with(XenItems.damascus, 1250, XenItems.zinc, 1100, XenItems.gold, 950, XenItems.dantstalin, 550, Items.silicon, 200));
 
                     unitType = XenUnits.spread;
                     health = 6930;

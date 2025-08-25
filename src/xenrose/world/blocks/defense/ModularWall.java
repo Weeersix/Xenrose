@@ -33,6 +33,7 @@ public class ModularWall extends Wall{
 
     public int canApply = -1;
     public TextureRegion armorRegion;
+    public TextureRegion reflectRegion;
 
     public ModularWall(String name){
         super(name);
@@ -46,6 +47,7 @@ public class ModularWall extends Wall{
     public void load() {
         super.load();
         armorRegion = Core.atlas.find(name + "-armored");
+        reflectRegion = Core.atlas.find(name + "-reflect");
     }
 
     @Override
@@ -289,9 +291,10 @@ public class ModularWall extends Wall{
         public void draw(){
             super.draw();
 
-            if(addArmor){
-                Draw.rect(armorRegion, x, y);
-            }
+            if(reflect) Draw.rect(reflectRegion, x, y);
+
+            if(addArmor) Draw.rect(armorRegion, x, y);
+
 
             if(shieldAdd) {
                 if (shieldRadius > 0) {
