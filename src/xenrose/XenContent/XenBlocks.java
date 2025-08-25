@@ -52,7 +52,6 @@ import mindustry.world.meta.BlockGroup;
 import mindustry.world.meta.BuildVisibility;
 import xenrose.XenAttributes;
 import xenrose.core.XenVars;
-import xenrose.graphics.Rotor;
 import xenrose.world.blocks.defense.ModularWall;
 import xenrose.world.blocks.defense.EnemyArmoredWall;
 import xenrose.world.blocks.defense.turret.AccelerationTurret;
@@ -64,7 +63,6 @@ import xenrose.world.blocks.production.MechanicalDrill;
 import xenrose.world.blocks.storage.RecoveringCore;
 import xenrose.world.blocks.units.StatusBlock;
 import xenrose.world.draw.DrawAccelerationHeat;
-import xenrose.world.draw.DrawRotor;
 
 import static arc.math.Interp.fastSlow;
 import static arc.math.Interp.pow3Out;
@@ -1228,14 +1226,14 @@ public class XenBlocks {
                 }};
 
                 enemyShieldWall = new EnemyArmoredWall("enemy-reinforced-damascus-wall"){{
-                    requirements(Category.defense, ItemStack.with(XenItems.damascus, 6f, XenItems.zinc, 3));
+                    requirements(Category.defense, BuildVisibility.editorOnly, ItemStack.with(XenItems.damascus, 6f, XenItems.zinc, 3));
                     health = 1550;
                     armor = 2;
                     floating = true;
                     lightningChance = 0.1f;
                 }};
                 enemyShieldWallLarge = new EnemyArmoredWall("enemy-reinforced-damascus-wall-large"){{
-                    requirements(Category.defense, ItemStack.with(XenItems.damascus, 6 * 4, XenItems.zinc, 3 * 4));
+                    requirements(Category.defense, BuildVisibility.editorOnly, ItemStack.with(XenItems.damascus, 6 * 4, XenItems.zinc, 3 * 4));
                     health = 6200;
                     armor = 2;
                     size = 2;

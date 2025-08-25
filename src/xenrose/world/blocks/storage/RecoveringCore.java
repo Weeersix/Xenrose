@@ -1,30 +1,24 @@
 package xenrose.world.blocks.storage;
 
 import arc.Core;
-import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Interp;
 import arc.math.Mathf;
 import arc.struct.EnumSet;
-import arc.util.Scaling;
 import arc.util.Time;
 import mindustry.content.Fx;
 import mindustry.entities.TargetPriority;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
-import mindustry.ui.Styles;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.meta.BlockFlag;
 import mindustry.world.meta.Env;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 
-import static mindustry.Vars.ui;
-
 public class RecoveringCore extends CoreBlock {
     public float healReload = 95;
-    public float healAmount = 5;
     public float healPercent = 4f;
     public TextureRegion glowRegion;
 

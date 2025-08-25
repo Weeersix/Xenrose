@@ -3,7 +3,6 @@ package xenrose.XenContent;
 import mindustry.content.Items;
 import mindustry.type.ItemStack;
 import xenrose.type.Modifier;
-import xenrose.util.XenIcons;
 
 public class BlocksModifiers {
     public static Modifier

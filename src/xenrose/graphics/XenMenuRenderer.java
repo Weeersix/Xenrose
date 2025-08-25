@@ -1,19 +1,27 @@
 package xenrose.graphics;
 
+import arc.Core;
+import arc.graphics.Camera;
+import arc.graphics.Color;
+import arc.graphics.g2d.*;
+import arc.graphics.gl.FrameBuffer;
+import arc.math.Mat;
+import arc.math.Mathf;
+import arc.scene.ui.layout.Scl;
+import arc.util.Log;
+import arc.util.Structs;
+import arc.util.Time;
+import arc.util.noise.Ridged;
+import arc.util.noise.Simplex;
+import mindustry.content.Blocks;
 import mindustry.graphics.Layer;
 import mindustry.graphics.MenuRenderer;
-import arc.*;
-import arc.graphics.*;
-import arc.graphics.g2d.*;
-import arc.graphics.gl.*;
-import arc.math.*;
-import arc.scene.ui.layout.*;
-import arc.util.*;
-import arc.util.noise.*;
-import mindustry.content.*;
-import mindustry.type.*;
-import mindustry.world.*;
-import xenrose.XenContent.*;
+import mindustry.type.Weather;
+import mindustry.world.Block;
+import mindustry.world.CachedTile;
+import mindustry.world.Tile;
+import mindustry.world.Tiles;
+import xenrose.XenContent.XenBlocks;
 
 import static mindustry.Vars.*;
 
@@ -49,18 +57,12 @@ public class XenMenuRenderer extends MenuRenderer {
         int offset = Mathf.random(100000);
         int s1 = offset, s2 = offset + 1, s3 = offset + 2;
         Block[] selected = Structs.random(
-                new Block[]{XenBlocks.softDamascusGround, XenBlocks.damascusWall, XenBlocks.crackedDamascusWall},
-                new Block[]{XenBlocks.kirmiteStoneFloor, XenBlocks.kirmiteStoneWall},
                 new Block[]{XenBlocks.softDamascusGround, XenBlocks.damascusWall},
-                new Block[]{XenBlocks.softDamascusGround, XenBlocks.crackedDamascusWall},
                 new Block[]{XenBlocks.kirmiteStoneFloor, XenBlocks.kirmiteStoneWall}
         );
         Block[] selected2 = Structs.random(
-                new Block[]{XenBlocks.softDamascusGround, XenBlocks.damascusWall, XenBlocks.crackedDamascusWall},
-                new Block[]{XenBlocks.kirmiteStoneFloor, XenBlocks.kirmiteStoneWall},
                 new Block[]{XenBlocks.softDamascusGround, XenBlocks.damascusWall},
-                new Block[]{XenBlocks.softDamascusGround, XenBlocks.crackedDamascusWall},
-                new Block[]{XenBlocks.kirmiteStoneFloor, XenBlocks.kirmiteStoneWall}
+                new Block[]{XenBlocks.orinilGround, XenBlocks.orinilWall}
         );
 
         double tr1 = Mathf.random(0.65f, 0.85f);
@@ -105,32 +107,6 @@ public class XenMenuRenderer extends MenuRenderer {
                             if(heat > base + 0.15){
                                 floor = XenBlocks.burnedDamscusGround;
                             }
-                        }
-                    }
-                }
-
-                if(tech){
-                    int mx = x % secSize, my = y % secSize;
-                    int sclx = x / secSize, scly = y / secSize;
-                    if(Simplex.noise2d(s1, 2, 1f / 10f, 0.5f, sclx, scly) > 0.4f && (mx == 0 || my == 0 || mx == secSize - 1 || my == secSize - 1)){
-                        floor = XenBlocks.damascusGround;
-                        if(Mathf.dst(mx, my, secSize/2, secSize/2) > secSize/2f + 1){
-                            floor = XenBlocks.crackedDamascusGround;
-                        }
-
-
-                        if(wall != Blocks.air && Mathf.chance(0.7)){
-                            wall = XenBlocks.burnedDamscusWall;
-                        }
-                    }
-                }
-
-                if(tendrils){
-                    if(Ridged.noise2d(1 + offset, x, y, 1f / 17f) > 0f){
-                        floor = Mathf.chance(0.2) ? XenBlocks.kirmiteStoneFloor : XenBlocks.kirmiteStoneGround;
-
-                        if(wall != Blocks.air){
-                            wall = XenBlocks.kirmiteStoneWall;
                         }
                     }
                 }
@@ -211,33 +187,22 @@ public class XenMenuRenderer extends MenuRenderer {
         batch.drawCache(cacheWall);
         batch.endDraw();
 
-        Draw.proj(mat);
-        Draw.color(0f, 0f, 0f, darkness);
-        Fill.crect(0f, 0f, Core.graphics.getWidth(), Core.graphics.getHeight());
-        Draw.color();
-    }
-
-    private void particles(){
-        Texture tex = Core.assets.get("sprites/noiseAlpha.png", Texture.class);
-        if(tex.getMagFilter() != Texture.TextureFilter.linear){
-            tex.setFilter(Texture.TextureFilter.linear);
-            tex.setWrap(Texture.TextureWrap.repeat);
-        }
-
-        Draw.z(state.rules.fog ? Layer.fogOfWar + 1 : Layer.weather - 1);
-        Weather.drawNoiseLayers(tex, warmColor, 1000f, 0.34f, 0.65f, 1f, 1f, 0f, 3, -1.1f, 0.45f, 0.38f, 0.4f);
-        Draw.reset();
-
-        Draw.draw(Layer.weather, () ->
+        Draw.draw( Layer.fogOfWar, () ->
                 Weather.drawParticles(
                         Core.atlas.find("particle"), particleColor,
                         3f, 5.6f, //minmax size
-                        10000f, 1f, 10f, //density
+                        10000f, 1f, 100f, //density
                         windx, windy, //wind vectors
                         0.8f, 2f, //minmax alpha
                         45f, 74f, //sinscl
                         2.5f, 9f, //sinmag
                         false
                 ));
+
+        Draw.proj(mat);
+        Draw.color(0f, 0f, 0f, darkness);
+        Fill.crect(0f, 0f, Core.graphics.getWidth(), Core.graphics.getHeight());
+        Draw.color();
+
     }
 }
