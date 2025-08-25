@@ -2436,7 +2436,6 @@ public class XenBlocks {
                 }};
                 coreSunset = new RecoveringCore("core-sunset") {{
                     requirements(Category.effect, BuildVisibility.shown, with(XenItems.damascus, 3500, XenItems.zinc, 2000, XenItems.gold, 1400, XenItems.dantstalin, 1100, XenItems.protexide, 850, XenItems.isoteron, 200));
-                    alwaysUnlocked = true;
 
                     isFirstTier = true;
                     unitType = XenUnits.spraying;
