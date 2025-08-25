@@ -778,44 +778,42 @@ public class XenBlocks {
                     itemCapacity = 20;
                     liquidCapacity = 30f;
                     outputItem = new ItemStack(Items.silicon, 3);
+                    craftEffect = new RadialEffect(){{
+                        rotationSpacing = 180;
+                        rotationOffset = 90;
+                        lengthOffset = 8;
+                        amount = 2;
+                        effect = (
+                                new ParticleEffect() {{
+                                    particles = 8;
+                                    length = 40;
+                                    lifetime = 200;
+                                    sizeFrom = 1;
+                                    sizeTo = 3;
+                                    cone = 6;
+                                    baseRotation = 50;
+                                    useRotation = false;
+                                    interp = pow3Out;
+                                    colorFrom = Color.valueOf("b5b5b5aa");
+                                    colorTo = Color.valueOf("52515100");
+                                    layer = 100.2f;
+                                }});
+                    }};
 
                     drawer = new DrawMulti(
                             new DrawRegion("-bottom"),
-                            new DrawRotor(
-                                    new Rotor("-rotor"){{
-                                        x = 0f;
-                                        y = 0f;
-
-                                        height = 3.5f;
-
-                                        pixelHeight = 7;
-
-                                        palLight = Color.valueOf("7c746b");
-                                        palMedium = Color.valueOf("57534e");
-                                        palDark = Color.valueOf("2f2d2a");
-                                    }},
-                                    new Rotor("-rotor"){{
-                                        x = 0f;
-                                        y = 0f;
-
-                                        height = 3.5f;
-
-                                        pixelHeight = 7;
-
-                                        palLight = Color.valueOf("7c746b");
-                                        palMedium = Color.valueOf("57534e");
-                                        palDark = Color.valueOf("2f2d2a");
-
-                                        icon = false;
-                                    }}),
-                            new DrawRegion()
+                            new DrawFrames(){{
+                                frames = 9;
+                                interval = 5;
+                                sine = false;
+                            }},
+                            new DrawDefault()
                     );
 
                     consumePower(180f / 60f);
                     consumeLiquid(XenLiquids.liquidKirmit, 12f / 60f);
-                    consumeItem(Items.sand, 2);
+                    consumeItem(Items.sand, 3);
                     researchCost = with(XenItems.damascus, 2870, XenItems.zinc, 2670, XenItems.gold, 2140);
-
                 }};
                 liquidSeparator = new Separator("liquid-separator"){{
                     requirements(Category.crafting, ItemStack.with(XenItems.damascus, 60, XenItems.zinc, 35, XenItems.gold, 10));

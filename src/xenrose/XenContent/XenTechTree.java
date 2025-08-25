@@ -42,6 +42,8 @@ public class XenTechTree {
                     node(XenBlocks.reinforcedDamascusWallLarge, () -> {
                         node(BlocksModifiers.diocasiumArmor, Seq.with(new Objectives.Produce(XenItems.dantstalin), new Objectives.Produce(XenItems.protexide), new Objectives.Produce(XenItems.diocasium)), () -> {});
                         node(BlocksModifiers.healTechTree, Seq.with(new Objectives.Produce(XenItems.dantstalin), new Objectives.Produce(XenItems.protexide)), () -> {});
+                        node(BlocksModifiers.reflectModifier, Seq.with(new Objectives.Produce(XenItems.dantstalin), new Objectives.OnSector(XenSectorPresets.OrinilFault)), () -> {});
+                        node(BlocksModifiers.shieldModifier, Seq.with(new Objectives.Produce(XenItems.dantstalin), new Objectives.Produce(XenItems.protexide), new Objectives.Produce(XenItems.isoteron)), () -> {});
                     });
                 });
             });
