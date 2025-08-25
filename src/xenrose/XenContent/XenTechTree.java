@@ -71,14 +71,14 @@ public class XenTechTree {
             node(XenBlocks.pyrometallurgicalInstallation, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
                 node(XenBlocks.crusher, () -> {
                     node(XenBlocks.waterReformer, Seq.with(new Objectives.SectorComplete(XenSectorPresets.KirmitCoast)), () -> {
-                        node(XenBlocks.dantstalinSmelter, Seq.with(new Objectives.OnSector(XenSectorPresets.OrinilFault)), () -> {
-                            node(XenBlocks.waterCollerctor, Seq.with(new Objectives.Produce(XenItems.dantstalin)), () -> {});
-                        });
+                        node(XenBlocks.dantstalinSmelter, Seq.with(new Objectives.OnSector(XenSectorPresets.OrinilFault)), () -> {});
+                        node(XenBlocks.waterCollerctor, Seq.with(new Objectives.Produce(XenItems.dantstalin)), () -> {});
                     });
                     node(XenBlocks.orinilCrucible, Seq.with(new Objectives.Produce(XenLiquids.liquidOrinil)), () -> {
                         node(XenBlocks.energyChargingSplitter, () -> {});
                         node(XenBlocks.energyStabilizingBoiler, () -> {});
                     });
+                    node(XenBlocks.siliconCentrifuge, Seq.with(new Objectives.SectorComplete(XenSectorPresets.KirmitCoast)), () -> {});
                 });
             });
             //Unit and Payload Blocks
@@ -120,7 +120,9 @@ public class XenTechTree {
             });
             //Items & Liquids
             nodeProduce(XenItems.damascus, () -> {
-                nodeProduce(Items.sand, () -> {});
+                nodeProduce(Items.sand, () -> {
+                    nodeProduce(Items.silicon, () -> {});
+                });
                 nodeProduce(XenItems.zinc, () -> {
                     nodeProduce(XenItems.gold, () -> {
                         nodeProduce(XenLiquids.liquidKirmit, () -> {});
