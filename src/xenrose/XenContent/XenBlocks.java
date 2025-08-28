@@ -25,10 +25,7 @@ import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.world.blocks.defense.turrets.PowerTurret;
-import mindustry.world.blocks.distribution.Conveyor;
-import mindustry.world.blocks.distribution.DuctBridge;
-import mindustry.world.blocks.distribution.DuctRouter;
-import mindustry.world.blocks.distribution.Junction;
+import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.liquid.Conduit;
 import mindustry.world.blocks.liquid.LiquidBridge;
@@ -43,6 +40,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.production.Separator;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.consumers.ConsumeItemCharged;
@@ -76,7 +74,7 @@ public class XenBlocks {
     softDamascusGround, damascusGround, crackedDamascusGround, deepenedDamascusFloor,  kirmiteStoneFloor, kirmiteStoneGround, solidifiedKirmiteLiquid, kirmite, orinil, deepKirnite, oxidizedFloor, oxidizedGround, burnedDamscusFloor, burnedDamscusGround, graphiticStoneFloor, burntDamascusFloor, burnedKirmiteStoneFloor, orinilGround, orinilFloor, peatFloor,
     zinkWallOre, protexideWallOre,
     //distribution
-    damascusConveyor, dantstalinConveyor, damascusJunction, damascusRouter, damascusBridge,
+    damascusConveyor, dantstalinConveyor, damascusJunction, damascusRouter, damascusBridge, fortifiedOverflowGate, fortifiedUnderflowGate, hardenedSorter, hardenedInvertedSorter, unloader,
     //liquid
     hydraulicPump, energyPump, fragilePipeline, hardenedPipeline, fragileLiquidRouter, hardenedPipelineRouter, fragileLiquidBridge, hardenedPipelineBridge, reinforcedPipelineJunction, reinforcedLiquidTank, reinforcedLiquidStorage,
     //drills
@@ -366,6 +364,7 @@ public class XenBlocks {
                     speed = 3.5f;
                     regionRotated1 = 1;
                     solid = false;
+                    configurable = false;
 
                     hasPower = true;
                     consumesPower = true;
@@ -389,6 +388,40 @@ public class XenBlocks {
                 }};
                 ((Conveyor)damascusConveyor).bridgeReplacement = damascusBridge;
                 ((Conveyor)dantstalinConveyor).bridgeReplacement = damascusBridge;
+                fortifiedOverflowGate = new OverflowGate("fortified-overflow-gate"){{
+                    requirements(Category.distribution, with(XenItems.damascus, 8));
+                    hasPower = true;
+                    consumesPower = true;
+                    conductivePower = true;
+
+                    researchCost = with(XenItems.damascus, 80);
+                }};
+                fortifiedUnderflowGate = new OverflowGate("fortified-underflow-gate"){{
+                    requirements(Category.distribution, with(XenItems.damascus, 8f, XenItems.zinc, 2f));
+                    invert = true;
+                    hasPower = true;
+                    consumesPower = true;
+                    conductivePower = true;
+
+                    researchCost = with(XenItems.damascus, 120f, XenItems.zinc, 80f);
+                }};
+                hardenedSorter = new Sorter("hardened-sorter"){{
+                    requirements(Category.distribution, with(XenItems.damascus, 10));
+                    hasPower = true;
+                    consumesPower = true;
+                    conductivePower = true;
+
+                    researchCost = with(XenItems.damascus, 100);
+                }};
+                hardenedInvertedSorter = new Sorter("hardened-inverted-sorter"){{
+                    requirements(Category.distribution, with(XenItems.damascus, 10f, XenItems.zinc, 3f));
+                    invert = true;
+                    hasPower = true;
+                    consumesPower = true;
+                    conductivePower = true;
+
+                    researchCost = with(XenItems.damascus, 185f, XenItems.zinc, 130f);
+                }};
 
                 //liquid
                 hydraulicPump = new BreackablePump("hydraulic-pump"){{
@@ -2469,6 +2502,16 @@ public class XenBlocks {
 
                     unitCapModifier = 28;
                     researchCost = ItemStack.with(XenItems.damascus, 18500, XenItems.zinc, 18000, XenItems.gold, 12500, XenItems.dantstalin, 10560, XenItems.protexide, 10350, XenItems.isoteron, 5000);
+                }};
+
+                unloader = new Unloader("unloader"){{
+                    requirements(Category.effect, with(XenItems.damascus, 25f, XenItems.zinc, 20f, XenItems.gold, 10));
+                    speed = 60f / 11f;
+                    hasPower = true;
+                    consumesPower = true;
+                    conductivePower = true;
+
+                    researchCost = with(XenItems.damascus, 670f, XenItems.zinc, 540f, XenItems.gold, 300);
                 }};
             }
         }

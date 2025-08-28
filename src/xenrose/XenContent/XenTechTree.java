@@ -20,8 +20,17 @@ public class XenTechTree {
             //Logistics
             node(XenBlocks.damascusConveyor, Seq.with(new Objectives.Produce(XenItems.damascus)), () -> {
                 node(XenBlocks.damascusJunction, () -> {
-                    node(XenBlocks.damascusRouter);
-                    node(XenBlocks.damascusBridge);
+                    node(XenBlocks.damascusRouter, () -> {
+                        node(XenBlocks.fortifiedOverflowGate, () ->{
+                            node(XenBlocks.fortifiedUnderflowGate);
+                        });
+                        node(XenBlocks.hardenedSorter, () -> {
+                            node(XenBlocks.hardenedInvertedSorter);
+                        });
+                });
+                    node(XenBlocks.damascusBridge, () -> {
+                        node(XenBlocks.unloader);
+                    });
                 });
                 node(XenBlocks.dantstalinConveyor, () -> {});
             });
@@ -118,7 +127,9 @@ public class XenTechTree {
                     });
                 });
                 node(XenSectorPresets.DryingThickets, Seq.with(new Objectives.SectorComplete(XenSectorPresets.Landing)), () -> {
-                    node(XenSectorPresets.KirmitCoast, Seq.with(new Objectives.Research(XenBlocks.hoverUnitsAssembler)), () -> {});
+                    node(XenSectorPresets.KirmitCoast, Seq.with(new Objectives.Research(XenBlocks.hoverUnitsAssembler)), () -> {
+                        node(XenSectorPresets.KirmiteArhipelago, Seq.with(new Objectives.Research(XenBlocks.orinilReassembler), new Objectives.Research(XenUnits.manul), new Objectives.Research(XenBlocks.coreZenith), new Objectives.Research(XenBlocks.siliconCentrifuge)), () -> {});
+                    });
                 });
             });
             //Items & Liquids
