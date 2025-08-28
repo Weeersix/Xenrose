@@ -33,6 +33,7 @@ public class XenTechTree {
                     });
                 });
                 node(XenBlocks.dantstalinConveyor, () -> {});
+                node(XenBlocks.heatResistantContainer);
             });
             //Defense
             node(XenBlocks.samum, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {

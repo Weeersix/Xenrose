@@ -40,6 +40,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.Pump;
 import mindustry.world.blocks.production.Separator;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.storage.StorageBlock;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.world.blocks.units.UnitFactory;
@@ -92,7 +93,7 @@ public class XenBlocks {
     //turrets
     samum, desiccation, overflow, tributary, merge, shimmer, calmness, alignment,
     //storage
-    coreSunrise, coreZenith, coreSunset;
+    coreSunrise, coreZenith, coreSunset, heatResistantContainer;
 
     public static void load() {
         {
@@ -2502,6 +2503,13 @@ public class XenBlocks {
 
                     unitCapModifier = 28;
                     researchCost = ItemStack.with(XenItems.damascus, 18500, XenItems.zinc, 18000, XenItems.gold, 12500, XenItems.dantstalin, 10560, XenItems.protexide, 10350, XenItems.isoteron, 5000);
+                }};
+                heatResistantContainer = new StorageBlock("heat-resistan-container"){{
+                    requirements(Category.effect, with(XenItems.damascus, 100f, XenItems.dantstalin, 25f, XenItems.gold, 10));
+                    size = 2;
+                    itemCapacity = 500;
+
+                    researchCost = with(XenItems.damascus, 1850f, XenItems.dantstalin, 850f, XenItems.gold, 800);
                 }};
 
                 unloader = new Unloader("unloader"){{
