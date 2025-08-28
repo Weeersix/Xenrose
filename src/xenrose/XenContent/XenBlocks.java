@@ -78,7 +78,7 @@ public class XenBlocks {
     //distribution
     damascusConveyor, dantstalinConveyor, damascusJunction, damascusRouter, damascusBridge,
     //liquid
-    hydraulicPump, energyPump, fragilePipeline, hardenedPipeline, fragileLiquidRouter, hardenedPipelineRouter, fragileLiquidBridge, hardenedPipelineBridge, reinforcedPipelineJunction,
+    hydraulicPump, energyPump, fragilePipeline, hardenedPipeline, fragileLiquidRouter, hardenedPipelineRouter, fragileLiquidBridge, hardenedPipelineBridge, reinforcedPipelineJunction, reinforcedLiquidTank, reinforcedLiquidStorage,
     //drills
     energyDrill, energyChargedDrill, airMechanicalDrill,
     //production
@@ -481,6 +481,26 @@ public class XenBlocks {
                 }};
                 ((Conduit) fragilePipeline).junctionReplacement = reinforcedPipelineJunction;
                 ((Conduit) hardenedPipeline).junctionReplacement = reinforcedPipelineJunction;
+                reinforcedLiquidTank = new LiquidRouter("reinforced-liquid-tank"){{
+                    requirements(Category.liquid, with(XenItems.damascus, 40, XenItems.dantstalin, 25));
+                    size = 2;
+                    solid = true;
+                    liquidCapacity = 1200f;
+                    liquidPadding = 3f / 4f;
+                    health = 980;
+
+                    researchCost = with(XenItems.damascus, 850, XenItems.dantstalin, 400);
+                }};
+                reinforcedLiquidStorage = new LiquidRouter("reinforced-liquid-storage"){{
+                    requirements(Category.liquid, with(XenItems.damascus, 100, XenItems.dantstalin, 50, XenItems.zinc , 25));
+                    size = 3;
+                    solid = true;
+                    liquidCapacity = 8000f;
+                    liquidPadding = 2;
+                    health = 1780;
+
+                    researchCost = with(XenItems.damascus, 1650, XenItems.dantstalin, 1340, XenItems.zinc , 1290);
+                }};
 
                 //drills
                 energyDrill = new MechanicalDrill("energy-drill") {{

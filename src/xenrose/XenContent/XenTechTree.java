@@ -58,6 +58,9 @@ public class XenTechTree {
                         node(XenBlocks.hardenedPipelineRouter, () -> {
                             node(XenBlocks.hardenedPipelineBridge, () -> {});
                         });
+                        node(XenBlocks.reinforcedLiquidTank, () -> {
+                            node(XenBlocks.reinforcedLiquidStorage, () -> {});
+                        });
                     });
                 });
                 node(XenBlocks.energyPump, () -> {});
