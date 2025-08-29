@@ -1130,7 +1130,7 @@ public class XenUnits {
                      shoot.shotDelay = 8;
                      shoot.firstShotDelay = 35;
 
-                     bullet = new BasicBulletType(7.3f, 28f, "xenrose-basic-bullet1") {{
+                     bullet = new BasicBulletType(7.3f, 28f, "xenrose-basic-bullet1"){{
                          width = 6f;
                          height = 11f;
                          lifetime = 30f;
@@ -1141,7 +1141,10 @@ public class XenUnits {
                          hitColor = backColor = trailColor = Color.valueOf("6f42a4");
                          frontColor = Color.valueOf("e5c9ff");
                          trailLength = 11;
-                         trailWidth = 1.2f;
+                         trailWidth = 1.48f;
+                         trailEffect = XenFx.imitationTrail;
+                         trailRotation = true;
+                         trailInterval = 5;
                          lightColor = Color.valueOf("e5c9ff");
                          lightOpacity = 0.2f;
                          lightRadius = 2;
@@ -1371,6 +1374,19 @@ public class XenUnits {
                  setEnginesMirror(
                          new UnitEngine(9.5f, -12.25f, 3.4f, 275f)
                  );
+
+                 if(XenVars.xenroseUnitsEffects) {
+                     abilities.add(
+                             new MoveEffectAbility(9.75f, -11.5f, Pal.sapBulletBack, XenFx.imitationTrail, 3f) {{
+                                 color = Color.valueOf("c696f2b7");
+                                 rotateEffect = true;
+                             }},
+                             new MoveEffectAbility(-9.75f, -11.5f, Pal.sapBulletBack, XenFx.imitationTrail, 3f) {{
+                                 color = Color.valueOf("c696f2b7");
+                                 rotateEffect = true;
+                             }});
+                 }
+
                  weapons.add(new Weapon("xenrose-split-missile-weapon"){{
                      x = 49f / 4f;
                      y = -4;
@@ -1675,7 +1691,7 @@ public class XenUnits {
                      mirror = false;
                      shootSound = XenSounds.xanitShoot;
 
-                     shoot.shots = 4;
+                     shoot.shots = 6;
                      shoot.shotDelay = 9;
                      shoot.firstShotDelay = 50;
                      inaccuracy = 9;

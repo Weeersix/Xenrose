@@ -36,7 +36,7 @@ public class XenSectorPresets {
             difficulty = 5;
             showSectorLandInfo = true;
         }};
-        KirmiteArhipelago = new SectorPreset("Kirmite-Archipelago", XenPlanets.xenor, 5){{
+        KirmiteArhipelago = new SectorPreset("Kirmite-Archipelago", XenPlanets.xenor, 2){{
             difficulty = 6;
             showSectorLandInfo = true;
         }};
