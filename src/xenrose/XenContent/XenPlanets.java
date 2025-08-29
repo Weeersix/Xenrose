@@ -36,7 +36,7 @@ public class XenPlanets {
                 r.waveTeam = XenTeams.renars;
                 r.placeRangeCheck = false;
                 r.showSpawns = false;
-                r.coreDestroyClear = false;
+                r.coreDestroyClear = true;
                 r.ambientLight = Color.valueOf("c8793246");
                 r.onlyDepositCore = false;
             };

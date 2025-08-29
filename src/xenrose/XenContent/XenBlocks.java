@@ -522,6 +522,7 @@ public class XenBlocks {
                     liquidCapacity = 1200f;
                     liquidPadding = 3f / 4f;
                     health = 980;
+                    squareSprite = false;
 
                     researchCost = with(XenItems.damascus, 850, XenItems.dantstalin, 400);
                 }};
@@ -532,6 +533,7 @@ public class XenBlocks {
                     liquidCapacity = 8000f;
                     liquidPadding = 2;
                     health = 1780;
+                    squareSprite = false;
 
                     researchCost = with(XenItems.damascus, 1650, XenItems.dantstalin, 1340, XenItems.zinc , 1290);
                 }};
@@ -2508,6 +2510,7 @@ public class XenBlocks {
                     requirements(Category.effect, with(XenItems.damascus, 100f, XenItems.dantstalin, 25f, XenItems.gold, 10));
                     size = 2;
                     itemCapacity = 500;
+                    squareSprite = false;
 
                     researchCost = with(XenItems.damascus, 1850f, XenItems.dantstalin, 850f, XenItems.gold, 800);
                 }};
