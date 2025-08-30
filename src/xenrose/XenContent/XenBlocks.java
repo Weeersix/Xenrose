@@ -1995,6 +1995,7 @@ public class XenBlocks {
                         shoot.firstShotDelay = 50;
                         inaccuracy = 24;
 
+                        targetAir = false;
                         rotateSpeed = 3;
                         itemCapacity = 20;
                         scaleLifetimeOffset = 1.2f / 9f;
@@ -2444,6 +2445,7 @@ public class XenBlocks {
                     shoot.shotDelay = 2f;
                     inaccuracy = 28;
 
+                    targetAir = false;
                     shootY = 10f / 4f;
                     squareSprite = false;
                     floating = true;

@@ -48,7 +48,7 @@ public class XenPlanets {
             atmosphereRadIn = 0.02f;
             atmosphereRadOut = 0.3f;
             startSector = 1;
-            allowLaunchToNumbered = false;
+            allowLaunchToNumbered = true;
             alwaysUnlocked = true;
             updateLighting = false;
         }};

@@ -27,7 +27,7 @@ public class ModularWall extends Wall{
     public float healReload = 1;
     public float healPercent = 7f;
 
-    public float shieldHealth = 900f;
+    public float shieldHealth = 1600f;
     public float regenSpeed = 2f;
     public float breakCooldown = 60f * 4f;
 
@@ -69,7 +69,7 @@ public class ModularWall extends Wall{
         public float charge = 0, recharge = 0;
 
         public float preparation = 1;
-        public int armor = 0;
+        public int armor = 0, ref = 0;
 
         boolean canHeal = true;
 
@@ -105,6 +105,7 @@ public class ModularWall extends Wall{
                            t.button(XenIcons.reflectModuleAdd, XenStyles.reflectModule, () -> {
                                reflect = true;
                                reflectUsed = true;
+                               ref = 1;
                                deselect();
                            }).size(50);
 
@@ -326,7 +327,10 @@ public class ModularWall extends Wall{
             //Reflect Module
             if(reflect) {
                 chanceDeflect = 20f;
-                Fx.dooropen.at(x, y, block.size, block);
+                if(ref >= 1) {
+                    Fx.dooropen.at(x, y, block.size, block);
+                    ref = 0;
+                }
             } else chanceDeflect = 0;
 
             //Armor
