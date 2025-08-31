@@ -14,7 +14,7 @@ public class XenTechTree {
         XenPlanets.xenor.techTree = TechTree.nodeRoot("Xenor", XenBlocks.coreSunrise, () -> {
             //Drills
             node(XenBlocks.energyDrill, Seq.with(new Objectives.Produce(XenItems.damascus)), () -> {
-                node(XenBlocks.airMechanicalDrill, () -> {});
+                node(XenBlocks.airMechanicalDrill, Seq.with(new Objectives.SectorComplete(XenSectorPresets.KirmiteArhipelago)), () -> {});
                 node(XenBlocks.energyChargedDrill, () -> {});
             });
             //Logistics

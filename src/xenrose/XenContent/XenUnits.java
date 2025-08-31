@@ -99,7 +99,7 @@ public class XenUnits {
                             frontColor = Color.valueOf("ffd2a4");
                             trailWidth = 1.55f;
                             trailLength = 5;
-                            buildingDamageMultiplier = 0.1f;
+                            buildingDamageMultiplier = 0.01f;
                             hitEffect = despawnEffect = new ExplosionEffect(){{
                                 lifetime = 26f;
                                 waveStroke = 2f;
@@ -115,78 +115,75 @@ public class XenUnits {
                         }};
                     }});
                 }};
-             spread = new UnitType("spread"){{
-                 coreUnitDock = true;
-                 controller = u -> new BuilderAI(true, 500f);
-                 constructor = UnitEntity::create;
-                 outlineColor = Color.valueOf("211c18");
-                 envDisabled = 0;
-                 health = 370;
-                 hitSize = 17f;
+        spread = new UnitType("spread"){{
+            coreUnitDock = true;
+            controller = u -> new BuilderAI(true, 500f);
+            constructor = UnitEntity::create;
+            outlineColor = Color.valueOf("211c18");
+            envDisabled = 0;
+            health = 370;
+            hitSize = 17f;
 
-                 faceTarget = true;
-                 targetPriority = -2;
-                 lowAltitude = false;
-                 pickupUnits = false;
-                 flying = true;
-                 mineSpeed = 9.5f;
-                 mineTier = 4;
-                 buildSpeed = 1.1f;
-                 drag = 0.085f;
-                 speed = 4f;
-                 rotateSpeed = 12f;
-                 accel = 0.7f;
-                 itemCapacity = 45;
-                 useEngineElevation = false;
-                 engineSize = 3f;
-                 engineOffset = 7f;
-                 fogRadius = 0;
+            faceTarget = true;
+            targetPriority = -2;
+            lowAltitude = false;
+            pickupUnits = false;
+            flying = true;
+            mineSpeed = 9.5f;
+            mineTier = 4;
+            buildSpeed = 1.6f;
+            drag = 0.085f;
+            speed = 4f;
+            rotateSpeed = 12f;
+            accel = 0.7f;
+            itemCapacity = 45;
+            useEngineElevation = false;
+            engineSize = 3f;
+            engineOffset = 7f;
+            fogRadius = 0;
 
-                 alwaysUnlocked = true;
-                 mineWalls = true;
-                 mineFloor = true;
+            alwaysUnlocked = true;
+            mineWalls = true;
+            mineFloor = true;
 
-                 weapons.add(new Weapon("xenrose-spread-weapon"){{
-                         shootSound = Sounds.blaster;
-                         x = 0f;
-                         y = 5f;
-                         mirror = false;
-                         rotate = false;
-                         reload = 35;
-                         recoil = 1.5f;
-                         top = false;
-                         shoot.shots = 3;
-                         shoot.firstShotDelay = 15;
-                         inaccuracy = 14;
-                         bullet = new BasicBulletType(5f, 15f) {{
-                             width = 9f;
-                             height = 12f;
-                             lifetime = 55f;
-                             shootEffect = Fx.sparkShoot;
-                             smokeEffect = Fx.shootBigSmoke;
-                             hitColor = backColor = trailColor = Color.valueOf("cea36b");
-                             frontColor = Color.valueOf("ffd2a4");
-                             trailWidth = 1.2f;
-                             trailLength = 8;
-                             homingPower = 0.2f;
-                             homingDelay = 16f;
-                             homingRange = 30;
-                             buildingDamageMultiplier = 0.1f;
-                             hitEffect = despawnEffect = new ExplosionEffect(){{
-                                 lifetime = 26f;
-                                 waveStroke = 1.5f;
-                                 waveColor = sparkColor = smokeColor =  trailColor;
-                                 waveRad = 7f;
-                                 smokeSize = 1f;
-                                 smokeSizeBase = 0.8f;
-                                 sparks = 3;
-                                 sparkRad = 10f;
-                                 sparkLen = 5f;
-                                 sparkStroke = 1f;
-                             }};
-                         }};
-                 }});
-             }};
+            weapons.add(new Weapon("xenrose-spread-weapon"){{
+                shootSound = Sounds.blaster;
+                x = 2.75f;
+                y = 15f / 4f;
+                mirror = false;
+                rotate = false;
+                reload = 18;
+                recoil = 1.5f;
+                top = false;
+                bullet = new BasicBulletType(5f, 15f) {{
+                    width = 9f;
+                    height = 12f;
+                    lifetime = 55f;
+                    shootEffect = Fx.sparkShoot;
+                    smokeEffect = Fx.shootBigSmoke;
+                    hitColor = backColor = trailColor = Color.valueOf("cea36b");
+                    frontColor = Color.valueOf("ffd2a4");
+                    trailWidth = 1.2f;
+                    trailLength = 8;
+                    homingPower = 0.2f;
+                    homingDelay = 16f;
+                    homingRange = 30;
+                    buildingDamageMultiplier = 0.01f;
+                    hitEffect = despawnEffect = new ExplosionEffect(){{
+                        lifetime = 26f;
+                        waveStroke = 1.5f;
+                        waveColor = sparkColor = smokeColor =  trailColor;
+                        waveRad = 7f;
+                        smokeSize = 1f;
+                        smokeSizeBase = 0.8f;
+                        sparks = 3;
+                        sparkRad = 10f;
+                        sparkLen = 5f;
+                        sparkStroke = 1f;
+                    }};
+                }};
+            }});
+        }};
 
              //zanar tech tree
              zanar = new UnitType("zanar"){{
