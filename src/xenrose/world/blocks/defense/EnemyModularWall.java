@@ -8,10 +8,10 @@ import mindustry.content.Fx;
 import mindustry.entities.units.BuildPlan;
 import mindustry.world.blocks.defense.Wall;
 
-public class EnemyArmoredWall extends Wall {
+public class EnemyModularWall extends Wall {
     public TextureRegion armorRegion;
 
-    public EnemyArmoredWall(String name){
+    public EnemyModularWall(String name){
         super(name);
         update = true;
         lightningChance = 0.1f;

@@ -52,7 +52,7 @@ import mindustry.world.meta.BuildVisibility;
 import xenrose.XenAttributes;
 import xenrose.core.XenVars;
 import xenrose.world.blocks.defense.ModularWall;
-import xenrose.world.blocks.defense.EnemyArmoredWall;
+import xenrose.world.blocks.defense.EnemyModularWall;
 import xenrose.world.blocks.defense.turret.AccelerationTurret;
 import xenrose.world.blocks.distribution.*;
 import xenrose.world.blocks.enviroments.EffectFloor;
@@ -1254,14 +1254,14 @@ public class XenBlocks {
                     floating = true;
                 }};
 
-                enemyShieldWall = new EnemyArmoredWall("enemy-reinforced-damascus-wall"){{
+                enemyShieldWall = new EnemyModularWall("enemy-reinforced-damascus-wall"){{
                     requirements(Category.defense, BuildVisibility.editorOnly, ItemStack.with(XenItems.damascus, 6f, XenItems.zinc, 3));
                     health = 1550;
                     armor = 2;
                     floating = true;
                     lightningChance = 0.1f;
                 }};
-                enemyShieldWallLarge = new EnemyArmoredWall("enemy-reinforced-damascus-wall-large"){{
+                enemyShieldWallLarge = new EnemyModularWall("enemy-reinforced-damascus-wall-large"){{
                     requirements(Category.defense, BuildVisibility.editorOnly, ItemStack.with(XenItems.damascus, 6 * 4, XenItems.zinc, 3 * 4));
                     health = 6200;
                     armor = 2;

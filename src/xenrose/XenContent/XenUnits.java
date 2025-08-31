@@ -150,7 +150,7 @@ public class XenUnits {
                 shootSound = Sounds.blaster;
                 x = 2.75f;
                 y = 15f / 4f;
-                mirror = false;
+                mirror = true;
                 rotate = false;
                 reload = 18;
                 recoil = 1.5f;
