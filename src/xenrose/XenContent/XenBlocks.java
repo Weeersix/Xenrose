@@ -116,22 +116,10 @@ public class XenBlocks {
                 burntDamascusWall = new StaticWall("burnt-damascus-wall"){{
                     variants = 3;
                 }};
-                burnedKirmiteStoneWall = new StaticWall("burned-kirmite-stone-wall"){{
-                    variants = 3;
-                }};
-                oxidizedWall = new StaticWall("oxidized-wall") {{
-                    variants = 4;
-                }};
                 burnedDamscusWall = new StaticWall("burned-damscus-wall") {{
                     variants = 3;
                 }};
-                graphiticStoneWall = new StaticWall("graphitic-stone-wall") {{
-                    variants = 3;
-                }};
                 orinilWall = new StaticWall("orinil-wall"){{
-                    variants = 3;
-                }};
-                peatWall = new StaticWall("peat-wall"){{
                     variants = 3;
                 }};
 
@@ -158,15 +146,6 @@ public class XenBlocks {
                     shadowOffset = -1.1f;
                 }};
                 kirmiteStoneBoulder = new Prop("kirmite-stone-boulder") {{
-                    variants = 2;
-                }};
-                oxidizedCluster = new TallBlock("oxidized-cluster") {{
-                    variants = 3;
-                }};
-                oxidizedBoulder = new Prop("oxidized-boulder") {{
-                    variants = 2;
-                }};
-                graphiticStoneBoulder = new Prop("graphitic-stone-boulder") {{
                     variants = 2;
                 }};
                 burnedDamscusBoulder = new Prop("burned-damscus-boulder"){{
@@ -264,12 +243,6 @@ public class XenBlocks {
                     isLiquid = true;
                     drownTime = 200f;
                     cacheLayer = XenCacheLayer.orinil;
-                }};
-                oxidizedGround = new Floor("oxidized-ground") {{
-                    variants = 2;
-                }};
-                oxidizedFloor = new Floor("oxidized-floor") {{
-                    variants = 3;
                 }};
                 burnedDamscusFloor = new Floor("burned-damscus-floor") {{
                     variants = 3;
