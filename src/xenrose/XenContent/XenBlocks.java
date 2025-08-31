@@ -1699,7 +1699,6 @@ public class XenBlocks {
                     range = 253;
                     reload = 75;
                     rotateSpeed = 1.9f;
-                    targetAir = false;
                     consumePower(150f / 60f);
                     shootY = 0f;
                     recoil = 1.45f;
