@@ -412,6 +412,7 @@ public class ModularWall extends Wall{
         public void write(Writes write){
             super.write(write);
             write.bool(reflectUsed);
+            write.bool(reflect);
             write.bool(repair);
             write.bool(used);
             write.bool(addArmor);
@@ -425,6 +426,7 @@ public class ModularWall extends Wall{
         public void read(Reads read, byte revision){
             super.read(read, revision);
             this.reflectUsed = read.bool();
+            this.reflect = read.bool();
             this.repair = read.bool();
             this.used = read.bool();
             this.addArmor = read.bool();

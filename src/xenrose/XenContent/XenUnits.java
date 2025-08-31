@@ -1698,7 +1698,7 @@ public class XenUnits {
                      bullet = new BasicBulletType(3.1f, 50, "xenrose-basic-bullet1"){{
                          width = 10f;
                          height = 13f;
-                         lifetime = 105f;
+                         lifetime = 95f;
                          frontColor = trailColor = Color.valueOf("cff4ed");
                          backColor = Color.valueOf("5b8f92");
                          trailWidth = 2.1f;
@@ -1799,7 +1799,7 @@ public class XenUnits {
                          shoot.firstShotDelay = 50;
                          inaccuracy = 16;
 
-                     bullet = new BasicBulletType(2.6f, 60, "xenrose-basic-bullet1"){{
+                     bullet = new BasicBulletType(2.6f, 80, "xenrose-basic-bullet1"){{
                          width = 9f;
                          height = 12f;
                          lifetime = 153f;
