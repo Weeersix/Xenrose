@@ -1517,7 +1517,7 @@ public class XenUnits {
              }};
 
         //maneuver tech tree
-        maneuver = new UnitType("sinar"){{
+        maneuver = new UnitType("maneuver"){{
             constructor = UnitEntity::create;
             defaultCommand = UnitCommand.repairCommand;
 
