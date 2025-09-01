@@ -39,8 +39,8 @@ public class XenUnits {
             zanar, inorn, manler, inzeran, rezagin,
             //imitation tech tree
             imitation, simulation, fusion, split,
-            //sinar tech tree
-            sinar,
+            //maneuver tech tree
+            maneuver,
             //xanit tech tree
             xanit, manul, amiren, manixem,
             //suport units
@@ -1515,6 +1515,81 @@ public class XenUnits {
                      }};
                  }});
              }};
+
+        //maneuver tech tree
+        maneuver = new UnitType("sinar"){{
+            constructor = UnitEntity::create;
+            defaultCommand = UnitCommand.repairCommand;
+
+            outlineColor = Color.valueOf("211c18");
+            health = 1340;
+            hitSize = 12f;
+
+            flying = true;
+            drag = 0.085f;
+            speed = 4f;
+            rotateSpeed = 7f;
+            accel = 0.2f;
+            itemCapacity = 12;
+            engineSize = 3f;
+            engineOffset = 20f / 4f;
+
+            weapons.add(new Weapon(){{
+                x = 3.5f;
+                y = 4;
+                reload = 120f;
+                rotate = false;
+                mirror = true;
+                top = false;
+                shootSound = XenSounds.weaponMinShoot1;
+
+                shoot.shots = 5;
+                shoot.shotDelay = 2.4f;
+                shoot.firstShotDelay = 50;
+                inaccuracy = 8;
+
+                bullet = new BasicBulletType(5.6f, 10, "xenrose-basic-bullet1"){{
+                    height = 16;
+                    width = 8;
+                    lifetime = 76;
+                    frontColor = trailColor = Color.valueOf("c6cfda");
+                    backColor = Color.valueOf("89939e");
+                    trailWidth = 2f;
+                    trailLength = 13;
+                    trailInterval = 1.8f;
+                    trailRotation = true;
+                    trailEffect = new ParticleEffect(){{
+                        particles = 1;
+                        lifetime = 20;
+                        length = 0;
+                        baseLength = 0;
+                        colorFrom = Color.valueOf("c6cfda");
+                        colorTo = Color.valueOf("89939e");
+
+                    }};
+                    homingPower = 0.195f;
+                    homingRange = 35;
+                    homingDelay = 10;
+
+                    healColor = Color.valueOf("c6cfda");
+                    healPercent = 1.7f;
+                    collidesTeam = true;
+                    reflectable = false;
+
+                    hitEffect = despawnEffect = new ParticleEffect() {{
+                        lifetime = 36;
+                        particles = 10;
+                        colorFrom = Color.valueOf("c6cfda");
+                        colorTo = Color.valueOf("89939e");
+                        sizeFrom = 2;
+                        sizeTo = 0;
+                        cone = 50;
+                        length = 20;
+                        baseLength = 0;
+                    }};
+                }};
+            }});
+        }};
 
         //support units
         kinor = new UnitType("kinor"){{
