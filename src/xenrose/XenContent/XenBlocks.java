@@ -406,6 +406,15 @@ public class XenBlocks {
                     liquidCapacity = 80f;
                     size = 2;
 
+                    drawer = new DrawMulti(
+                            new DrawFrames(){{
+                                frames = 24;
+                                interval = 2.8f;
+                                sine = false;
+                            }},
+                            new DrawDefault()
+                    );
+
                     researchCost = with(XenItems.damascus, 150, XenItems.zinc, 60, XenItems.gold, 15);
                 }};
                 energyPump = new Pump("energy-pump"){{
@@ -417,6 +426,15 @@ public class XenBlocks {
                     size = 3;
                     consumePower(100f / 60f);
                     consumeLiquid(Liquids.hydrogen, 3f / 60f);
+
+                    drawer = new DrawMulti(
+                            new DrawFrames(){{
+                                frames = 29;
+                                interval = 2.2f;
+                                sine = false;
+                            }},
+                            new DrawDefault()
+                    );
 
                     researchCost = with(XenItems.damascus, 3950, XenItems.zinc, 3290, XenItems.dantstalin, 1420);
                 }};
