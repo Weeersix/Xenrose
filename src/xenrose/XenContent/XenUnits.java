@@ -1537,18 +1537,15 @@ public class XenUnits {
             weapons.add(new Weapon(){{
                 x = 3.5f;
                 y = 4;
-                reload = 120f;
+                reload = 80f;
                 rotate = false;
                 mirror = true;
                 top = false;
                 shootSound = XenSounds.weaponMinShoot1;
 
-                shoot.shots = 5;
-                shoot.shotDelay = 2.4f;
-                shoot.firstShotDelay = 50;
-                inaccuracy = 8;
+                shoot.shots = 1;
 
-                bullet = new BasicBulletType(5.6f, 10, "xenrose-basic-bullet1"){{
+                bullet = new BasicBulletType(5.6f, 5, "xenrose-basic-bullet1"){{
                     height = 16;
                     width = 8;
                     lifetime = 76;
@@ -1572,7 +1569,7 @@ public class XenUnits {
                     homingDelay = 10;
 
                     healColor = Color.valueOf("c6cfda");
-                    healPercent = 1.7f;
+                    healPercent = 1f;
                     collidesTeam = true;
                     reflectable = false;
 
