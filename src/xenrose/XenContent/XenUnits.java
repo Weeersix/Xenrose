@@ -39,12 +39,10 @@ public class XenUnits {
             zanar, inorn, manler, inzeran, rezagin,
             //imitation tech tree
             imitation, simulation, fusion, split,
-            //maneuver tech tree
-            maneuver,
             //xanit tech tree
             xanit, manul, amiren, manixem,
             //suport units
-            kinor;
+            kinor, guardian;
 
     public static void load() {
              spraying = new UnitType("spraying"){{
@@ -1516,8 +1514,7 @@ public class XenUnits {
                  }});
              }};
 
-        //maneuver tech tree
-        maneuver = new UnitType("maneuver"){{
+        guardian = new UnitType("guardian"){{
             constructor = UnitEntity::create;
             defaultCommand = UnitCommand.repairCommand;
 
