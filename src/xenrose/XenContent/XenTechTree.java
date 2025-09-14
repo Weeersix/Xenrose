@@ -78,6 +78,7 @@ public class XenTechTree {
             node(XenBlocks.kirmiteEvaporator, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
                 node(XenBlocks.accumulator, Seq.with(new Objectives.SectorComplete(XenSectorPresets.BurntHills)), () -> {});
                 node(XenBlocks.cableNode, () -> {});
+                node(XenBlocks.orinilReactor, Seq.with(new Objectives.Research(XenLiquids.liquidOrinil), new Objectives.SectorComplete(XenSectorPresets.KirmiteArhipelago)), () ->{});
             });
             //Production
             node(XenBlocks.pyrometallurgicalInstallation, Seq.with(new Objectives.Produce(XenItems.zinc)), () -> {
