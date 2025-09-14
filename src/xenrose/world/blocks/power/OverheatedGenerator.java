@@ -92,7 +92,7 @@ public class OverheatedGenerator extends ConsumeGenerator {
         }
 
         public boolean foundUnit() {
-            if(XenUnits.maneuver.useUnitCap) {
+            if(XenUnits.guardian.useUnitCap) {
                 return true;
             }else{
                 return false;
