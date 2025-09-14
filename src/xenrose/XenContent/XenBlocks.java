@@ -58,6 +58,7 @@ import xenrose.world.blocks.distribution.*;
 import xenrose.world.blocks.enviroments.EffectFloor;
 import xenrose.world.blocks.liquid.*;
 import xenrose.world.blocks.power.BetterConsumeGenerator;
+import xenrose.world.blocks.power.OverheatedGenerator;
 import xenrose.world.blocks.production.MechanicalDrill;
 import xenrose.world.blocks.storage.RecoveringCore;
 import xenrose.world.blocks.units.StatusBlock;
@@ -83,7 +84,7 @@ public class XenBlocks {
     //production
     pyrometallurgicalInstallation, crusher, waterReformer, siliconCentrifuge, liquidSeparator, dantstalinSmelter, waterCollerctor, orinilCrucible, energyStabilizingBoiler,energyChargingSplitter,
     //power
-    kirmiteEvaporator, cableNode, accumulator,
+    kirmiteEvaporator, orinilReactor, cableNode, accumulator,
     //walls
     reinforcedDamascusWall, reinforcedDamascusWallLarge, enemyShieldWall, enemyShieldWallLarge,
     //units
@@ -1235,6 +1236,23 @@ public class XenBlocks {
                     itemCapacity = 10;
                     fogRadius = 2;
                     consume(new ConsumeItemCharged(4));
+                    researchCost = with(XenItems.damascus, 15, XenItems.zinc, 20);
+                }};
+                orinilReactor = new OverheatedGenerator("orinil-reactor"){{
+                    requirements(Category.power, with(XenItems.damascus, 50, XenItems.zinc, 20));
+                    powerProduction = 1000f / 60f;
+                    size = 3;
+                    squareSprite = false;
+                    consumeLiquidTemp = XenLiquids.liquidOrinil;
+
+                    drawer = new DrawMulti(
+                            new DrawDefault(),
+                            new DrawGlowRegion()
+                    );
+
+                    hasLiquids = true;
+                    liquidCapacity = 75;
+                    consumeLiquid(XenLiquids.liquidOrinil, 30f / 60f);
                     researchCost = with(XenItems.damascus, 15, XenItems.zinc, 20);
                 }};
                 cableNode = new BeamNode("cable-node") {{

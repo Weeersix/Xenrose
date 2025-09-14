@@ -22,26 +22,37 @@ import mindustry.world.meta.Attribute;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.world.meta.StatValues;
-import xenrose.XenContent.XenFx;
 
 public class BetterConsumeGenerator extends ConsumeGenerator {
     public Effect generateEffect = Fx.none;
+    public Attribute attribute = Attribute.heat;
+    public TextureRegion chargedRegion;
+
+    public boolean displayEfficiency = true;
+
     public float effectChance = 0.05f;
     public float minEfficiency = 0f;
     public float displayEfficiencyScale = 1f;
-    public boolean displayEfficiency = true;
-    public @Nullable LiquidStack outputLiquid;
-    public Attribute attribute = Attribute.heat;
     public float lightClipSize;
     public float itemDuration = 120f;
     public float warmupSpeed = 0.05f;
     public float generateEffectRange = 3f;
+    public float minCharge = 6;
+
     public @Nullable ConsumeItemFilter filterItem;
     public @Nullable ConsumeLiquidFilter filterLiquid;
+    public @Nullable LiquidStack outputLiquid;
+
     public ObjectFloatMap<Item> itemDurationMultipliers = new ObjectFloatMap<>();
 
     public BetterConsumeGenerator(String name) {
         super(name);
+    }
+
+    @Override
+    public void load() {
+        super.load();
+        chargedRegion = Core.atlas.find(name + "-charge");
     }
 
     public float getDisplayedPowerProduction(){
@@ -95,12 +106,20 @@ public class BetterConsumeGenerator extends ConsumeGenerator {
         public float sum;
         public float itemDurationMultiplier = 1;
 
+        private float itemCharge(){
+            Item item = items.first();
+
+            if(items.total() > 0) return item.charge;
+            return 0;
+        }
+
         @Override
         public void updateTile() {
             boolean valid = efficiency > 0;
             totalTime += warmup * Time.delta + (sum + attribute.env());
 
             warmup = Mathf.lerpDelta(warmup, valid ? 1f : 0f, warmupSpeed);
+
             if(hasItems){
                 productionEfficiency = (efficiency * efficiencyMultiplier) + (sum + attribute.env());
             }else{
@@ -136,6 +155,15 @@ public class BetterConsumeGenerator extends ConsumeGenerator {
         }
 
         @Override
+        public void draw() {
+            drawer.draw(this);
+
+            super.draw();
+            if(hasItems && itemCharge() > minCharge) Draw.rect(chargedRegion, x, y);
+
+        }
+
+        @Override
         public void afterPickedUp(){
             super.afterPickedUp();
             sum = 0f;
@@ -143,7 +171,7 @@ public class BetterConsumeGenerator extends ConsumeGenerator {
 
         @Override
         public float totalProgress(){
-            return enabled && sum > 0 ? super.totalProgress() : 0f;
+            return totalTime;
         }
 
         @Override
