@@ -97,6 +97,7 @@ public class XenTechTree {
             //Unit and Payload Blocks
             node(XenBlocks.groundUnitsAssembler, Seq.with(new Objectives.OnSector(XenSectorPresets.DryingThickets)), () -> {
                 node(XenUnits.zanar, Seq.with(new Objectives.Research(XenBlocks.groundUnitsAssembler)), () -> {});
+                node(XenUnits.maneuver, Seq.with(new Objectives.SectorComplete(XenSectorPresets.OrinilFault)), () -> {});
 
                 node(XenBlocks.hoverUnitsAssembler, Seq.with(new Objectives.SectorComplete(XenSectorPresets.DryingThickets)), () -> {
                     node(XenUnits.imitation, Seq.with(new Objectives.Research(XenBlocks.hoverUnitsAssembler)), () -> {});

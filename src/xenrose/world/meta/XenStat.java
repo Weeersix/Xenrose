@@ -7,5 +7,6 @@ public class XenStat {
 
     public static final Stat
             powerTier = new Stat("powerTier", StatCat.function),
-            stabilizing = new Stat("stabilizingRange", StatCat.function);
+            stabilizing = new Stat("stabilizingRange", StatCat.function),
+            module = new Stat("module", StatCat.function);
 }

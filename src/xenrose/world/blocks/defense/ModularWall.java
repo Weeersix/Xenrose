@@ -9,17 +9,22 @@ import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import arc.util.Eachable;
+import arc.util.Scaling;
 import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.content.Fx;
 import mindustry.entities.units.BuildPlan;
+import mindustry.gen.Icon;
 import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
+import mindustry.ui.Styles;
 import mindustry.world.blocks.defense.Wall;
 import xenrose.XenContent.BlocksModifiers;
 import xenrose.type.Modifier;
 import xenrose.ui.XenStyles;
 import xenrose.util.XenIcons;
+import xenrose.world.meta.XenStat;
 
 import static mindustry.Vars.*;
 
@@ -35,6 +40,9 @@ public class ModularWall extends Wall{
     public TextureRegion armorRegion;
     public TextureRegion reflectRegion;
 
+    public Modifier modifier;
+    public ArmoredWallBuild m;
+
     public ModularWall(String name){
         super(name);
         configurable = true;
@@ -42,6 +50,159 @@ public class ModularWall extends Wall{
         clearOnDoubleTap = true;
         update = true;
     }
+
+    private int checkUnlock(){
+        if(BlocksModifiers.reflectModifier.unlockedNow() && !BlocksModifiers.reflectModifier.isBanned()){
+            if(BlocksModifiers.healTechTree.unlockedNow() && !BlocksModifiers.healTechTree.isBanned()){
+                if(BlocksModifiers.diocasiumArmor.unlockedNow() && !BlocksModifiers.diocasiumArmor.isBanned()){
+                    if(BlocksModifiers.shieldModifier.unlockedNow() && !BlocksModifiers.shieldModifier.isBanned()) return 4;
+                    return 3;
+                }
+                return 2;
+            }
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public void setStats() {
+        super.setStats();
+
+        stats.add(XenStat.module,table -> {
+            table.row();
+
+            table.table(Styles.grayPanel, t -> {
+                switch (checkUnlock()){
+                    case 1 -> {
+                        modifier = BlocksModifiers.reflectModifier;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                        t.row();
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                        t.row();
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                    }
+                    case 2 -> {
+                        //reflect module
+                        modifier = BlocksModifiers.reflectModifier;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        //heal module
+                        modifier = BlocksModifiers.healTechTree;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                        t.row();
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                    }
+                    case 3 -> {
+                        //reflect module
+                        modifier = BlocksModifiers.reflectModifier;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        //heal module
+                        modifier = BlocksModifiers.healTechTree;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        //armor
+                        modifier = BlocksModifiers.diocasiumArmor;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                    }
+                    case 4 -> {
+                        //reflect module
+                        modifier = BlocksModifiers.reflectModifier;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        //heal module
+                        modifier = BlocksModifiers.healTechTree;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        //armor
+                        modifier = BlocksModifiers.diocasiumArmor;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.row();
+
+                        //shield module
+                        modifier = BlocksModifiers.shieldModifier;
+
+                        t.image(modifier.uiIcon).size(40).pad(10f).left().scaling(Scaling.fit);
+                        t.table(info -> {
+                            info.add(modifier.localizedName).left();
+                        });
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                    }
+
+                    default -> {
+                        t.image(Icon.cancel).color(Pal.remove).size(40).size(310, 47);
+                        t.row();
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                        t.row();
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                        t.row();
+                        t.image(Icon.cancel).color(Pal.remove).size(40);
+                    }
+                }
+            });
+        });
+    }
+
 
     @Override
     public void load() {

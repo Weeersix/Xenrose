@@ -7,6 +7,7 @@ import mindustry.entities.Units;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import mindustry.type.Liquid;
+import mindustry.type.UnitType;
 import mindustry.ui.Bar;
 import mindustry.world.blocks.power.ConsumeGenerator;
 import mindustry.world.consumers.ConsumeItemEfficiency;
@@ -91,12 +92,8 @@ public class OverheatedGenerator extends ConsumeGenerator {
             return liquid.temperature;
         }
 
-        public boolean foundUnit() {
-            if(XenUnits.guardian.useUnitCap) {
-                return true;
-            }else{
-                return false;
-            }
+        public Class<? extends UnitType> foundUnit(UnitType unit){
+            return unit.getClass();
         }
 
         @Override
@@ -112,12 +109,14 @@ public class OverheatedGenerator extends ConsumeGenerator {
                 heatDamage = false;
             }
 
-            Units.nearby(team, x, y, stabilizingRange + tilesize, u -> {
-                if(foundUnit()){
-                    overheat = 0;
-                    heatDamage = false;
-                }
-            });
+            if(foundUnit(XenUnits.spraying) != null) {
+                Units.nearby(team, x, y, stabilizingRange, u -> {
+                    overheat -= (Time.delta / 100);
+                    if(overheat <= 9.7f) {
+                        heatDamage = false;
+                    }else heatDamage = true;
+                });
+            }
 
             if(liquidTemp(consumeLiquidTemp) > 0 && liquids.currentAmount() > 0.5f && heatDamage){
                 charge += Time.delta;

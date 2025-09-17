@@ -1240,7 +1240,7 @@ public class XenBlocks {
                 }};
                 orinilReactor = new OverheatedGenerator("orinil-reactor"){{
                     requirements(Category.power, with(XenItems.damascus, 50, XenItems.zinc, 20));
-                    powerProduction = 1000f / 60f;
+                    powerProduction = 1800f / 60f;
                     size = 3;
                     squareSprite = false;
                     consumeLiquidTemp = XenLiquids.liquidOrinil;
