@@ -1311,7 +1311,12 @@ public class XenBlocks {
                     requirements(Category.units, with(XenItems.damascus, 150,XenItems.zinc, 120, XenItems.gold, 50));
                     size = 3;
                     configurable = false;
-                    plans.add(new UnitPlan(XenUnits.zanar, 60f * 20f, with(XenItems.zinc, 35, XenItems.gold, 20)));
+
+                    plans.add(
+                            new UnitPlan(XenUnits.zanar, 60f * 20f, with(XenItems.zinc, 35, XenItems.gold, 20)),
+                            new UnitPlan(XenUnits.maneuver, 60f * 18f, with(XenItems.zinc, 60, XenItems.gold, 35, XenItems.damascus, 10))
+                    );
+
                     regionSuffix = "-dark";
                     fogRadius = 3;
                     consumePower(1.666666666666667f);
