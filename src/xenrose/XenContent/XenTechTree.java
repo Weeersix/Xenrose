@@ -110,6 +110,7 @@ public class XenTechTree {
                             node(XenUnits.inorn, Seq.with(new Objectives.Research(XenBlocks.orinilReassembler)), () -> {});
                             node(XenUnits.simulation, Seq.with(new Objectives.Research(XenBlocks.orinilReassembler)), () -> {});
                             node(XenUnits.manul, Seq.with(new Objectives.Research(XenBlocks.orinilReassembler)), () -> {});
+                            node(XenUnits.mover, Seq.with(new Objectives.Research(XenBlocks.orinilReassembler)), () -> {});
                             node(XenBlocks.thermalReassemblingFactory, () -> {
                                 node(XenUnits.manler, Seq.with(new Objectives.Research(XenBlocks.thermalReassemblingFactory)), () -> {});
                                 node(XenUnits.fusion, Seq.with(new Objectives.Research(XenBlocks.thermalReassemblingFactory)), () -> {});

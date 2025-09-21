@@ -1624,6 +1624,7 @@ public class XenUnits {
             shadowElevation = 0.1f;
             groundLayer = Layer.legUnit - 1f;
 
+            researchCostMultiplier = 2.5f;
             weapons.add(new Weapon(){{
                 x = 17.25f / 4f;
                 y = 2f / 4f;
@@ -1710,6 +1711,8 @@ public class XenUnits {
             hovering = true;
             shadowElevation = 0.1f;
             groundLayer = Layer.legUnit - 1f;
+
+            researchCostMultiplier = 4f;
 
             weapons.add(new Weapon("xenrose-mover-weapon"){{
                 x = 19f / 4f;

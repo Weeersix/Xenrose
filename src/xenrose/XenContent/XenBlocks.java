@@ -1356,36 +1356,12 @@ public class XenBlocks {
                     upgrades.addAll(
                             new UnitType[]{XenUnits.zanar, XenUnits.inorn},
                             new UnitType[]{XenUnits.imitation, XenUnits.simulation},
-                            new UnitType[]{XenUnits.xanit, XenUnits.manul}
+                            new UnitType[]{XenUnits.xanit, XenUnits.manul},
+                            new UnitType[]{XenUnits.maneuver, XenUnits.mover}
                     );
 
                     constructTime = 15f * 60f;
                     researchCost = with(XenItems.damascus, 4920, XenItems.zinc, 4560, XenItems.dantstalin, 3200, XenItems.gold, 1890);
-                }};
-                thermalReassemblingFactory = new Reconstructor("thermal-reassembling-factory"){{
-                    requirements(Category.units, with(XenItems.damascus, 500, XenItems.zinc, 320, XenItems.dantstalin, 240, XenItems.protexide, 100, XenItems.gold, 50));
-                    size = 5;
-                    consumePower(660f / 60f);
-                    consumeItems(with(XenItems.gold, 85, XenItems.dantstalin, 40, XenItems.protexide, 25, XenItems.isoteron, 5));
-                    consumeLiquids(LiquidStack.with(XenLiquids.liquidOrinil, 90f / 60f, Liquids.hydrogen, 25f / 60f));
-
-                    upgrades.addAll(
-                            new UnitType[]{XenUnits.inorn, XenUnits.manler},
-                            new UnitType[]{XenUnits.simulation, XenUnits.fusion},
-                            new UnitType[]{XenUnits.manul, XenUnits.amiren}
-                    );
-
-                    constructTime = 65f * 60f;
-                    researchCost = with(XenItems.damascus, 7740, XenItems.zinc, 7210, XenItems.dantstalin, 6320, XenItems.protexide, 4200, XenItems.gold, 4086);
-                }};
-                shieldTower = new StatusBlock("shield-tower"){{
-                    requirements(Category.units, with(XenItems.damascus, 80, XenItems.zinc, 50, XenItems.dantstalin, 20));
-
-                    size = 2;
-                    squareSprite = false;
-                    status = StatusEffects.shielded;
-                    statusDuration = 2100;
-                    researchCost = ItemStack.with(XenItems.damascus, 2530, XenItems.zinc, 2130, XenItems.dantstalin, 1437);
                 }};
 
                 //payload
