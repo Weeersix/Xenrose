@@ -44,6 +44,7 @@ public class XenTechTree {
                     node(XenBlocks.tributary, () -> {});
                     node(XenBlocks.overflow, Seq.with(new Objectives.OnSector(XenSectorPresets.BurntHills)), () -> {
                         node(XenBlocks.shimmer, () -> {});
+                        node(XenBlocks.superiority, () -> {});
                     });
                 });
                 node(XenBlocks.calmness, () -> {});

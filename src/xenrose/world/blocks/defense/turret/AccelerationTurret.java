@@ -54,7 +54,7 @@ public class AccelerationTurret extends ItemTurret {
             Draw.reset();
 
             if(accelHeat > 3 && liquidCurrent > 1f) {
-                Drawf.additive(accelHeatRegion, accelHeatColor, (1f - glowMag + Mathf.absin(glowScl, glowMag)), x, y, (buildRotation() * rotation), Layer.turretHeat);
+                Drawf.additive(accelHeatRegion, accelHeatColor, (1f - glowMag + Mathf.absin(glowScl, glowMag)), x, y, (rotation), Layer.turretHeat);
             }
         }
 
@@ -64,7 +64,8 @@ public class AccelerationTurret extends ItemTurret {
             unit.ammo((float)unit.type().ammoCapacity * totalAmmo / maxAmmo);
 
             if(liquids.currentAmount() >= 0.1f && liquid.temperature > 3f) {
-                accelHeat = liquid.temperature;
+                if(liquids.currentAmount() > 0.1f) accelHeat = liquid.temperature;
+                else return;
                 liquidCurrent = liquids.currentAmount();
                 damageContinuous(liquids.currentAmount()/(300 - liquid.temperature * 3));
                 if(Mathf.chanceDelta(0.05)) {
