@@ -42,7 +42,7 @@ public class XenUnits {
             //imitation tech tree
             imitation, simulation, fusion, split,
             //maneuver tech tree
-            maneuver,
+            maneuver, mover,
             //xanit tech tree
             xanit, manul, amiren, manixem,
             //suport units
@@ -1599,7 +1599,6 @@ public class XenUnits {
             rotateSpeed = 3.8f;
             health = 820;
             armor = 4f;
-            researchCostMultiplier = 1.2f;
 
             outlineColor = Color.valueOf("211c18");
 
@@ -1637,7 +1636,7 @@ public class XenUnits {
                 shoot.shots = 3;
                 shoot.shotDelay = 5;
 
-                bullet = new BasicBulletType(5f, 12, "xenrose-basic-bullet1") {{
+                bullet = new BasicBulletType(5f, 8, "xenrose-basic-bullet1") {{
                     width = 6f;
                     height = 10f;
                     lifetime = 76f;
@@ -1645,7 +1644,100 @@ public class XenUnits {
                     backColor = Color.valueOf("ffd49b");
                     trailWidth = 1.4f;
                     trailLength = 11;
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 1;
                     followAimSpeed = 2;
+                    homingPower = 0.195f;
+                    homingRange = 35;
+                    homingDelay = 10;
+
+                    trailInterval = 2;
+                    hitEffect = despawnEffect = shootEffect = new ParticleEffect(){{
+                        particles = 5;
+                        length = 20;
+                        baseLength = 0;
+                        lifetime = 10;
+                        cone = 30;
+                        colorFrom = Color.valueOf("ffd49b");
+                        colorTo = Color.valueOf("ffd49b");
+                        sizeFrom = 2;
+                        sizeTo = 0;
+                    }};
+                    trailEffect = new ParticleEffect(){{
+                        particles = 1;
+                        length = 0;
+                        baseLength = 0;
+                        lifetime = 12;
+                        colorFrom = Color.valueOf("ffd49b");
+                        colorTo = Color.valueOf("ffd49b");
+                        sizeFrom = 2.5f;
+                        sizeTo = 0;
+                    }};
+                }};
+            }});
+        }};
+        mover = new UnitType("mover"){{
+            constructor = LegsUnit::create;
+
+            speed = 0.87f;
+            drag = 0.1f;
+            hitSize = 19f;
+            rotateSpeed = 3.8f;
+            health = 1960;
+            armor = 4f;
+
+            outlineColor = Color.valueOf("211c18");
+
+            legStraightness = 0.45f;
+            stepShake = 0f;
+            legCount = 4;
+            legLength = 19f;
+            lockLegBase = true;
+            legContinuousMove = true;
+            legExtension = -2f;
+            legBaseOffset = 4f;
+            legMaxLength = 1.35f;
+            legMinLength = 0.2f;
+            legLengthScl = 1.1f;
+            legForwardScl = 1.02f;
+            legGroupSize = 3;
+            rippleScale = 0.2f;
+            legMoveSpace = 1.7f;
+            allowLegStep = true;
+            legPhysicsLayer = false;
+
+            hovering = true;
+            shadowElevation = 0.1f;
+            groundLayer = Layer.legUnit - 1f;
+
+            weapons.add(new Weapon("xenrose-mover-weapon"){{
+                x = 19f / 4f;
+                y = -0.5f;
+
+                reload = 35f;
+                rotate = true;
+                rotateSpeed = 2f;
+                rotationLimit = 140;
+                mirror = true;
+                alternate = false;
+                shootSound = XenSounds.weaponMinShoot1;
+
+                shoot.shots = 3;
+                shoot.shotDelay = 4;
+
+                bullet = new BasicBulletType(5f, 15, "xenrose-basic-bullet1") {{
+                    width = 6f;
+                    height = 10f;
+                    lifetime = 80f;
+                    frontColor = trailColor = Color.valueOf("ffd49b");
+                    backColor = Color.valueOf("ffd49b");
+                    trailWidth = 1.4f;
+                    trailLength = 11;
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 2;
+                    followAimSpeed = 5;
                     homingPower = 0.195f;
                     homingRange = 35;
                     homingDelay = 10;
