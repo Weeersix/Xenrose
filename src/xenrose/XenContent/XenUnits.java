@@ -1534,59 +1534,6 @@ public class XenUnits {
             itemCapacity = 12;
             engineSize = 3f;
             engineOffset = 20f / 4f;
-
-            weapons.add(new Weapon(){{
-                x = 3.5f;
-                y = 4;
-                reload = 80f;
-                rotate = false;
-                mirror = true;
-                top = false;
-                shootSound = XenSounds.weaponMinShoot1;
-
-                shoot.shots = 1;
-
-                bullet = new BasicBulletType(5.6f, 5, "xenrose-basic-bullet1"){{
-                    height = 16;
-                    width = 8;
-                    lifetime = 76;
-                    frontColor = trailColor = Color.valueOf("c6cfda");
-                    backColor = Color.valueOf("89939e");
-                    trailWidth = 2f;
-                    trailLength = 13;
-                    trailInterval = 1.8f;
-                    trailRotation = true;
-                    trailEffect = new ParticleEffect(){{
-                        particles = 1;
-                        lifetime = 20;
-                        length = 0;
-                        baseLength = 0;
-                        colorFrom = Color.valueOf("c6cfda");
-                        colorTo = Color.valueOf("89939e");
-
-                    }};
-                    homingPower = 0.195f;
-                    homingRange = 35;
-                    homingDelay = 10;
-
-                    healColor = Color.valueOf("c6cfda");
-                    healPercent = 1f;
-                    collidesTeam = true;
-                    reflectable = false;
-
-                    hitEffect = despawnEffect = new ParticleEffect() {{
-                        lifetime = 36;
-                        particles = 10;
-                        colorFrom = Color.valueOf("c6cfda");
-                        colorTo = Color.valueOf("89939e");
-                        sizeFrom = 2;
-                        sizeTo = 0;
-                        cone = 50;
-                        length = 20;
-                        baseLength = 0;
-                    }};
-                }};
-            }});
         }};
 
         //maneuver tech tree

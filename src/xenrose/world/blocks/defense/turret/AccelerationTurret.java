@@ -54,7 +54,7 @@ public class AccelerationTurret extends ItemTurret {
             Draw.reset();
 
             if(accelHeat > 3 && liquidCurrent > 1f) {
-                Drawf.additive(accelHeatRegion, accelHeatColor, (1f - glowMag + Mathf.absin(glowScl, glowMag)), x, y, (rotation), Layer.turretHeat);
+                Drawf.additive(accelHeatRegion, accelHeatColor, (1f - glowMag + Mathf.absin(glowScl, glowMag)), x, y, rotation, Layer.turretHeat);
             }
         }
 

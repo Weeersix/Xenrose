@@ -20,6 +20,7 @@ import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.defense.Wall;
+import mindustry.world.meta.Stat;
 import xenrose.XenContent.BlocksModifiers;
 import xenrose.type.Modifier;
 import xenrose.ui.XenStyles;
@@ -41,7 +42,6 @@ public class ModularWall extends Wall{
     public TextureRegion reflectRegion;
 
     public Modifier modifier;
-    public ArmoredWallBuild m;
 
     public ModularWall(String name){
         super(name);
@@ -69,6 +69,8 @@ public class ModularWall extends Wall{
     public void setStats() {
         super.setStats();
 
+        stats.remove(Stat.baseDeflectChance);
+
         stats.add(XenStat.module,table -> {
             table.row();
 
@@ -81,7 +83,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.reflectModifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         t.image(Icon.cancel).color(Pal.remove).size(40);
@@ -98,7 +100,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.reflectModifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         //heal module
@@ -108,7 +110,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.healTechTree)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         t.image(Icon.cancel).color(Pal.remove).size(40);
@@ -123,7 +125,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.reflectModifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         //heal module
@@ -133,7 +135,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.healTechTree)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         //armor
@@ -143,7 +145,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.diocasiumArmor)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         t.image(Icon.cancel).color(Pal.remove).size(40);
@@ -156,7 +158,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.reflectModifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         //heal module
@@ -166,7 +168,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.healTechTree)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         //armor
@@ -176,7 +178,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.diocasiumArmor)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                         t.row();
 
                         //shield module
@@ -186,7 +188,7 @@ public class ModularWall extends Wall{
                         t.table(info -> {
                             info.add(modifier.localizedName).left();
                         });
-                        t.button("?", Styles.flatBordert, () -> ui.content.show(modifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
+                        t.button("?", Styles.flatBordert, () -> ui.content.show(BlocksModifiers.shieldModifier)).size(40f).pad(10).right().grow().visible(() -> modifier.unlockedNow());
                     }
 
                     default -> {
